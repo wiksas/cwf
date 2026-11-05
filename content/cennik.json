@@ -1,0 +1,385 @@
+{
+  "karty_sportowe": [
+    "MultiSport",
+    "Medicover Sport",
+    "FitProfit",
+    "PZU Sport",
+    "Krakowska Karta Rodzinna"
+  ],
+  "cenniki": [
+    {
+      "tytul": "Wejścia indywidualne",
+      "podtytul": "Limit pojedynczego wejścia: 2,5 h",
+      "wyroznienie": true,
+      "tabele": [
+        {
+          "naglowek_wierszy": "",
+          "kolumny": [
+            "Ulgowy",
+            "Normalny"
+          ],
+          "wiersze": [
+            {
+              "nazwa": "Pn–Pt do 15:00",
+              "ceny": [
+                "35 zł",
+                "40 zł"
+              ]
+            },
+            {
+              "nazwa": "Pn–Pt po 15:00",
+              "ceny": [
+                "40 zł",
+                "45 zł"
+              ]
+            },
+            {
+              "nazwa": "Sobota i niedziela",
+              "ceny": [
+                "40 zł",
+                "45 zł"
+              ]
+            },
+            {
+              "nazwa": "Karnet 8 wejść",
+              "ceny": [
+                "230 zł",
+                "260 zł"
+              ]
+            },
+            {
+              "nazwa": "Karnet miesięczny",
+              "ceny": [
+                "260 zł",
+                "290 zł"
+              ]
+            },
+            {
+              "nazwa": "Codziennie po 21:00",
+              "ceny": [
+                "30 zł"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tytul": "Bilety rodzinne",
+      "podtytul": "Rodzic + dziecko, w jednym bilecie",
+      "wyroznienie": false,
+      "tabele": [
+        {
+          "naglowek_wierszy": "",
+          "kolumny": [
+            "Pn–Pt do 15:00",
+            "Po 15:00 i weekend"
+          ],
+          "wiersze": [
+            {
+              "nazwa": "1 rodzic + 1 dziecko",
+              "ceny": [
+                "45 zł",
+                "50 zł"
+              ]
+            },
+            {
+              "nazwa": "1 rodzic + 2 dzieci",
+              "ceny": [
+                "70 zł",
+                "80 zł"
+              ]
+            },
+            {
+              "nazwa": "2 rodziców + 1 dziecko",
+              "ceny": [
+                "80 zł",
+                "90 zł"
+              ]
+            },
+            {
+              "nazwa": "2 rodziców + 2 dzieci",
+              "ceny": [
+                "90 zł",
+                "100 zł"
+              ]
+            },
+            {
+              "nazwa": "Każde kolejne dziecko",
+              "ceny": [
+                "+10 zł",
+                "+15 zł"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tytul": "Sekcje wspinaczkowe",
+      "podtytul": "W cenie: wstęp, opieka instruktora i sprzęt",
+      "wyroznienie": true,
+      "kotwica": "cennik-sekcje",
+      "tabele": [
+        {
+          "naglowek_wierszy": "",
+          "kolumny": [
+            "Cena",
+            "Z kartą sportową"
+          ],
+          "wiersze": [
+            {
+              "nazwa": "Dzieci / studenci",
+              "ceny": []
+            },
+            {
+              "nazwa": "1 wejście",
+              "ceny": [
+                "90 zł",
+                "75 zł"
+              ]
+            },
+            {
+              "nazwa": "Karnet 4 wejścia",
+              "ceny": [
+                "290 zł",
+                "185 zł"
+              ]
+            },
+            {
+              "nazwa": "Karnet 8 wejść",
+              "ceny": [
+                "395 zł",
+                "235 zł"
+              ]
+            },
+            {
+              "nazwa": "Dorośli",
+              "ceny": []
+            },
+            {
+              "nazwa": "1 wejście",
+              "ceny": [
+                "95 zł",
+                "80 zł"
+              ]
+            },
+            {
+              "nazwa": "Karnet 4 wejścia",
+              "ceny": [
+                "320 zł",
+                "195 zł"
+              ]
+            },
+            {
+              "nazwa": "Karnet 8 wejść",
+              "ceny": [
+                "430 zł",
+                "250 zł"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tytul": "Urodziny i imprezy firmowe",
+      "podtytul": "2 godziny z instruktorami · tyrolka +200 zł",
+      "wyroznienie": false,
+      "tabele": [
+        {
+          "naglowek_wierszy": "Liczba osób",
+          "kolumny": [
+            "Urodziny",
+            "Firmowe"
+          ],
+          "wiersze": [
+            {
+              "nazwa": "do 5",
+              "ceny": [
+                "600 zł",
+                "—"
+              ]
+            },
+            {
+              "nazwa": "do 10",
+              "ceny": [
+                "800 zł",
+                "800 zł"
+              ]
+            },
+            {
+              "nazwa": "do 15",
+              "ceny": [
+                "1000 zł",
+                "1050 zł"
+              ]
+            },
+            {
+              "nazwa": "do 20",
+              "ceny": [
+                "1200 zł",
+                "1300 zł"
+              ]
+            },
+            {
+              "nazwa": "do 25",
+              "ceny": [
+                "1400 zł",
+                "1550 zł"
+              ]
+            },
+            {
+              "nazwa": "do 30",
+              "ceny": [
+                "1600 zł",
+                "1800 zł"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tytul": "Szkoły i grupy zorganizowane",
+      "podtytul": "Bilet za osobę + opłata za instruktorów (2 h)",
+      "wyroznienie": false,
+      "kotwica": "cennik-grupy",
+      "tabele": [
+        {
+          "naglowek_wierszy": "Grupa",
+          "kolumny": [
+            "Do 15:00",
+            "Po 15:00 / weekend",
+            "Instruktorzy"
+          ],
+          "wiersze": [
+            {
+              "nazwa": "do 10 os.",
+              "ceny": [
+                "28 zł",
+                "33 zł",
+                "320 zł"
+              ]
+            },
+            {
+              "nazwa": "do 15 os.",
+              "ceny": [
+                "27 zł",
+                "32 zł",
+                "480 zł"
+              ]
+            },
+            {
+              "nazwa": "do 20 os.",
+              "ceny": [
+                "26 zł",
+                "31 zł",
+                "640 zł"
+              ]
+            },
+            {
+              "nazwa": "do 25 os.",
+              "ceny": [
+                "25 zł",
+                "30 zł",
+                "800 zł"
+              ]
+            }
+          ]
+        },
+        {
+          "naglowek": "Zajęcia cykliczne dla grup 3–5 osób",
+          "opis": "M.in. grupy z niepełnosprawnością, szkoły, przedszkola, świetlice — cena za grupę, z instruktorem",
+          "naglowek_wierszy": "Czas zajęć",
+          "kolumny": [
+            "Do 16:00",
+            "Po 16:00 / weekend"
+          ],
+          "wiersze": [
+            {
+              "nazwa": "1 h",
+              "ceny": [
+                "220 zł",
+                "270 zł"
+              ]
+            },
+            {
+              "nazwa": "1,5 h",
+              "ceny": [
+                "270 zł",
+                "320 zł"
+              ]
+            },
+            {
+              "nazwa": "2 h",
+              "ceny": [
+                "310 zł",
+                "360 zł"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tytul": "Sprzęt i treningi indywidualne",
+      "podtytul": "Wypożyczalnia w każdej lokalizacji",
+      "wyroznienie": false,
+      "tabele": [
+        {
+          "naglowek_wierszy": "Trening z instruktorem",
+          "kolumny": [
+            "1 os.",
+            "2 os."
+          ],
+          "wiersze": [
+            {
+              "nazwa": "1 h",
+              "ceny": [
+                "160 zł",
+                "220 zł"
+              ]
+            },
+            {
+              "nazwa": "1,5 h",
+              "ceny": [
+                "220 zł",
+                "280 zł"
+              ]
+            },
+            {
+              "nazwa": "2 h",
+              "ceny": [
+                "280 zł",
+                "340 zł"
+              ]
+            }
+          ]
+        }
+      ],
+      "dodatki": [
+        {
+          "nazwa": "Uprząż",
+          "cena": "15 zł"
+        },
+        {
+          "nazwa": "Przyrząd",
+          "cena": "10 zł"
+        },
+        {
+          "nazwa": "Buty",
+          "cena": "25 zł"
+        },
+        {
+          "nazwa": "Lina",
+          "cena": "30 zł"
+        },
+        {
+          "nazwa": "Szkolenie z asekuracji",
+          "cena": "40 zł / 2 os."
+        }
+      ]
+    }
+  ]
+}

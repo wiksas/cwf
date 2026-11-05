@@ -1,0 +1,18 @@
+{
+  "dokumenty": [
+    {
+      "nazwa": "Formularz osobowy",
+      "link": "https://drive.google.com/file/d/12PgOHiSdZEF4ScChNiZD--ShT65lF1kz/view?usp=sharing",
+      "opis": "Google Drive ↗"
+    },
+    {
+      "nazwa": "Oświadczenie rodziców",
+      "plik": "/assets/dokumenty/oswiadczenie-rodzicow.pdf"
+    },
+    {
+      "nazwa": "Regulaminy obiektów i bonów",
+      "link": "regulaminy.html",
+      "opis": "strona"
+    }
+  ]
+}

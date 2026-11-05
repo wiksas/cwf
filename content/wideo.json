@@ -1,0 +1,34 @@
+{
+  "filmy": [
+    {
+      "tytul": "Urodziny, które wszyscy zapamiętają!",
+      "link": "https://www.youtube.com/watch?v=T7Yo__vs2BQ",
+      "miniatura": "/assets/urodziny-2.jpg"
+    },
+    {
+      "tytul": "Sekcje / Meeting boulderowy",
+      "link": "https://www.youtube.com/watch?v=en3Fd90KhqY",
+      "miniatura": "/assets/sekcje-dorosli.jpg"
+    },
+    {
+      "tytul": "Forteciaki — zawody wspinaczkowe dla dzieci",
+      "link": "https://www.youtube.com/watch?v=r0fxEhWpyBQ",
+      "miniatura": "/assets/sekcje-dzieci.jpg"
+    },
+    {
+      "tytul": "Centrum Wspinaczkowe Forteca — Rydlówka 32",
+      "link": "https://www.youtube.com/watch?v=PKiSZG8dncw",
+      "miniatura": "/assets/rydlowka.jpg"
+    },
+    {
+      "tytul": "Sekcje wspinaczkowe dla dorosłych",
+      "link": "https://www.youtube.com/watch?v=e2sZofM2wvM",
+      "miniatura": "/assets/galeria/ludowa-2.jpg"
+    },
+    {
+      "tytul": "Sekcje wspinaczkowe dla dzieci",
+      "link": "https://www.youtube.com/watch?v=av9MzDB8dZo",
+      "miniatura": "/assets/bday-wspinaczka.jpg"
+    }
+  ]
+}

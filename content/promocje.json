@@ -1,0 +1,19 @@
+{
+  "promocje": [
+    {
+      "etykieta": "30 zł",
+      "tytul": "Tańsze wejście po 21:00",
+      "tekst": "Codziennie po 21:00 bilet wstępu tylko 30 zł."
+    },
+    {
+      "etykieta": "0 zł",
+      "tytul": "W dniu urodzin wspinasz się za free",
+      "tekst": "Pokaż w recepcji dokument z datą urodzenia i wspinaj się tego dnia za darmo."
+    },
+    {
+      "etykieta": "−%",
+      "tytul": "Przyprowadź znajomego",
+      "tekst": "Wspinaj się taniej we dwoje — szczegóły w recepcjach CWF."
+    }
+  ]
+}

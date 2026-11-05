@@ -1,0 +1,98 @@
+{
+  "karty": [
+    {
+      "tytul": "Sekcje dla dorosłych",
+      "zdjecie": "/assets/sekcje-dorosli.jpg",
+      "opis_zdjecia": "Dorośli podczas treningu na ściance CWF",
+      "tekst": "Cykliczne treningi z instruktorem: technika, praca nóg, sprzęt i węzły. Z kartą sportową od 80 zł za zajęcia.",
+      "punkty": [
+        "od 16 lat, grupy do 8 osób",
+        "3 poziomy: początkujący, średnio­zaawansowani, zaawansowani",
+        "elastyczny grafik, sprzęt w cenie"
+      ],
+      "przycisk_tekst": "Zobacz ceny",
+      "przycisk_link": "#cennik-sekcje",
+      "kotwica": "sekcje-dorosli"
+    },
+    {
+      "tytul": "Sekcje dla dzieci",
+      "zdjecie": "/assets/sekcje-dzieci.jpg",
+      "opis_zdjecia": "Dziecko wspinające się po kolorowych chwytach",
+      "tekst": "Zajęcia ogólnorozwojowe z instruktorem: wspinaczka od podstaw, gry i zabawy. Z kartą sportową od 75 zł.",
+      "punkty": [
+        "od 3,5 roku, małe grupy",
+        "wspiera prawidłową postawę i koordynację",
+        "sprzęt w cenie"
+      ],
+      "przycisk_tekst": "Zobacz ceny",
+      "przycisk_link": "#cennik-sekcje",
+      "kotwica": "sekcje-dzieci"
+    },
+    {
+      "tytul": "Urodziny dla dzieci",
+      "zdjecie": "/assets/urodziny.jpg",
+      "opis_zdjecia": "Urodziny dziecka na ściance wspinaczkowej",
+      "tekst": "2 godziny zabaw z instruktorami, tyrolka 30 m i osobna salka. Od 600 zł.",
+      "punkty": [
+        "program dopasowany do wieku",
+        "upominek dla każdego uczestnika",
+        "rezerwacje: 509 838 500"
+      ],
+      "przycisk_tekst": "Program urodzin",
+      "przycisk_link": "#urodziny"
+    },
+    {
+      "tytul": "Warsztaty dla szkół",
+      "zdjecie": "/assets/warsztaty-szkoly.jpg",
+      "opis_zdjecia": "Grupa szkolna na warsztatach wspinaczkowych",
+      "tekst": "Przedszkola, szkoły, świetlice, kluby sportowe i kolonie — jednorazowo lub cyklicznie. Bilet od 25 zł za osobę.",
+      "punkty": [
+        "2 godziny zegarowe z rozgrzewką",
+        "1 instruktor na maks. 5 osób",
+        "cały sprzęt w cenie"
+      ],
+      "przycisk_tekst": "Oferta dla grup",
+      "przycisk_link": "#cennik-grupy",
+      "kotwica": "szkoly"
+    },
+    {
+      "tytul": "Zajęcia dla osób z niepełnosprawnością",
+      "zdjecie": "/assets/zajecia-niepelnosprawnosc.jpg",
+      "opis_zdjecia": "Zajęcia wspinaczkowe dla osoby z niepełnosprawnością",
+      "tekst": "Zajęcia wspinaczkowo-terapeutyczne dla dzieci, młodzieży i dorosłych — indywidualne lub w grupach 3–5 osób.",
+      "punkty": [
+        "m.in. zespół Downa, MPD, autyzm",
+        "osoby niewidome i niedosłyszące",
+        "budynki dostosowane"
+      ],
+      "przycisk_tekst": "Szczegóły i ceny",
+      "przycisk_link": "#cennik-grupy",
+      "kotwica": "niepelnosprawnosc"
+    }
+  ],
+  "dodatkowe": [
+    {
+      "kotwica": "szkolenie",
+      "tytul": "Szkolenie z asekuracji",
+      "tekst": "Pierwsza wizyta? Instruktor nauczy Cię wiązania i asekuracji górnej. **40 zł / 2 os.** — zarezerwuj w recepcji."
+    },
+    {
+      "kotwica": "skalki",
+      "tytul": "Kursy i wyjazdy w skałki",
+      "tekst": "Jednodniowe wyjazdy oraz kursy skałkowe przygotowujące do samodzielnego wspinania w skałach."
+    },
+    {
+      "tytul": "Wypożyczalnia sprzętu",
+      "tekst": "Uprząż, przyrząd, buty i lina na miejscu — nie musisz nic kupować na start."
+    },
+    {
+      "tytul": "Imprezy firmowe",
+      "tekst": "Integracja na ściance z instruktorami, od **800 zł** za grupę do 10 osób."
+    },
+    {
+      "kotwica": "bony",
+      "tytul": "Bony upominkowe",
+      "tekst": "Wejście, karnet lub zajęcia na prezent. Do kupienia w recepcji, ważne 3 miesiące. [Regulamin bonów](regulaminy.html#bony)"
+    }
+  ]
+}

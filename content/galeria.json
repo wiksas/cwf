@@ -1,0 +1,55 @@
+{
+  "grupy": [
+    {
+      "nazwa": "Ludowa 6",
+      "zdjecia": [
+        {
+          "zdjecie": "/assets/galeria/ludowa-1.jpg",
+          "opis": "Hala Ludowa 6 z lotu drona — kolorowe ściany z drogami"
+        },
+        {
+          "zdjecie": "/assets/galeria/ludowa-2.jpg",
+          "opis": "Wspinaczka po żółtej płycie na Ludowej 6"
+        },
+        {
+          "zdjecie": "/assets/galeria/ludowa-3.jpg",
+          "opis": "Kilka zespołów wspinających się z liną na Ludowej 6"
+        }
+      ]
+    },
+    {
+      "nazwa": "Racławicka 60",
+      "zdjecia": [
+        {
+          "zdjecie": "/assets/galeria/raclawicka-1.jpg",
+          "opis": "Hala Racławicka 60 — rzeźbiony panel i strefa boulderowa"
+        },
+        {
+          "zdjecie": "/assets/galeria/raclawicka-2.jpg",
+          "opis": "Wspinaczka z liną obok ściany z dużymi chwytami na Racławickiej 60"
+        },
+        {
+          "zdjecie": "/assets/galeria/raclawicka-3.jpg",
+          "opis": "Rzeźbiony panel imitujący naturalną skałę na Racławickiej 60"
+        }
+      ]
+    },
+    {
+      "nazwa": "Rydlówka 32",
+      "zdjecia": [
+        {
+          "zdjecie": "/assets/galeria/rydlowka-1.jpg",
+          "opis": "Przewieszona boulderownia na Rydlówce 32"
+        },
+        {
+          "zdjecie": "/assets/galeria/rydlowka-2.jpg",
+          "opis": "Strefa treningowa z chwytotablicami na Rydlówce 32"
+        },
+        {
+          "zdjecie": "/assets/galeria/rydlowka-3.jpg",
+          "opis": "Wolne ciężary w strefie treningowej na Rydlówce 32"
+        }
+      ]
+    }
+  ]
+}

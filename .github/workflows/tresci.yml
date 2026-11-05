@@ -1,0 +1,44 @@
+# Po zapisie w panelu /admin/ (commit w content/ lub assets/) wstawia treści do HTML i commituje wynik.
+# GitHub Pages publikuje gałąź main, więc strona aktualizuje się po commicie z tego workflow.
+name: Treści z CMS
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "content/**"
+      - "assets/**"
+      - "scripts/build.mjs"
+      - "*.html"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tresci-cms
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: main # zawsze najnowszy stan — kolejne zapisy z CMS czekają w kolejce (concurrency)
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+      - name: Wstaw treści do HTML
+        run: node scripts/build.mjs
+      - name: Zapisz zmiany
+        run: |
+          if git diff --quiet; then
+            echo "HTML aktualny — brak zmian."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "Strona: aktualizacja treści z CMS"
+          git pull --rebase origin main # gdy w trakcie doszedł kolejny zapis z CMS; jego własny przebieg zbuduje go ponownie
+          git push

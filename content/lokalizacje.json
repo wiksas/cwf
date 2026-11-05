@@ -1,0 +1,102 @@
+{
+  "lokalizacje": [
+    {
+      "nazwa": "Ludowa 6",
+      "adres": "ul. Ludowa 6",
+      "dzielnica": "Podgórze",
+      "okolice": "okolice ul. Wielickiej / Kopca Kraka",
+      "parametry": [
+        "**740 m²** powierzchni wspinaczkowej",
+        "**42** stanowiska z liną, ściany do **8,5 m**",
+        "**2 boulderownie** — 11 ścian i Moonboard"
+      ],
+      "godziny": [
+        {
+          "od": "pn",
+          "do": "pt",
+          "otwarcie": "10:00",
+          "zamkniecie": "23:00"
+        },
+        {
+          "od": "sb",
+          "do": "nd",
+          "otwarcie": "10:00",
+          "zamkniecie": "22:00"
+        }
+      ],
+      "telefon": "512 631 621",
+      "email": "recepcjaL6@cwf.pl",
+      "facebook": "https://www.facebook.com/CWFortecaLudowa6"
+    },
+    {
+      "nazwa": "Racławicka 60",
+      "adres": "ul. Racławicka 60",
+      "dzielnica": "Krowodrza",
+      "okolice": "okolice ul. Wrocławskiej / Urzędu Marszałkowskiego",
+      "parametry": [
+        "**1200 m²** powierzchni wspinaczkowej",
+        "**50** stanowisk z liną + **9** na rzeźbionym panelu z rysami, ściany do **9 m**",
+        "**17-metrowa wieża** z kutymi chwytami jak w skale",
+        "**14** ścian boulderowych"
+      ],
+      "godziny": [
+        {
+          "od": "pn",
+          "do": "pt",
+          "otwarcie": "10:00",
+          "zamkniecie": "23:00"
+        },
+        {
+          "od": "sb",
+          "do": "nd",
+          "otwarcie": "10:00",
+          "zamkniecie": "22:00"
+        }
+      ],
+      "telefon": "509 228 998",
+      "email": "recepcjaR60@cwf.pl",
+      "facebook": "https://www.facebook.com/CWFortecaRaclawicka60"
+    },
+    {
+      "nazwa": "Rydlówka 32",
+      "adres": "ul. Rydlówka 32",
+      "dzielnica": "Podgórze",
+      "okolice": "okolice Ronda Matecznego / ul. Wadowickiej",
+      "parametry": [
+        "**15** stanowisk z liną, ściany do **6 m**",
+        "**2 duże boulderownie**"
+      ],
+      "godziny": [
+        {
+          "od": "pn",
+          "do": "cz",
+          "otwarcie": "10:00",
+          "zamkniecie": "23:00"
+        },
+        {
+          "od": "pt",
+          "otwarcie": "10:00",
+          "zamkniecie": "22:00"
+        },
+        {
+          "od": "sb",
+          "do": "nd",
+          "otwarcie": "10:00",
+          "zamkniecie": "22:00"
+        }
+      ],
+      "telefon": "509 300 918",
+      "email": "recepcjaR32@cwf.pl",
+      "facebook": "https://www.facebook.com/CWFortecaRydlowka32"
+    }
+  ],
+  "udogodnienia": [
+    "Sala na imprezy okolicznościowe",
+    "2 szatnie z prysznicami",
+    "Bezpłatny parking",
+    "WiFi",
+    "Budynek dostosowany dla osób z niepełnosprawnością",
+    "Wypożyczalnia sprzętu",
+    "Przystanki tramwajowe i autobusowe w pobliżu"
+  ]
+}

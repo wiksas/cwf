@@ -1,0 +1,401 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+# Panel treści CWF (Sveltia CMS). Każdy zapis = commit w content/*.json lub assets/;
+# GitHub Action „Treści z CMS” wstawia zmiany do HTML (scripts/build.mjs), a GitHub Pages publikuje stronę.
+
+backend:
+  name: github
+  repo: wiksas/cwf
+  branch: main
+  # Logowanie tokenem GitHub (instrukcja w README). Po wdrożeniu Sveltia CMS Authenticator dodaj base_url i „oauth”.
+  auth_methods: [token]
+  commit_messages:
+    update: "CMS: {{collection}} — {{slug}}"
+    uploadMedia: "CMS: dodano plik {{path}}"
+    deleteMedia: "CMS: usunięto plik {{path}}"
+
+site_url: https://wiksas.github.io/cwf/
+logo:
+  src: ../assets/sygnet.svg
+
+media_folder: /assets
+public_folder: /assets
+media_libraries:
+  default:
+    config:
+      slugify_filename: true
+      transformations:
+        raster_image:
+          format: webp
+          quality: 82
+          width: 1600
+          height: 1600
+
+editor:
+  preview: false
+
+collections:
+  - name: strona
+    label: Treści strony
+    description: >-
+      Zmiany pojawiają się na stronie po ok. 2 minutach od zapisania.
+      W polach tekstowych: `**tekst**` = pogrubienie, `[tekst](adres)` = link.
+    files:
+      # ---------- CENNIK ----------
+      - name: cennik
+        label: Cennik
+        file: content/cennik.json
+        fields:
+          - name: karty_sportowe
+            label: Honorowane karty sportowe
+            widget: list
+            label_singular: karta
+            hint: Plakietki nad cennikiem.
+          - name: cenniki
+            label: Cenniki
+            label_singular: cennik
+            widget: list
+            collapsed: true
+            summary: "{{tytul}}"
+            hint: >-
+              Kolejność na liście = kolejność na stronie. Ceny występują też w tekstach innych sekcji
+              (nagłówek strony, Oferta, Urodziny, Promocje, FAQ) — po zmianie cennika sprawdź je również.
+            fields:
+              - { name: tytul, label: Tytuł, widget: string }
+              - { name: podtytul, label: Podtytuł, widget: string, required: false }
+              - name: wyroznienie
+                label: Wyróżniona ramka
+                widget: boolean
+                required: false
+                default: false
+              - name: kotwica
+                label: Adres kotwicy (techniczne)
+                widget: string
+                required: false
+                hint: Np. cennik-sekcje — używane przez przyciski „Zobacz ceny”. Nie zmieniaj bez potrzeby.
+                pattern: ["^[a-z0-9-]+$", "Tylko małe litery bez polskich znaków, cyfry i myślniki"]
+              - name: tabele
+                label: Tabele
+                label_singular: tabela
+                widget: list
+                collapsed: false
+                summary: "{{naglowek}} {{kolumny}}"
+                fields:
+                  - name: naglowek
+                    label: Śródtytuł nad tabelą
+                    widget: string
+                    required: false
+                    hint: Zwykle pusty — używany, gdy w jednym cenniku jest kilka tabel.
+                  - { name: opis, label: Opis nad tabelą, widget: string, required: false }
+                  - name: naglowek_wierszy
+                    label: Nagłówek pierwszej kolumny
+                    widget: string
+                    required: false
+                    hint: Np. „Liczba osób”. Może zostać pusty.
+                  - name: kolumny
+                    label: Kolumny cen
+                    widget: list
+                    label_singular: kolumna
+                    hint: Np. „Ulgowy”, „Normalny”.
+                  - name: wiersze
+                    label: Wiersze
+                    label_singular: wiersz
+                    widget: list
+                    collapsed: false
+                    summary: "{{nazwa}}: {{ceny}}"
+                    hint: >-
+                      Wiersz bez cen = śródtytuł grupy (np. „Dorośli”). Jedna cena przy kilku kolumnach
+                      zostaje rozciągnięta na pozostałe kolumny.
+                    fields:
+                      - { name: nazwa, label: Nazwa, widget: string }
+                      - name: ceny
+                        label: Ceny
+                        widget: list
+                        label_singular: cena
+                        required: false
+                        hint: W kolejności kolumn, np. „35 zł”.
+              - name: dodatki
+                label: Dodatkowe ceny (plakietki pod tabelą)
+                label_singular: plakietka
+                widget: list
+                required: false
+                summary: "{{nazwa}} {{cena}}"
+                fields:
+                  - { name: nazwa, label: Nazwa, widget: string }
+                  - { name: cena, label: Cena, widget: string }
+
+      # ---------- PROMOCJE ----------
+      - name: promocje
+        label: Promocje
+        file: content/promocje.json
+        fields:
+          - name: promocje
+            label: Promocje
+            label_singular: promocja
+            widget: list
+            required: false
+            summary: "{{etykieta}} — {{tytul}}"
+            hint: Pusta lista = komunikat „Aktualnie nie mamy promocji”.
+            fields:
+              - { name: etykieta, label: Etykieta, widget: string, hint: "Krótko, np. „30 zł” albo „−%”." }
+              - { name: tytul, label: Tytuł, widget: string }
+              - { name: tekst, label: Opis, widget: text }
+
+      # ---------- GALERIA ----------
+      - name: galeria
+        label: Galeria
+        file: content/galeria.json
+        media_folder: /assets/galeria
+        public_folder: /assets/galeria
+        fields:
+          - name: grupy
+            label: Grupy zdjęć
+            label_singular: grupa
+            widget: list
+            collapsed: true
+            summary: "{{nazwa}}"
+            fields:
+              - { name: nazwa, label: Nazwa grupy, widget: string, hint: Np. nazwa lokalizacji. }
+              - name: zdjecia
+                label: Zdjęcia
+                label_singular: zdjęcie
+                widget: list
+                collapsed: true
+                summary: "{{opis}}"
+                thumbnail: zdjecie
+                hint: Na komputerze widać po 3 zdjęcia w rzędzie, na telefonie karuzelę.
+                fields:
+                  - { name: zdjecie, label: Zdjęcie, widget: image }
+                  - name: opis
+                    label: Opis zdjęcia
+                    widget: string
+                    hint: Co widać na zdjęciu — czytają go niewidomi i Google.
+
+      # ---------- URODZINY ----------
+      - name: urodziny
+        label: Urodziny
+        file: content/urodziny.json
+        fields:
+          - name: pakiety_naglowek
+            label: Nagłówek pakietów
+            widget: string
+            hint: "**600 zł** = cena wyróżniona na żółto."
+          - { name: pakiety_tekst, label: Lista pakietów, widget: text }
+          - name: oswiadczenie
+            label: Oświadczenie rodzica (PDF)
+            widget: file
+            media_folder: /assets/dokumenty
+            public_folder: /assets/dokumenty
+          - name: atrakcje
+            label: Atrakcje (karty przesuwane w bok)
+            label_singular: atrakcja
+            widget: list
+            collapsed: true
+            summary: "{{tytul}}"
+            thumbnail: zdjecie
+            hint: Numery kart i nagłówek „N atrakcji w 2 godziny” tworzą się same.
+            fields:
+              - { name: zdjecie, label: Zdjęcie, widget: image }
+              - { name: opis_zdjecia, label: Opis zdjęcia, widget: string }
+              - { name: tytul, label: Tytuł, widget: string }
+              - { name: tekst, label: Opis, widget: text }
+              - { name: wyroznienie, label: "Wyróżnienie „hit”", widget: boolean, required: false, default: false }
+
+      # ---------- OFERTA ----------
+      - name: oferta
+        label: Oferta
+        file: content/oferta.json
+        fields:
+          - name: karty
+            label: Karty oferty (ze zdjęciem)
+            label_singular: karta
+            widget: list
+            collapsed: true
+            summary: "{{tytul}}"
+            thumbnail: zdjecie
+            fields:
+              - { name: tytul, label: Tytuł, widget: string }
+              - { name: zdjecie, label: Zdjęcie, widget: image }
+              - { name: opis_zdjecia, label: Opis zdjęcia, widget: string }
+              - { name: tekst, label: Opis, widget: text }
+              - { name: punkty, label: Punkty, label_singular: punkt, widget: list, required: false }
+              - { name: przycisk_tekst, label: Napis na przycisku, widget: string, required: false }
+              - name: przycisk_link
+                label: Link przycisku
+                widget: string
+                required: false
+                hint: "Sekcja strony (#urodziny, #cennik-sekcje, #cennik-grupy) albo pełny adres https://…"
+              - name: kotwica
+                label: Adres kotwicy (techniczne)
+                widget: string
+                required: false
+                hint: Np. sekcje-dzieci. Nie zmieniaj bez potrzeby — prowadzą tu stare adresy strony.
+                pattern: ["^[a-z0-9-]+$", "Tylko małe litery bez polskich znaków, cyfry i myślniki"]
+          - name: dodatkowe
+            label: Także w Fortecy (karty bez zdjęć)
+            label_singular: karta
+            widget: list
+            collapsed: true
+            summary: "{{tytul}}"
+            fields:
+              - { name: tytul, label: Tytuł, widget: string }
+              - { name: tekst, label: Opis, widget: text }
+              - name: kotwica
+                label: Adres kotwicy (techniczne)
+                widget: string
+                required: false
+                pattern: ["^[a-z0-9-]+$", "Tylko małe litery bez polskich znaków, cyfry i myślniki"]
+
+      # ---------- LOKALIZACJE ----------
+      - name: lokalizacje
+        label: Lokalizacje i godziny otwarcia
+        file: content/lokalizacje.json
+        fields:
+          - name: lokalizacje
+            label: Lokalizacje
+            label_singular: lokalizacja
+            widget: list
+            collapsed: true
+            summary: "{{nazwa}}"
+            hint: Godziny i kontakty trafiają na karty lokalizacji, do stopki i do danych dla Google.
+            fields:
+              - name: nazwa
+                label: Nazwa
+                widget: string
+                hint: Np. „Ludowa 6”. Z nazwy powstaje adres karty (#ludowa-6) i link do mapy.
+              - { name: adres, label: Adres, widget: string }
+              - { name: dzielnica, label: Dzielnica, widget: string, required: false }
+              - { name: okolice, label: Jak trafić, widget: string, required: false }
+              - name: parametry
+                label: Parametry ściany
+                widget: list
+                label_singular: parametr
+                required: false
+                hint: "Np. **740 m²** powierzchni wspinaczkowej"
+              - name: godziny
+                label: Godziny otwarcia
+                label_singular: przedział
+                widget: list
+                summary: "{{od}}–{{do}} {{otwarcie}}–{{zamkniecie}}"
+                fields:
+                  - name: od
+                    label: Od dnia
+                    widget: select
+                    options: &dni
+                      - { label: Poniedziałek, value: pn }
+                      - { label: Wtorek, value: wt }
+                      - { label: Środa, value: sr }
+                      - { label: Czwartek, value: cz }
+                      - { label: Piątek, value: pt }
+                      - { label: Sobota, value: sb }
+                      - { label: Niedziela, value: nd }
+                  - name: do
+                    label: Do dnia
+                    widget: select
+                    required: false
+                    hint: Puste = jeden dzień.
+                    options: *dni
+                  - name: otwarcie
+                    label: Otwarcie
+                    widget: string
+                    pattern: ["^\\d{1,2}:\\d{2}$", "Format GG:MM, np. 10:00"]
+                  - name: zamkniecie
+                    label: Zamknięcie
+                    widget: string
+                    pattern: ["^\\d{1,2}:\\d{2}$", "Format GG:MM, np. 22:00"]
+              - name: telefon
+                label: Telefon recepcji
+                widget: string
+                pattern: ["^\\+?[\\d ]{9,}$", "Cyfry i spacje, np. 512 631 621"]
+              - { name: email, label: E-mail recepcji, widget: string }
+              - { name: facebook, label: Facebook lokalizacji, widget: string, required: false }
+          - name: udogodnienia
+            label: Udogodnienia (w każdej lokalizacji)
+            widget: list
+            label_singular: udogodnienie
+
+      # ---------- FORMULARZE ----------
+      - name: formularze
+        label: Formularze do pobrania
+        file: content/formularze.json
+        media_folder: /assets/dokumenty
+        public_folder: /assets/dokumenty
+        fields:
+          - name: dokumenty
+            label: Dokumenty
+            label_singular: dokument
+            widget: list
+            summary: "{{nazwa}}"
+            hint: Każdy dokument ma albo plik (np. PDF), albo link — nie oba naraz.
+            fields:
+              - { name: nazwa, label: Nazwa, widget: string }
+              - { name: plik, label: Plik, widget: file, required: false }
+              - { name: link, label: Link, widget: string, required: false, hint: "Np. https://… albo regulaminy.html" }
+              - name: opis
+                label: Dopisek
+                widget: string
+                required: false
+                hint: Puste przy pliku = rozmiar, np. „PDF · 49 KB”.
+
+      # ---------- WIDEO ----------
+      - name: wideo
+        label: Filmy
+        file: content/wideo.json
+        fields:
+          - name: filmy
+            label: Filmy z YouTube
+            label_singular: film
+            widget: list
+            required: false
+            collapsed: true
+            summary: "{{tytul}}"
+            thumbnail: miniatura
+            fields:
+              - { name: tytul, label: Tytuł, widget: string }
+              - { name: link, label: Link do filmu, widget: string, pattern: ["^https://", "Pełny adres, np. https://www.youtube.com/watch?v=…"] }
+              - { name: miniatura, label: Miniatura, widget: image }
+
+      # ---------- FAQ ----------
+      - name: faq
+        label: Pytania i słowniczek
+        file: content/faq.json
+        fields:
+          - name: pytania
+            label: Pytania i odpowiedzi
+            label_singular: pytanie
+            widget: list
+            collapsed: true
+            summary: "{{pytanie}}"
+            hint: Pierwsze pytanie jest od razu rozwinięte.
+            fields:
+              - { name: pytanie, label: Pytanie, widget: string }
+              - { name: odpowiedz, label: Odpowiedź, widget: text }
+          - name: slowniczek
+            label: Słowniczek wspinacza
+            label_singular: hasło
+            widget: list
+            required: false
+            collapsed: true
+            summary: "{{termin}}"
+            fields:
+              - { name: termin, label: Hasło, widget: string }
+              - { name: definicja, label: Wyjaśnienie, widget: text }
+
+      # ---------- USTAWIENIA ----------
+      - name: ustawienia
+        label: Telefony i teksty ogólne
+        file: content/ustawienia.json
+        fields:
+          - name: infolinia
+            label: Infolinia
+            widget: string
+            pattern: ["^\\+?[\\d ]{9,}$", "Cyfry i spacje, np. 12 632 83 33"]
+          - name: telefon_urodziny
+            label: Telefon — rezerwacja urodzin
+            widget: string
+            pattern: ["^\\+?[\\d ]{9,}$", "Cyfry i spacje, np. 509 838 500"]
+          - { name: pasek_gorny, label: Tekst w czarnym pasku na górze, widget: string }
+          - { name: hero_tekst, label: Tekst pod napisem „Centrum Wspinaczkowe Forteca”, widget: text }
+          - name: opis_seo
+            label: Opis strony w Google
+            widget: text
+            hint: Około 150 znaków — widoczny w wynikach wyszukiwania.

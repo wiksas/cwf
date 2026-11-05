@@ -46,6 +46,10 @@ Zostawiamy wszystko, po czym klienci rozpoznają Fortecę, a poprawiamy wykonani
 | `fundacja.html` | Fundacja Magnezja — cele i dane rejestrowe |
 | `styles.css` | style w palecie CWF + 9 efektów CSS Scroll-driven Animations |
 | `script.js` | zamykanie menu mobilnego po wyborze sekcji / Escape / kliknięciu obok |
+| `admin/` | panel treści dla klienta ([Sveltia CMS](https://sveltiacms.app/)): `index.html` + konfiguracja pól `config.yml` |
+| `content/*.json` | treści edytowane w panelu: cennik, promocje, galeria, urodziny, oferta, lokalizacje i godziny, formularze, filmy, FAQ, telefony |
+| `scripts/build.mjs` | wstawia `content/*.json` do bloków `<!-- cms:… -->` w plikach HTML (Node 22, bez zależności) |
+| `.github/workflows/tresci.yml` | po każdym zapisie w panelu uruchamia `build.mjs` i commituje zaktualizowany HTML |
 | `assets/logo-cwf.png`, `assets/sygnet-cwf.png` | oryginalne logo z `cwf.pl` |
 | `assets/sygnet.svg` | wektorowy znak CWF |
 | `assets/*.jpg`, `assets/galeria/*.jpg` | oryginalne zdjęcia z `cwf.pl` (hero, sekcje, urodziny, szkoły, galerie 3 lokalizacji) |
@@ -56,6 +60,58 @@ Zostawiamy wszystko, po czym klienci rozpoznają Fortecę, a poprawiamy wykonani
 ## Jak otworzyć
 
 Dwuklik w `index.html`. Pełne animacje w Chrome / Edge 115+ i Safari 26+; w innych przeglądarkach strona działa statycznie. Menu mobilne sprawdzisz, zwężając okno poniżej 1080 px.
+
+---
+
+## Panel treści (CMS)
+
+Klient zmienia ceny, zdjęcia i teksty pod adresem **`https://wiksas.github.io/cwf/admin/`** — bez dotykania kodu.
+
+```mermaid
+flowchart LR
+  A[Klient zapisuje w /admin/] -->|commit content/*.json, assets/| B[GitHub]
+  B --> C[Action „Treści z CMS”: node scripts/build.mjs]
+  C -->|commit index.html itd.| D[GitHub Pages]
+```
+
+Zmiana jest widoczna na stronie po ok. 2 minutach. Strona pozostaje czystym HTML (SEO, działa bez JS, dwuklik w `index.html` nadal działa).
+
+### Co da się edytować
+
+| Sekcja w panelu | Gdzie trafia na stronie |
+|---|---|
+| Cennik | honorowane karty + wszystkie tabele cen (dowolna liczba cenników, tabel, kolumn i wierszy; wiersz bez cen = śródtytuł grupy) |
+| Promocje | karty promocji; pusta lista = komunikat „Aktualnie nie mamy promocji” |
+| Galeria | grupy zdjęć z opisami (alt); nowe zdjęcia → `assets/galeria/` |
+| Urodziny | pakiety, oświadczenie rodzica (PDF), karty atrakcji — numeracja i nagłówek „N atrakcji w 2 godziny” liczą się same |
+| Oferta | karty oferty ze zdjęciami i karty „Także w Fortecy” |
+| Lokalizacje i godziny | karty lokalizacji, stopka i JSON-LD dla Google z jednego źródła; w stopce sąsiednie dni o tych samych godzinach łączą się (Pt + Sb–Nd → Pt–Nd) |
+| Formularze | lista dokumentów: plik (rozmiar „PDF · 49 KB” liczy się sam) albo link |
+| Filmy, Pytania i słowniczek | karty YouTube, FAQ, słowniczek |
+| Telefony i teksty ogólne | infolinia i telefon urodzin (wszędzie, także na podstronach), pasek górny, tekst w hero, opis dla Google |
+
+W tekstach działa `**pogrubienie**` i `[link](adres)`. Zdjęcia są przy wgrywaniu zmniejszane do 1600 px i konwertowane do WebP; `width`/`height` w HTML odczytuje `build.mjs` z pliku. Nagłówki sekcji, regulaminy i układ zostają w HTML — zmienia je programista.
+
+> Ceny występują też w zwykłych tekstach (hero „od 35 zł”, karty oferty, urodziny, promocja po 21:00, FAQ o sprzęcie). Panel o tym przypomina przy cenniku — po zmianie cennika trzeba je poprawić ręcznie w odpowiednich sekcjach.
+
+### Dostęp dla klienta (jednorazowo)
+
+Najprościej (klient nie potrzebuje konta GitHub):
+
+1. Właściciel repozytorium (`wiksas`) otwiera `/admin/` → *Sign In Using Access Token* → link w okienku prowadzi do formularza [fine-grained token](https://github.com/settings/personal-access-tokens/new) z zaznaczonym *Contents: Read and write*.
+2. W formularzu: *Repository access → Only select repositories → `wiksas/cwf`*, ważność np. 1 rok → *Generate token*.
+3. Token przekazać klientowi; klient wkleja go w to samo okienko na `/admin/`. Token zostaje w przeglądarce, przy kolejnych wizytach logowanie nie jest potrzebne. Odebranie dostępu = usunięcie tokenu w GitHubie. Commity z panelu są podpisane kontem właściciela.
+
+Z własnym kontem klienta (commity podpisane jego nazwą): właściciel dodaje konto w **Settings → Collaborators** (rola *Write*). Fine-grained token współpracownika nie obejmuje repozytoriów należących do innego konta osobistego, więc klient tworzy [token classic z zakresem `repo`](https://github.com/settings/tokens/new?scopes=repo&description=Panel%20CWF) i wkleja go w okienku logowania.
+
+Logowanie przyciskiem *Sign In with GitHub* jest wyłączone (`auth_methods: [token]` w `admin/config.yml`), bo wymaga serwera OAuth. Żeby je włączyć: wdrożyć [Sveltia CMS Authenticator](https://github.com/sveltia/sveltia-cms-auth) na Cloudflare Workers (darmowy plan), dopisać `base_url: <adres workera>` i `auth_methods: [oauth, token]`.
+
+### Praca programisty
+
+- Treści zmieniaj w `content/*.json` (albo w panelu), potem `node scripts/build.mjs` — skrypt podmienia tylko bloki `<!-- cms:nazwa --> … <!-- /cms:nazwa -->`, reszta HTML jest ręczna. Nie edytuj HTML wewnątrz tych bloków — zostanie nadpisany.
+- Nowy blok: dodaj znaczniki w HTML, funkcję w `BLOCKS` w `scripts/build.mjs` i pola w `admin/config.yml`.
+- Błąd w treści (brak pliku zdjęcia, więcej cen niż kolumn, zły zakres dni) zatrzymuje Action z opisem w logu — strona zostaje w poprzedniej wersji.
+- Panel lokalnie: `python -m http.server` w katalogu repo → `http://localhost:8000/admin/` → *Work with Local Repository* (Chrome/Edge) → wskaż katalog repozytorium; zapis trafia prosto do plików, potem `node scripts/build.mjs`.
 
 ---
 
@@ -85,6 +141,7 @@ Wszystkie animacje działają tylko pod `prefers-reduced-motion: no-preference` 
 - [ ] Zdjęcia w wyższej rozdzielczości / WebP z archiwum klienta.
 - [ ] Self-hosting fontów Inter i Montserrat (Google Fonts przesyła IP odwiedzającego do Google — RODO).
 - [ ] `og:image` i JSON-LD zakładają hosting w katalogu głównym `https://cwf.pl/`.
+- [ ] Po przeniesieniu na `cwf.pl`: zmienić `site_url` w `admin/config.yml` (oraz `repo`, jeśli zmieni się repozytorium).
 - [ ] Przekierowania 301 ze starych adresów WordPressa:
 
 | Stary adres | Nowy adres |
