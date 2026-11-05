@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 520" width="520" height="520">
+  <!-- Kafel tła: kolorowe chwyty wspinaczkowe (klamy, listwy, oble, szczypy, volumeny, kieszonki, stopnie).
+       Chwyty trzymają się z dala od krawędzi kafla, więc tło powtarza się bez szwów. -->
+  <defs>
+    <path id="jug" d="M-30-10C-30-28-8-30 6-24C22-18 32-6 28 8C24 22 4 24-6 16C-14 10-30 8-30-10Z"/>
+    <path id="crimp" d="M-40-6C-40-14-20-14-8-12C8-16 30-14 40-8C44 0 36 8 22 8C6 10-10 6-24 9C-36 10-40 4-40-6Z"/>
+    <path id="volume" d="M0-34L32 24C34 28 30 32 26 32H-26C-30 32-34 28-32 24Z"/>
+    <path id="pinch" d="M-10-36C4-40 14-26 12-10C10 6 18 20 10 32C2 42-14 36-14 22C-14 8-22-4-20-18C-18-30-14-34-10-36Z"/>
+    <path id="sloper" d="M-34 0C-34-22-14-32 6-30C26-28 36-12 34 6C32 24 14 32-4 30C-24 28-34 18-34 0Z"/>
+    <path id="multi" d="M-24-20C-14-34 4-26 10-30C24-36 34-20 26-8C34 4 30 22 14 22C6 32-12 32-16 20C-30 20-36 4-26-4C-34-12-30-20-24-20Z"/>
+    <path id="foot" d="M-12-8C-4-14 10-12 12-2C14 8 2 12-6 10C-14 8-18-2-12-8Z"/>
+    <path id="edge" d="M-34 6C-36-8-20-20 0-20C20-20 36-8 34 6C33 14 24 16 16 12C8 8-8 8-16 12C-24 16-33 14-34 6Z"/>
+    <path id="pocket" d="M-22-18C-6-30 18-26 26-10C34 6 24 26 4 28C-16 30-30 18-30 2C-30-6-28-12-22-18Z"/>
+  </defs>
+  <g opacity="0.22" stroke="#000" stroke-opacity="0.28" stroke-width="1.5" stroke-linejoin="round">
+    <g transform="translate(70 70) rotate(-15)">
+      <use href="#jug" transform="translate(2.5 3.5)" fill="#000" fill-opacity=".22" stroke="none"/>
+      <use href="#jug" fill="#ffca08"/><path d="M-22-14C-10-24 10-22 20-10" fill="none" stroke-width="2.5" stroke-opacity=".35"/><circle cy="0" r="4" fill="#000" fill-opacity=".45" stroke="none"/>
+    </g>
+    <g transform="translate(215 55) rotate(8)">
+      <use href="#crimp" transform="translate(2.5 3.5)" fill="#000" fill-opacity=".22" stroke="none"/>
+      <use href="#crimp" fill="#3a86ff"/><circle cy="0" r="3.5" fill="#000" fill-opacity=".45" stroke="none"/>
+    </g>
+    <g transform="translate(360 85) rotate(20)">
+      <use href="#sloper" transform="translate(2.5 3.5)" fill="#000" fill-opacity=".22" stroke="none"/>
+      <use href="#sloper" fill="#e5484d"/><circle cy="0" r="4.5" fill="#000" fill-opacity=".45" stroke="none"/>
+    </g>
+    <g transform="translate(460 180) rotate(-30)">
+      <use href="#pinch" transform="translate(2.5 3.5)" fill="#000" fill-opacity=".22" stroke="none"/>
+      <use href="#pinch" fill="#3fb950"/><circle cy="0" r="3.5" fill="#000" fill-opacity=".45" stroke="none"/>
+    </g>
+    <g transform="translate(130 185) rotate(12)">
+      <use href="#multi" transform="translate(2.5 3.5)" fill="#000" fill-opacity=".22" stroke="none"/>
+      <use href="#multi" fill="#8e5cd9"/><ellipse cx="14" cy="8" rx="5" ry="3" fill="#000" fill-opacity=".25" stroke="none"/><ellipse cx="-14" cy="-8" rx="4" ry="2.5" fill="#000" fill-opacity=".25" stroke="none"/><circle cy="0" r="4" fill="#000" fill-opacity=".45" stroke="none"/>
+    </g>
+    <g transform="translate(285 200) rotate(-5)">
+      <use href="#volume" transform="translate(2.5 3.5)" fill="#000" fill-opacity=".22" stroke="none"/>
+      <use href="#volume" fill="#f28c28"/><path d="M0-34V32M0 0L-28 30M0 0L28 30" fill="none" stroke-opacity=".3"/><circle cy="8" r="4" fill="#000" fill-opacity=".45" stroke="none"/>
+    </g>
+    <g transform="translate(405 295) rotate(30)">
+      <use href="#edge" transform="translate(2.5 3.5)" fill="#000" fill-opacity=".22" stroke="none"/>
+      <use href="#edge" fill="#ff7eb6"/><path d="M-26 0C-12-10 12-10 26 0" fill="none" stroke-width="2.5" stroke-opacity=".35"/><circle cy="0" r="4" fill="#000" fill-opacity=".45" stroke="none"/>
+    </g>
+    <g transform="translate(60 305) rotate(70)">
+      <use href="#crimp" transform="translate(2.5 3.5)" fill="#000" fill-opacity=".22" stroke="none"/>
+      <use href="#crimp" fill="#2ec4b6"/><circle cy="0" r="3.5" fill="#000" fill-opacity=".45" stroke="none"/>
+    </g>
+    <g transform="translate(205 330) rotate(-25)">
+      <use href="#pinch" transform="translate(2.5 3.5)" fill="#000" fill-opacity=".22" stroke="none"/>
+      <use href="#pinch" fill="#ffca08"/><circle cy="0" r="3.5" fill="#000" fill-opacity=".45" stroke="none"/>
+    </g>
+    <g transform="translate(145 440) rotate(5)">
+      <use href="#volume" transform="translate(2.5 3.5)" fill="#000" fill-opacity=".22" stroke="none"/>
+      <use href="#volume" fill="#e5484d"/><path d="M0-34V32M0 0L-28 30M0 0L28 30" fill="none" stroke-opacity=".3"/><circle cy="8" r="4" fill="#000" fill-opacity=".45" stroke="none"/>
+    </g>
+    <g transform="translate(320 430) rotate(-12)">
+      <use href="#pocket" transform="translate(2.5 3.5)" fill="#000" fill-opacity=".22" stroke="none"/>
+      <use href="#pocket" fill="#3a86ff"/><ellipse cx="-2" cy="-4" rx="12" ry="7" fill="#000" fill-opacity=".3" stroke="none"/>
+    </g>
+    <g transform="translate(460 445) rotate(25)">
+      <use href="#sloper" transform="translate(2.5 3.5)" fill="#000" fill-opacity=".22" stroke="none"/>
+      <use href="#sloper" fill="#3fb950"/><circle cy="0" r="4.5" fill="#000" fill-opacity=".45" stroke="none"/>
+    </g>
+    <g transform="translate(300 315) rotate(30)">
+      <use href="#foot" transform="translate(2.5 3.5)" fill="#000" fill-opacity=".22" stroke="none"/>
+      <use href="#foot" fill="#8e5cd9"/><circle cy="0" r="2.5" fill="#000" fill-opacity=".45" stroke="none"/>
+    </g>
+    <g transform="translate(455 65) rotate(-20)">
+      <use href="#foot" transform="translate(2.5 3.5)" fill="#000" fill-opacity=".22" stroke="none"/>
+      <use href="#foot" fill="#f28c28"/><circle cy="0" r="2.5" fill="#000" fill-opacity=".45" stroke="none"/>
+    </g>
+    <g transform="translate(55 420) rotate(10)">
+      <use href="#foot" transform="translate(2.5 3.5)" fill="#000" fill-opacity=".22" stroke="none"/>
+      <use href="#foot" fill="#ff7eb6"/><circle cy="0" r="2.5" fill="#000" fill-opacity=".45" stroke="none"/>
+    </g>
+    <g transform="translate(235 470) rotate(-40)">
+      <use href="#foot" transform="translate(2.5 3.5)" fill="#000" fill-opacity=".22" stroke="none"/>
+      <use href="#foot" fill="#2ec4b6"/><circle cy="0" r="2.5" fill="#000" fill-opacity=".45" stroke="none"/>
+    </g>
+    <g transform="translate(35 175) rotate(60)">
+      <use href="#foot" transform="translate(2.5 3.5)" fill="#000" fill-opacity=".22" stroke="none"/>
+      <use href="#foot" fill="#ffca08"/><circle cy="0" r="2.5" fill="#000" fill-opacity=".45" stroke="none"/>
+    </g>
+  </g>
+</svg>
