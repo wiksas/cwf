@@ -274,48 +274,64 @@ p { text-wrap: pretty; }
 }
 .btn--outline-light:hover { background: #ffffff; color: var(--cwf-black); }
 
-/* ---------- Wysokościomierz 0–17 m ---------- */
-.altimeter { display: none; }
-@media (min-width: 1500px) {
+/* ---------- Wysokościomierz 0–17 m: pokazuje położenie na stronie; przeciągnięcie rombu przewija stronę (script.js) ---------- */
+.altimeter {
+  --alt-h: min(250px, 45vh);
+  position: fixed;
+  right: 1rem;
+  top: 50%;
+  translate: 0 -50%;
+  height: var(--alt-h);
+  width: 64px;
+  z-index: 120; /* nad sceną urodzin, pod nagłówkiem i paskiem „Zadzwoń” */
+  background: rgb(255 255 255 / 0.94);
+  border: 2px solid var(--cwf-black);
+  border-radius: 12px;
+  padding: 0.45rem 0.55rem 0.45rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  font: 700 0.68rem/1 var(--font-head);
+  color: var(--cwf-black);
+  box-shadow: var(--shadow-card);
+  cursor: pointer;
+  touch-action: none; /* przeciąganie palcem nie przewija strony pod spodem */
+  user-select: none;
+}
+.altimeter__rope {
+  position: absolute;
+  left: 13px;
+  top: 10px;
+  bottom: 10px;
+  width: 3px;
+  background: var(--cwf-black);
+}
+.altimeter__climber {
+  position: absolute;
+  left: 6px;
+  bottom: 6px;
+  width: 17px;
+  height: 17px;
+  background: var(--cwf-yellow);
+  border: 2.5px solid var(--cwf-black);
+  transform: rotate(45deg);
+  cursor: grab;
+}
+.altimeter.is-dragging,
+.altimeter.is-dragging .altimeter__climber { cursor: grabbing; }
+/* węższy ekran: sama lina z rombem przy krawędzi okna, bez podziałki */
+@media (max-width: 1499px) {
   .altimeter {
-    position: fixed;
-    right: 1rem;
-    top: 50%;
-    translate: 0 -50%;
-    height: 250px;
-    width: 64px;
-    z-index: 95;
-    background: rgb(255 255 255 / 0.94);
-    border: 2px solid var(--cwf-black);
-    border-radius: 12px;
-    padding: 0.45rem 0.55rem 0.45rem 1.6rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-end;
-    font: 700 0.68rem/1 var(--font-head);
-    color: var(--cwf-black);
-    box-shadow: var(--shadow-card);
-    pointer-events: none;
+    --alt-h: min(200px, 36vh);
+    right: 4px;
+    width: 33px;
+    padding: 0;
+    background: rgb(255 255 255 / 0.85);
   }
-  .altimeter__rope {
-    position: absolute;
-    left: 13px;
-    top: 10px;
-    bottom: 10px;
-    width: 3px;
-    background: var(--cwf-black);
-  }
-  .altimeter__climber {
-    position: absolute;
-    left: 6px;
-    bottom: 6px;
-    width: 17px;
-    height: 17px;
-    background: var(--cwf-yellow);
-    border: 2.5px solid var(--cwf-black);
-    transform: rotate(45deg);
-  }
+  .altimeter > span { display: none; }
+  /* pole dotyku szersze niż widoczna lina (≥ 44 px) */
+  .altimeter::after { content: ""; position: absolute; inset: -8px -6px -8px -10px; }
 }
 
 /* ---------- HERO (zdjęcie ścianki + żółty znak, jak na cwf.pl) ---------- */
@@ -1414,7 +1430,7 @@ html.is-locked { overflow: hidden; }
       .sd-hscroll__sticky {
         position: sticky;
         top: var(--header-h);
-        z-index: 96; /* nad wysokościomierzem */
+        z-index: 96; /* nad treścią strony, pod wysokościomierzem */
         height: calc(100vh - var(--header-h));
         display: flex;
         flex-direction: column;
@@ -1443,7 +1459,7 @@ html.is-locked { overflow: hidden; }
 
 @keyframes sd-grow-x { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 @keyframes sd-fade-in { to { opacity: 1; } }
-@keyframes sd-climb { from { transform: translateY(0) rotate(45deg); } to { transform: translateY(-214px) rotate(45deg); } }
+@keyframes sd-climb { from { transform: translateY(0) rotate(45deg); } to { transform: translateY(calc(36px - var(--alt-h))) rotate(45deg); } }
 @keyframes sd-hero-exit { to { opacity: 0.15; transform: translateY(-34px) scale(0.96); } }
 @keyframes sd-fade-up { from { opacity: 0; transform: translateY(38px); } to { opacity: 1; transform: none; } }
 @keyframes sd-sign-in { from { opacity: 0; transform: rotate(-90deg) scale(0.6); } to { opacity: 1; transform: none; } }

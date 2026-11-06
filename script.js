@@ -371,6 +371,63 @@ if (galleryLinks.length && typeof HTMLDialogElement === "function") {
   }
 }
 
+// ---------- Wysokościomierz: przeciągnięcie rombu (albo klik w linę) przewija stronę ----------
+// Romb prowadzi animacja CSS scroll(root); bez niej (ograniczony ruch, starsze przeglądarki) ustawia go skrypt.
+// Element zostaje aria-hidden: to wygodny skrót dla myszy i palca, przewijanie z klawiatury działa jak zawsze.
+const altimeter = document.querySelector(".altimeter");
+
+if (altimeter) {
+  const climber = altimeter.querySelector(".altimeter__climber");
+  const CLIMBER_BOTTOM = 6; // bottom: 6px w CSS
+  const CLIMBER_SIZE = 17;
+  const TOP_GAP = 9; // romb na „17 m” kończy 9 px pod górną krawędzią (36px w keyframes sd-climb = 6 + 17 + 9 + 4 obramowania)
+  const maxScroll = () => document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const travel = () => altimeter.clientHeight - CLIMBER_BOTTOM - CLIMBER_SIZE - TOP_GAP;
+
+  const place = () => {
+    if (climber.getAnimations().length) {
+      climber.style.transform = "";
+      return;
+    }
+    const progress = maxScroll() > 0 ? Math.min(1, Math.max(0, window.scrollY / maxScroll())) : 0;
+    climber.style.transform = `translateY(${-progress * travel()}px) rotate(45deg)`;
+  };
+
+  /** Wysokość wskaźnika na linie → położenie strony (środek rombu pod palcem / kursorem). */
+  const scrollToPointer = (clientY) => {
+    const bottom = altimeter.getBoundingClientRect().bottom - altimeter.clientTop - CLIMBER_BOTTOM - CLIMBER_SIZE / 2;
+    const progress = Math.min(1, Math.max(0, (bottom - clientY) / travel()));
+    window.scrollTo({ top: progress * maxScroll(), behavior: "instant" });
+  };
+
+  let dragging = false;
+  altimeter.addEventListener("pointerdown", (event) => {
+    if (event.button > 0) return;
+    event.preventDefault();
+    dragging = true;
+    altimeter.classList.add("is-dragging");
+    altimeter.setPointerCapture(event.pointerId);
+    scrollToPointer(event.clientY);
+  });
+  altimeter.addEventListener("pointermove", (event) => dragging && scrollToPointer(event.clientY));
+  const endDrag = () => {
+    dragging = false;
+    altimeter.classList.remove("is-dragging");
+  };
+  altimeter.addEventListener("pointerup", endDrag);
+  altimeter.addEventListener("pointercancel", endDrag);
+  altimeter.addEventListener("lostpointercapture", endDrag);
+
+  let frame = 0;
+  const schedule = () => {
+    if (!frame) frame = requestAnimationFrame(() => ((frame = 0), place()));
+  };
+  window.addEventListener("scroll", schedule, { passive: true });
+  window.addEventListener("resize", schedule);
+  reducedMotion.addEventListener("change", schedule);
+  place();
+}
+
 // ---------- Pasek „Zadzwoń” na telefonie chowa się przy stopce ----------
 const callBar = document.querySelector(".call-bar");
 const footer = document.querySelector(".site-footer");

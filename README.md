@@ -127,7 +127,7 @@ Logowanie przyciskiem *Sign In with GitHub* jest wyłączone (`auth_methods: [to
 |---|---|---|
 | `.sd-progress` | żółty pasek postępu czytania | `scroll(root)` |
 | `.site-header::after` | cień nagłówka pojawia się po zjechaniu z góry | `scroll(root)`, `0 150px` |
-| `.altimeter__climber` | wysokościomierz 0–17 m (wysokość wieży CWF), od 1500 px — mieści się na marginesie | `scroll(root)` |
+| `.altimeter__climber` | wysokościomierz 0–17 m (wysokość wieży CWF): od 1500 px z podziałką na marginesie, na węższych ekranach sama lina z rombem przy krawędzi okna. Romb można przeciągnąć (albo kliknąć w linę), żeby przewinąć stronę (`script.js`); bez animacji CSS pozycję rombu ustawia skrypt | `scroll(root)` |
 | `.hero__inner` | treść hero odpływa i blednie | `view()`, `exit` |
 | `.sd-reveal` | wejście nagłówków sekcji | `view()` |
 | `.sd-stagger > *` | kaskadowe wejście kart (lokalizacje, oferta, cennik, promocje, wideo, FAQ) | `view()` + `--i` |
