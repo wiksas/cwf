@@ -1,0 +1,11 @@
+{
+  "name": "cwf-forteca",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5"
+  }
+}

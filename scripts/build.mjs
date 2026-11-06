@@ -1,12 +1,26 @@
-// Wstawia treści z content/*.json (edytowane w panelu /admin/ — Sveltia CMS) do stron HTML.
+// Wstawia treści z content/*.json (edytowane w panelu /admin/ — Sveltia CMS) do stron HTML,
+// generuje warianty zdjęć WebP (img/), obraz podglądu linku (og:image) i sitemap.xml.
 // Podmieniane są wyłącznie bloki <!-- cms:nazwa --> … <!-- /cms:nazwa -->; reszta HTML jest pisana ręcznie.
-// Uruchomienie: node scripts/build.mjs (to samo robi GitHub Action po każdym zapisie w CMS).
-import { readFileSync, statSync, writeFileSync } from "node:fs";
+// Uruchomienie: npm install, potem node scripts/build.mjs (to samo robi GitHub Action po każdym zapisie w CMS).
+import { createHash } from "node:crypto";
+import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, unlinkSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import sharp from "sharp";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const PAGES = ["index.html", "regulaminy.html", "fundacja.html"];
+const SITE = "https://cwf.pl/";
+const CITY = "Kraków";
+const ORG_NAME = "Centrum Wspinaczkowe Forteca";
+const OPT_DIR = "img"; // wyłącznie pliki generowane — nieużywane są usuwane przy każdym buildzie
+
+/** Strony, w których podmieniane są bloki; `url` = adres w sitemap.xml (null = poza sitemapą). */
+const PAGES = [
+  { file: "index.html", url: SITE },
+  { file: "regulaminy.html", url: `${SITE}regulaminy.html` },
+  { file: "fundacja.html", url: `${SITE}fundacja.html` },
+  { file: "404.html", url: null },
+];
 
 const load = (name) => JSON.parse(readFileSync(path.join(ROOT, "content", `${name}.json`), "utf8"));
 const ustawienia = load("ustawienia");
@@ -34,6 +48,14 @@ function inline(text, strong = "b") {
     .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, label, href) => `<a href="${href}"${external(href)}>${label}</a>`);
 }
 
+/** Ten sam tekst bez formatowania — do danych strukturalnych. */
+const plain = (text) =>
+  String(text ?? "")
+    .replace(/\*\*(.+?)\*\*/g, "$1")
+    .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, "$1")
+    .replace(/\u00ad/g, "")
+    .replace(/\u00a0/g, " ");
+
 function need(value, where) {
   const empty = value === undefined || value === null || (typeof value === "string" && value.trim() === "");
   if (empty || (Array.isArray(value) && value.length === 0)) throw new Error(`Brak wymaganej treści: ${where}`);
@@ -45,7 +67,7 @@ const nest = (text, spaces) => text.split("\n").map((line) => (line ? " ".repeat
 
 const wrap = (open, items, close, spaces = 2) => `${open}\n${nest(items.join("\n"), spaces)}\n${close}`;
 
-const ico = (name) => `<svg class="ico"><use href="#i-${name}"/></svg>`;
+const ico = (name) => `<svg class="ico" aria-hidden="true"><use href="#i-${name}"/></svg>`;
 
 /** "512 631 621" → "+48512631621" */
 function tel(display) {
@@ -57,67 +79,87 @@ function tel(display) {
 const slug = (text) =>
   text.toLowerCase().replace(/ł/g, "l").normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
+const mapUrl = (name) => `https://maps.google.com/maps?q=${encodeURIComponent(`${name}, ${CITY}`)}`;
+
 /** Ścieżka z CMS ("/assets/x.jpg") → ścieżka względna strony ("assets/x.jpg"); plik musi istnieć w repozytorium. */
 function asset(src, where) {
   const rel = String(need(src, where)).replace(/^\/+/, "");
   const file = path.join(ROOT, rel);
   try {
-    if (statSync(file).isFile()) return { href: encodeURI(rel), file };
+    if (statSync(file).isFile()) return { rel, href: encodeURI(rel), file };
   } catch {}
   throw new Error(`Nie ma pliku „${rel}” (${where})`);
 }
 
-/** Wymiary JPEG / PNG / WebP / GIF / SVG — do atrybutów width/height (brak skoków układu przy ładowaniu). */
-function imageSize(file) {
-  const b = readFileSync(file);
-  if (b.length > 24 && b.readUInt32BE(0) === 0x89504e47) return [b.readUInt32BE(16), b.readUInt32BE(20)];
-  if (b[0] === 0xff && b[1] === 0xd8) {
-    let i = 2;
-    while (i + 9 < b.length) {
-      if (b[i] !== 0xff) { i++; continue; }
-      const marker = b[i + 1];
-      if (marker === 0xff) { i++; continue; }
-      if (marker === 0x01 || (marker >= 0xd0 && marker <= 0xd9)) { i += 2; continue; }
-      if (marker >= 0xc0 && marker <= 0xcf && ![0xc4, 0xc8, 0xcc].includes(marker)) return [b.readUInt16BE(i + 7), b.readUInt16BE(i + 5)];
-      i += 2 + b.readUInt16BE(i + 2);
-    }
-  }
-  if (b.toString("ascii", 0, 4) === "RIFF" && b.toString("ascii", 8, 12) === "WEBP") {
-    const chunk = b.toString("ascii", 12, 16);
-    if (chunk === "VP8 ") return [b.readUInt16LE(26) & 0x3fff, b.readUInt16LE(28) & 0x3fff];
-    if (chunk === "VP8L") {
-      const bits = b.readUInt32LE(21);
-      return [(bits & 0x3fff) + 1, ((bits >>> 14) & 0x3fff) + 1];
-    }
-    if (chunk === "VP8X") return [b.readUIntLE(24, 3) + 1, b.readUIntLE(27, 3) + 1];
-  }
-  if (b.toString("ascii", 0, 3) === "GIF") return [b.readUInt16LE(6), b.readUInt16LE(8)];
-  const svg = b.toString("utf8", 0, 2048).match(/<svg[^>]*>/)?.[0];
-  if (svg) {
-    const w = svg.match(/\swidth="([\d.]+)"/)?.[1];
-    const h = svg.match(/\sheight="([\d.]+)"/)?.[1];
-    if (w && h) return [Math.round(w), Math.round(h)];
-    const box = svg.match(/viewBox="[\d.-]+[ ,]+[\d.-]+[ ,]+([\d.]+)[ ,]+([\d.]+)"/);
-    if (box) return [Math.round(box[1]), Math.round(box[2])];
-  }
-  throw new Error(`Nieobsługiwany format obrazu: ${path.relative(ROOT, file)} (użyj JPG, PNG lub WebP)`);
-}
-
-/** <img> z wymiarami odczytanymi z pliku; `attrs` trafiają przed src (np. ' class="…"'). */
-function img(src, alt, where, attrs = "") {
-  const { href, file } = asset(src, where);
-  const [w, h] = imageSize(file);
-  return `<img${attrs} src="${esc(href)}" alt="${esc(alt)}" width="${w}" height="${h}" loading="lazy">`;
-}
+const shortHash = (buffer) => createHash("sha1").update(buffer).digest("hex").slice(0, 8);
 
 const anchor = (id) => (id ? ` id="${esc(id)}"` : "");
+
+// ---------- zdjęcia: warianty WebP do srcset ----------
+
+const WIDTHS = [480, 960, 1440];
+const HERO_WIDTHS = [800, 1280, 1920];
+const produced = new Set(); // nazwy plików w img/ użyte w tym buildzie
+const variantCache = new Map();
+mkdirSync(path.join(ROOT, OPT_DIR), { recursive: true });
+
+/** Tworzy brakujące warianty WebP (nazwa zawiera skrót treści pliku, więc podmiana zdjęcia = nowe warianty). */
+async function prepareImage(src, widths, where) {
+  const { rel, file } = asset(src, where);
+  const key = `${rel}|${widths}`;
+  if (variantCache.has(key)) return;
+  const buffer = readFileSync(file);
+  const meta = await sharp(buffer).metadata();
+  const [ow, oh] = (meta.orientation ?? 1) >= 5 ? [meta.height, meta.width] : [meta.width, meta.height];
+  const base = `${path.basename(rel, path.extname(rel))}-${shortHash(buffer)}`;
+  const variants = [];
+  for (const w of [...new Set(widths.map((width) => Math.min(width, ow)))]) {
+    const name = `${base}-${w}.webp`;
+    const out = path.join(ROOT, OPT_DIR, name);
+    if (!existsSync(out)) await sharp(buffer).rotate().resize({ width: w }).webp({ quality: 78 }).toFile(out);
+    produced.add(name);
+    variants.push({ w, h: Math.round((oh * w) / ow), href: `${OPT_DIR}/${encodeURI(name)}` });
+  }
+  variantCache.set(key, variants);
+}
+
+function variants(src, widths = WIDTHS) {
+  const rel = String(src).replace(/^\/+/, "");
+  const found = variantCache.get(`${rel}|${widths}`);
+  if (!found) throw new Error(`Zdjęcie ${rel} nie zostało przygotowane — dodaj je do listy w prepareAllImages()`);
+  return found;
+}
+
+const srcset = (list) => list.map((v) => `${v.href} ${v.w}w`).join(", ");
+
+/** <img> z srcset; `attrs` trafiają przed src (np. ' class="…"'). */
+function img(src, alt, sizes, attrs = "", { widths = WIDTHS, eager = false } = {}) {
+  const list = variants(src, widths);
+  const middle = list[Math.min(1, list.length - 1)];
+  const largest = list.at(-1);
+  const loading = eager ? ' fetchpriority="high"' : ' loading="lazy"';
+  return `<img${attrs} src="${middle.href}" srcset="${srcset(list)}" sizes="${sizes}" alt="${esc(alt)}" width="${largest.w}" height="${largest.h}"${loading} decoding="async">`;
+}
+
+const largest = (src, widths = WIDTHS) => variants(src, widths).at(-1);
+
+/** Podgląd linku 1200×630 (og:image) wycięty ze zdjęcia z nagłówka strony. */
+async function prepareOgImage(src) {
+  const { rel, file } = asset(src, "ustawienia: zdjęcie w nagłówku");
+  const buffer = readFileSync(file);
+  const name = `${path.basename(rel, path.extname(rel))}-${shortHash(buffer)}-og.jpg`;
+  const out = path.join(ROOT, OPT_DIR, name);
+  if (!existsSync(out)) await sharp(buffer).rotate().resize(1200, 630, { fit: "cover" }).jpeg({ quality: 82, mozjpeg: true }).toFile(out);
+  produced.add(name);
+  return `${OPT_DIR}/${encodeURI(name)}`;
+}
 
 // ---------- godziny otwarcia ----------
 
 const DAYS = ["pn", "wt", "sr", "cz", "pt", "sb", "nd"];
 const DAY_FULL = { pn: "Poniedziałek", wt: "Wtorek", sr: "Środa", cz: "Czwartek", pt: "Piątek", sb: "Sobota", nd: "Niedziela" };
 const DAY_SHORT = { pn: "Pn", wt: "Wt", sr: "Śr", cz: "Czw", pt: "Pt", sb: "Sb", nd: "Nd" };
-const DAY_SCHEMA = { pn: "Mo", wt: "Tu", sr: "We", cz: "Th", pt: "Fr", sb: "Sa", nd: "Su" };
+const DAY_SCHEMA = { pn: "Monday", wt: "Tuesday", sr: "Wednesday", cz: "Thursday", pt: "Friday", sb: "Saturday", nd: "Sunday" };
 
 function openingRows(loc) {
   return need(loc.godziny, `${loc.nazwa}: godziny otwarcia`).map((row) => {
@@ -135,7 +177,7 @@ function openingRows(loc) {
   });
 }
 
-/** Łączy sąsiednie dni z tymi samymi godzinami (Pt + Sb–Nd → Pt–Nd) — do stopki i danych dla Google. */
+/** Łączy sąsiednie dni z tymi samymi godzinami (Pt + Sb–Nd → Pt–Nd) — do stopki. */
 function mergedRows(rows) {
   const out = [];
   for (const row of rows) {
@@ -148,39 +190,129 @@ function mergedRows(rows) {
 }
 
 const dayRange = (row, names, sep) => (row.from === row.to ? names[row.from] : `${names[row.from]}${sep}${names[row.to]}`);
+const daysOf = (row) => DAYS.slice(DAYS.indexOf(row.from), DAYS.indexOf(row.to) + 1);
+const hhmm = (time) => time.padStart(5, "0");
 
-// ---------- bloki ----------
+// ---------- przygotowanie zdjęć ----------
 
 const locs = need(lokalizacje.lokalizacje, "lokalizacje");
+const attractions = need(urodziny.atrakcje, "urodziny: atrakcje");
+const groups = need(galeria.grupy, "galeria");
+const videos = wideo.filmy ?? [];
+
+for (const card of need(oferta.karty, "oferta: karty")) await prepareImage(card.zdjecie, WIDTHS, `oferta „${card.tytul}”`);
+for (const card of attractions) await prepareImage(card.zdjecie, WIDTHS, `urodziny „${card.tytul}”`);
+for (const group of groups) {
+  for (const photo of need(group.zdjecia, `galeria „${group.nazwa}”: zdjęcia`)) await prepareImage(photo.zdjecie, WIDTHS, `galeria „${group.nazwa}”`);
+}
+for (const video of videos) await prepareImage(video.miniatura, WIDTHS, `wideo „${video.tytul}”`);
+await prepareImage(ustawienia.hero_zdjecie, HERO_WIDTHS, "ustawienia: zdjęcie w nagłówku");
+const ogImage = await prepareOgImage(ustawienia.hero_zdjecie);
+
+// ---------- dane strukturalne ----------
+
+const title = need(ustawienia.tytul_seo, "ustawienia: tytuł strony");
+const description = need(ustawienia.opis_seo, "ustawienia: opis SEO");
+if (title.length > 60) console.warn(`Uwaga: tytuł strony ma ${title.length} znaków (zalecane ≤ 60).`);
+if (description.length > 160) console.warn(`Uwaga: opis strony ma ${description.length} znaków (zalecane ≤ 160).`);
+
+const ORG_ID = `${SITE}#organizacja`;
+const absolute = (href) => SITE + href;
 
 function schema() {
+  const groupByName = new Map(groups.map((g) => [g.nazwa, g]));
   return {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Centrum Wspinaczkowe Forteca",
-    url: "https://cwf.pl/",
-    logo: "https://cwf.pl/assets/logo-cwf.png",
-    telephone: tel(ustawienia.infolinia),
-    sameAs: ["https://www.facebook.com/cwforteca", "https://www.instagram.com/cwforteca"],
-    location: locs.map((loc) => ({
-      "@type": "SportsActivityLocation",
-      name: `Centrum Wspinaczkowe Forteca — ${loc.nazwa}`,
-      address: { "@type": "PostalAddress", streetAddress: loc.adres, addressLocality: "Kraków", addressCountry: "PL" },
-      telephone: tel(loc.telefon),
-      email: loc.email,
-      openingHours: mergedRows(openingRows(loc)).map(
-        (row) => `${dayRange(row, DAY_SCHEMA, "-")} ${row.open}-${row.close}`,
-      ),
-    })),
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": `${SITE}#strona`,
+        url: SITE,
+        name: ORG_NAME,
+        inLanguage: "pl-PL",
+        publisher: { "@id": ORG_ID },
+      },
+      {
+        "@type": "SportsOrganization",
+        "@id": ORG_ID,
+        name: ORG_NAME,
+        alternateName: ["CWF", "Forteca"],
+        url: SITE,
+        logo: { "@type": "ImageObject", url: `${SITE}assets/logo-cwf.png`, width: 1000, height: 414 },
+        image: absolute(ogImage),
+        telephone: tel(ustawienia.infolinia),
+        areaServed: { "@type": "City", name: CITY },
+        sameAs: ["https://www.facebook.com/cwforteca", "https://www.instagram.com/cwforteca"],
+        department: locs.map((loc) => ({ "@id": `${SITE}#${slug(loc.nazwa)}` })),
+        makesOffer: oferta.karty.map((card) => ({
+          "@type": "Offer",
+          itemOffered: { "@type": "Service", name: card.tytul, description: plain(card.tekst), areaServed: { "@type": "City", name: CITY } },
+        })),
+      },
+      ...locs.map((loc) => {
+        const photos = groupByName.get(loc.nazwa)?.zdjecia ?? [];
+        return {
+          "@type": "SportsActivityLocation",
+          "@id": `${SITE}#${slug(loc.nazwa)}`,
+          name: `${ORG_NAME} — ${loc.nazwa}`,
+          url: `${SITE}#${slug(loc.nazwa)}`,
+          parentOrganization: { "@id": ORG_ID },
+          ...(photos.length ? { image: photos.map((p) => absolute(largest(p.zdjecie).href)) } : {}),
+          telephone: tel(loc.telefon),
+          email: loc.email,
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: loc.adres,
+            addressLocality: CITY,
+            addressRegion: "małopolskie",
+            addressCountry: "PL",
+          },
+          hasMap: mapUrl(loc.nazwa),
+          openingHoursSpecification: openingRows(loc).map((row) => ({
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: daysOf(row).map((d) => DAY_SCHEMA[d]),
+            opens: hhmm(row.open),
+            closes: hhmm(row.close),
+          })),
+          ...(loc.facebook ? { sameAs: [loc.facebook] } : {}),
+        };
+      }),
+      {
+        "@type": "WebPage",
+        "@id": `${SITE}#strona-glowna`,
+        url: SITE,
+        name: title,
+        description,
+        inLanguage: "pl-PL",
+        isPartOf: { "@id": `${SITE}#strona` },
+        about: { "@id": ORG_ID },
+        primaryImageOfPage: { "@type": "ImageObject", url: absolute(ogImage), width: 1200, height: 630 },
+        hasPart: { "@id": `${SITE}#pytania` },
+      },
+      {
+        "@type": "FAQPage",
+        "@id": `${SITE}#pytania`,
+        url: `${SITE}#pytania`,
+        inLanguage: "pl-PL",
+        isPartOf: { "@id": `${SITE}#strona-glowna` },
+        mainEntity: need(faq.pytania, "FAQ").map((item) => ({
+          "@type": "Question",
+          name: plain(item.pytanie),
+          acceptedAnswer: { "@type": "Answer", text: plain(item.odpowiedz) },
+        })),
+      },
+    ],
   };
 }
+
+// ---------- bloki ----------
 
 function locationCard(loc, i) {
   const name = need(loc.nazwa, "lokalizacja: nazwa");
   const parts = [
     `<img class="loc-card__sign" src="assets/sygnet.svg" alt="" width="88" height="88">`,
     `<h3>${esc(name)}</h3>`,
-    `<p class="loc-card__addr">${esc(need(loc.adres, `${name}: adres`))}${loc.dzielnica ? ` · ${esc(loc.dzielnica)}` : ""}</p>`,
+    `<p class="loc-card__addr">${esc(need(loc.adres, `${name}: adres`))}, ${CITY}${loc.dzielnica ? ` · ${esc(loc.dzielnica)}` : ""}</p>`,
   ];
   if (loc.okolice) parts.push(`<p class="loc-card__near">${esc(loc.okolice)}</p>`);
   if (loc.parametry?.length) {
@@ -200,13 +332,14 @@ function locationCard(loc, i) {
       ],
       "</div>",
     ),
-    `<a class="btn btn--white-pill" href="https://maps.google.com/maps?q=${esc(encodeURIComponent(`${name}, Kraków`))}" target="_blank" rel="noopener">${ico("pin")} Jak dojechać</a>`,
+    `<a class="btn btn--white-pill" href="${esc(mapUrl(name))}" target="_blank" rel="noopener">${ico("pin")} Jak dojechać <span class="visually-hidden">— ${esc(name)}, mapa Google</span></a>`,
   );
   return wrap(`<article class="loc-card" id="${slug(name)}" style="--i:${i}">`, parts, "</article>");
 }
 
 function footerLocation(loc) {
   const items = [
+    `<li><a href="${esc(mapUrl(loc.nazwa))}" target="_blank" rel="noopener">${ico("pin")} ${esc(loc.adres)}, ${CITY}</a></li>`,
     `<li><a href="tel:${tel(loc.telefon)}">${ico("phone")} ${esc(loc.telefon)}</a></li>`,
     `<li><a href="mailto:${esc(loc.email)}">${ico("mail")} ${esc(loc.email)}</a></li>`,
     `<li>${mergedRows(openingRows(loc)).map((row) => `${dayRange(row, DAY_SHORT, "–")} ${esc(row.open)}–${esc(row.close)}`).join(" · ")}</li>`,
@@ -215,8 +348,12 @@ function footerLocation(loc) {
   return wrap(`<div class="footer-loc">`, [`<h3>${esc(loc.nazwa)}</h3>`, wrap("<ul>", items, "</ul>")], "</div>");
 }
 
+const SIZES_OFFER = "(min-width: 1280px) 240px, (min-width: 720px) 34vw, 100vw";
+const SIZES_BDAY = "(min-width: 460px) 360px, 80vw";
+const SIZES_GALLERY = "(min-width: 1280px) 400px, (min-width: 720px) 33vw, 82vw";
+const SIZES_VIDEO = "(min-width: 1280px) 300px, (min-width: 720px) 34vw, 100vw";
+
 function offerCard(card, i) {
-  const where = `oferta „${card.tytul}”`;
   const body = [`<h3>${esc(need(card.tytul, "oferta: tytuł"))}</h3>`, `<p>${inline(card.tekst)}</p>`];
   if (card.punkty?.length) body.push(wrap(`<ul class="offer-card__facts">`, card.punkty.map((p) => `<li>${inline(p)}</li>`), "</ul>"));
   if (card.przycisk_tekst && card.przycisk_link) {
@@ -224,7 +361,7 @@ function offerCard(card, i) {
   }
   return wrap(
     `<article class="offer-card"${anchor(card.kotwica)} style="--i:${i}">`,
-    [img(card.zdjecie, card.opis_zdjecia, where, ` class="offer-card__img"`), wrap(`<div class="offer-card__body">`, body, "</div>")],
+    [img(card.zdjecie, card.opis_zdjecia, SIZES_OFFER, ` class="offer-card__img"`), wrap(`<div class="offer-card__body">`, body, "</div>")],
     "</article>",
   );
 }
@@ -241,7 +378,7 @@ function birthdayCard(card, i) {
   return wrap(
     `<article class="bday-card${card.wyroznienie ? " bday-card--hit" : ""}">`,
     [
-      img(card.zdjecie, card.opis_zdjecia, `urodziny „${card.tytul}”`, ` class="bday-card__img"`),
+      img(card.zdjecie, card.opis_zdjecia, SIZES_BDAY, ` class="bday-card__img"`),
       wrap(
         `<div class="bday-card__body">`,
         [`<span class="bday-card__badge">${badge}</span>`, `<h4>${esc(need(card.tytul, "atrakcja: tytuł"))}</h4>`, `<p>${inline(card.tekst)}</p>`],
@@ -274,13 +411,13 @@ function priceTable(table, where) {
 }
 
 function priceBox(box, i) {
-  const title = need(box.tytul, "cennik: tytuł");
-  const parts = [`<h3>${esc(title)}</h3>`];
+  const boxTitle = need(box.tytul, "cennik: tytuł");
+  const parts = [`<h3>${esc(boxTitle)}</h3>`];
   if (box.podtytul) parts.push(`<p class="price-box__sub">${inline(box.podtytul)}</p>`);
-  need(box.tabele, `cennik „${title}”: tabele`).forEach((table, j) => {
+  need(box.tabele, `cennik „${boxTitle}”: tabele`).forEach((table, j) => {
     if (table.naglowek) parts.push(`<h4 class="price-box__subhead">${esc(table.naglowek)}</h4>`);
     if (table.opis) parts.push(`<p class="price-box__sub">${inline(table.opis)}</p>`);
-    parts.push(priceTable(table, `cennik „${title}”, tabela ${j + 1}`));
+    parts.push(priceTable(table, `cennik „${boxTitle}”, tabela ${j + 1}`));
   });
   if (box.dodatki?.length) {
     parts.push(wrap(`<ul class="price-chips">`, box.dodatki.map((d) => `<li>${esc(d.nazwa)} <b>${esc(d.cena)}</b></li>`), "</ul>"));
@@ -308,42 +445,74 @@ function documentLink(doc) {
 
 function galleryGroup(group) {
   const name = need(group.nazwa, "galeria: nazwa grupy");
-  const photos = need(group.zdjecia, `galeria „${name}”: zdjęcia`).map((photo, i) =>
-    img(photo.zdjecie, photo.opis, `galeria „${name}”`, ` style="--i:${i}"`),
+  const id = `galeria-${slug(name)}`;
+  const photos = group.zdjecia.map((photo, i) =>
+    wrap(
+      `<a class="gallery__item" style="--i:${i}" href="${largest(photo.zdjecie).href}" data-lightbox="${id}">`,
+      [img(photo.zdjecie, need(photo.opis, `galeria „${name}”: opis zdjęcia`), SIZES_GALLERY)],
+      "</a>",
+    ),
   );
   return wrap(
-    `<div class="gallery__loc" id="galeria-${slug(name)}">`,
+    `<div class="gallery__loc" id="${id}">`,
     [`<h3>${esc(name)}</h3>`, wrap(`<div class="gallery__grid sd-stagger" role="region" aria-label="Zdjęcia — ${esc(name)}" tabindex="0">`, photos, "</div>")],
     "</div>",
   );
 }
 
 function videoCard(video, i) {
-  const title = need(video.tytul, "wideo: tytuł");
+  const videoTitle = need(video.tytul, "wideo: tytuł");
   return wrap(
-    `<a class="video-card" style="--i:${i}" href="${esc(need(video.link, `wideo „${title}”: link`))}" target="_blank" rel="noopener">`,
+    `<a class="video-card" style="--i:${i}" href="${esc(need(video.link, `wideo „${videoTitle}”: link`))}" target="_blank" rel="noopener">`,
     [
-      img(video.miniatura, "", `wideo „${title}”`),
+      img(video.miniatura, "", SIZES_VIDEO),
       `<span class="video-card__play">${ico("play")}</span>`,
-      `<span class="video-card__title">${esc(title)}</span>`,
+      `<span class="video-card__title">${esc(videoTitle)} <span class="visually-hidden">(YouTube, nowa karta)</span></span>`,
     ],
     "</a>",
   );
 }
 
+const fileVersion = (rel) => shortHash(readFileSync(path.join(ROOT, rel)));
 const infolinia = need(ustawienia.infolinia, "ustawienia: infolinia");
 const telUrodziny = need(ustawienia.telefon_urodziny, "ustawienia: telefon urodziny");
-const attractions = need(urodziny.atrakcje, "urodziny: atrakcje");
 const promoList = promocje.promocje ?? [];
+const heroList = variants(ustawienia.hero_zdjecie, HERO_WIDTHS);
+
+const ogImageTags = () =>
+  [
+    `<meta property="og:image" content="${esc(absolute(ogImage))}">`,
+    `<meta property="og:image:width" content="1200">`,
+    `<meta property="og:image:height" content="630">`,
+    `<meta property="og:image:alt" content="${esc(need(ustawienia.hero_opis, "ustawienia: opis zdjęcia w nagłówku"))}">`,
+  ].join("\n");
 
 const BLOCKS = {
-  seo: () => `<meta name="description" content="${esc(need(ustawienia.opis_seo, "ustawienia: opis SEO"))}">`,
+  seo: () =>
+    [
+      `<title>${esc(title)}</title>`,
+      `<meta name="description" content="${esc(description)}">`,
+      `<meta property="og:title" content="${esc(title)}">`,
+      `<meta property="og:description" content="${esc(description)}">`,
+      ogImageTags(),
+    ].join("\n"),
+  "og-obraz": ogImageTags,
+  "hero-preload": () =>
+    `<link rel="preload" as="image" href="${heroList[Math.min(1, heroList.length - 1)].href}" imagesrcset="${srcset(heroList)}" imagesizes="100vw" fetchpriority="high">`,
+  zasoby: () =>
+    [
+      `<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>`,
+      `<link rel="preload" href="fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>`,
+      `<link rel="stylesheet" href="styles.css?v=${fileVersion("styles.css")}">`,
+    ].join("\n"),
+  skrypt: () => `<script src="script.js?v=${fileVersion("script.js")}" defer></script>`,
   jsonld: () => `<script type="application/ld+json">\n${JSON.stringify(schema(), null, 2).replace(/</g, "\\u003c")}\n</script>`,
   topbar: () =>
     [
       `<span>${esc(ustawienia.pasek_gorny)}</span>`,
       `<span>Infolinia: <a href="tel:${tel(infolinia)}">${esc(infolinia)}</a> · Urodziny: <a href="tel:${tel(telUrodziny)}">${esc(telUrodziny)}</a></span>`,
     ].join("\n"),
+  "hero-obraz": () => img(ustawienia.hero_zdjecie, "", "100vw", ` class="hero__bg"`, { widths: HERO_WIDTHS, eager: true }),
   hero: () =>
     [
       wrap(`<p class="hero__sub">`, [inline(need(ustawienia.hero_tekst, "ustawienia: tekst w nagłówku"), "strong")], "</p>"),
@@ -360,7 +529,7 @@ const BLOCKS = {
   lokalizacje: () => locs.map(locationCard).join("\n\n"),
   udogodnienia: () => (lokalizacje.udogodnienia ?? []).map((u) => `<li>${esc(u)}</li>`).join("\n"),
   "stopka-lokalizacje": () => locs.map(footerLocation).join("\n"),
-  oferta: () => need(oferta.karty, "oferta: karty").map(offerCard).join("\n\n"),
+  oferta: () => oferta.karty.map(offerCard).join("\n\n"),
   "oferta-dodatkowe": () =>
     (oferta.dodatkowe ?? [])
       .map((item, i) =>
@@ -397,10 +566,10 @@ const BLOCKS = {
           .join("\n")
       : `<p>Aktualnie nie mamy promocji — zapytaj w recepcji o bieżące oferty.</p>`,
   formularze: () => need(formularze.dokumenty, "formularze").map(documentLink).join("\n"),
-  galeria: () => need(galeria.grupy, "galeria").map(galleryGroup).join("\n"),
-  wideo: () => (wideo.filmy ?? []).map(videoCard).join("\n"),
+  galeria: () => groups.map(galleryGroup).join("\n"),
+  wideo: () => videos.map(videoCard).join("\n"),
   faq: () =>
-    need(faq.pytania, "FAQ")
+    faq.pytania
       .map((item, i) =>
         wrap(`<details class="faq-item" style="--i:${i}"${i === 0 ? " open" : ""}>`, [`<summary>${esc(item.pytanie)}</summary>`, `<p>${inline(item.odpowiedz)}</p>`], "</details>"),
       )
@@ -408,27 +577,77 @@ const BLOCKS = {
   slowniczek: () => (faq.slowniczek ?? []).map((t) => `<div><dt>${esc(t.termin)}</dt><dd>${inline(t.definicja)}</dd></div>`).join("\n"),
   infolinia: () => `<h2>Infolinia <a href="tel:${tel(infolinia)}">${esc(infolinia)}</a></h2>`,
   "infolinia-przycisk": () => `<a class="btn btn--yellow" href="tel:${tel(infolinia)}">${ico("phone")} Zadzwoń</a>`,
+  "pasek-kontakt": () =>
+    wrap(
+      `<nav class="call-bar" aria-label="Szybki kontakt">`,
+      [
+        `<a class="call-bar__btn call-bar__btn--main" href="tel:${tel(infolinia)}">${ico("phone")} Zadzwoń <span>${esc(infolinia)}</span></a>`,
+        `<a class="call-bar__btn" href="tel:${tel(telUrodziny)}">${ico("phone")} Urodziny</a>`,
+      ],
+      "</nav>",
+    ),
 };
 
 // ---------- podmiana bloków ----------
 
 const BLOCK = /^([ \t]*)<!-- cms:([a-z0-9-]+) -->\n[\s\S]*?^[ \t]*<!-- \/cms:\2 -->/gm;
+const today = new Date().toISOString().slice(0, 10);
 
 let changed = 0;
+const changedPages = new Set();
 for (const page of PAGES) {
-  const file = path.join(ROOT, page);
+  const file = path.join(ROOT, page.file);
   const original = readFileSync(file, "utf8");
   const eol = original.includes("\r\n") ? "\r\n" : "\n";
   const html = original.replace(/\r\n/g, "\n").replace(BLOCK, (_, indent, name) => {
     const render = BLOCKS[name];
-    if (!render) throw new Error(`${page}: nieznany blok <!-- cms:${name} -->`);
+    if (!render) throw new Error(`${page.file}: nieznany blok <!-- cms:${name} -->`);
     return `${indent}<!-- cms:${name} -->\n${nest(render(), indent.length)}\n${indent}<!-- /cms:${name} -->`;
   });
   const output = html.replace(/\n/g, eol);
   if (output !== original) {
     writeFileSync(file, output);
+    changedPages.add(page.file);
     changed++;
-    console.log(`zaktualizowano ${page}`);
+    console.log(`zaktualizowano ${page.file}`);
   }
 }
+
+// ---------- sitemap.xml (lastmod zmienia się tylko, gdy zmieniła się strona) ----------
+
+const sitemapFile = path.join(ROOT, "sitemap.xml");
+const previousSitemap = existsSync(sitemapFile) ? readFileSync(sitemapFile, "utf8") : "";
+const previousLastmod = (url) => previousSitemap.match(new RegExp(`<loc>${url.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}</loc>\\s*<lastmod>([\\d-]+)</lastmod>`))?.[1];
+const sitemapImages = [
+  ...oferta.karty.map((c) => c.zdjecie),
+  ...attractions.map((c) => c.zdjecie),
+  ...groups.flatMap((g) => g.zdjecia.map((p) => p.zdjecie)),
+].map((src) => absolute(largest(src).href));
+const sitemapUrls = PAGES.filter((p) => p.url).map((page) => {
+  const lastmod = changedPages.has(page.file) ? today : previousLastmod(page.url) ?? today;
+  const images = page.file === "index.html" ? [...new Set(sitemapImages)].map((loc) => `    <image:image><image:loc>${esc(loc)}</image:loc></image:image>`) : [];
+  return [`  <url>`, `    <loc>${page.url}</loc>`, `    <lastmod>${lastmod}</lastmod>`, ...images, `  </url>`].join("\n");
+});
+const sitemap = [
+  `<?xml version="1.0" encoding="UTF-8"?>`,
+  `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">`,
+  ...sitemapUrls,
+  `</urlset>`,
+  "",
+].join("\n");
+if (sitemap !== previousSitemap.replace(/\r\n/g, "\n")) {
+  writeFileSync(sitemapFile, sitemap);
+  changed++;
+  console.log("zaktualizowano sitemap.xml");
+}
+
+// ---------- sprzątanie nieużywanych wariantów zdjęć ----------
+
+for (const name of readdirSync(path.join(ROOT, OPT_DIR))) {
+  if (!produced.has(name)) {
+    unlinkSync(path.join(ROOT, OPT_DIR, name));
+    console.log(`usunięto nieużywany ${OPT_DIR}/${name}`);
+  }
+}
+
 console.log(changed ? `Gotowe — zmienione pliki: ${changed}.` : "Gotowe — bez zmian.");

@@ -3,6 +3,40 @@
    Kolory z cwf.pl: #ffca08 (żółty znak), #fbb03b (bursztyn), biel / #f4f4f4, #111111
    ========================================================================== */
 
+/* Czcionki na własnym serwerze (OFL, fonts/OFL.txt): latin + latin-ext (Latin Extended-A — polskie znaki) */
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("fonts/inter-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("fonts/inter-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-017F;
+}
+@font-face {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600 800;
+  font-display: swap;
+  src: url("fonts/montserrat-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600 800;
+  font-display: swap;
+  src: url("fonts/montserrat-latin-ext.woff2") format("woff2");
+  unicode-range: U+0100-017F;
+}
+
 :root {
   --cwf-yellow: #ffca08;
   --cwf-amber: #fbb03b;
@@ -141,7 +175,8 @@ p { text-wrap: pretty; }
   white-space: nowrap;
   border-bottom: 2px solid transparent;
 }
-.site-nav a:hover { border-bottom-color: var(--cwf-yellow); }
+.site-nav a:hover,
+.site-nav a[aria-current] { border-bottom-color: var(--cwf-yellow); }
 
 .site-header .header-cta { display: none; white-space: nowrap; }
 
@@ -191,7 +226,8 @@ p { text-wrap: pretty; }
   border-radius: 8px;
 }
 .mobile-nav nav a:first-child { background: var(--cwf-yellow); }
-.mobile-nav nav a:hover { background: var(--cwf-surface); }
+.mobile-nav nav a:hover,
+.mobile-nav nav a[aria-current]:not(:first-child) { background: var(--cwf-surface); }
 
 @media (min-width: 1080px) {
   .site-nav { display: flex; }
@@ -285,20 +321,34 @@ p { text-wrap: pretty; }
 /* ---------- HERO (zdjęcie ścianki + żółty znak, jak na cwf.pl) ---------- */
 .hero {
   position: relative;
+  isolation: isolate;
   min-height: 600px;
   display: grid;
   align-items: center;
   background-color: var(--cwf-black);
-  background-image:
-    radial-gradient(ellipse at center, rgb(0 0 0 / 0.55) 0%, rgb(0 0 0 / 0.3) 70%),
-    linear-gradient(180deg, rgb(0 0 0 / 0.25), rgb(0 0 0 / 0.55)),
-    url("assets/scianka-hero.jpg");
-  background-size: cover;
-  background-position: center;
   color: #ffffff;
   padding-block: clamp(4rem, 9vw, 6.5rem) clamp(5.5rem, 10vw, 8rem);
   text-align: center;
   clip-path: polygon(0 0, 100% 0, 100% 93%, 0 100%);
+}
+/* zdjęcie jako <img> z srcset (szybsze LCP niż tło CSS), przyciemnienie na pseudo-elemencie */
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse at center, rgb(0 0 0 / 0.55) 0%, rgb(0 0 0 / 0.3) 70%),
+    linear-gradient(180deg, rgb(0 0 0 / 0.25), rgb(0 0 0 / 0.55));
 }
 .hero__inner {
   max-width: 58rem;
@@ -318,6 +368,18 @@ p { text-wrap: pretty; }
   text-shadow: 0 4px 20px rgb(0 0 0 / 0.55);
 }
 .hero h1 span { display: block; color: var(--cwf-yellow); }
+.hero h1 .hero__kicker {
+  display: table;
+  margin: 0 auto 0.9rem;
+  background: var(--cwf-yellow);
+  color: var(--cwf-black);
+  font: 800 clamp(0.74rem, 1.4vw, 0.86rem)/1.2 var(--font-head);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-shadow: none;
+  padding: 0.45rem 0.85rem;
+  border-radius: 4px;
+}
 .hero__sub {
   max-width: 42rem;
   margin: 0;
@@ -550,12 +612,12 @@ p { text-wrap: pretty; }
   text-decoration: none;
 }
 
-/* Galeria atrakcji — bez wsparcia animacji: zwykły poziomy scroll z przyciąganiem */
+/* Atrakcje urodzinowe: karuzela przesuwana palcem, na komputerze strzałki ‹ › z licznikiem (script.js) */
 .hs-head {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   gap: 0.4rem 1rem;
   margin-bottom: 1rem;
 }
@@ -563,12 +625,42 @@ p { text-wrap: pretty; }
 .hs-head__hint { font-size: 0.88rem; color: var(--cwf-muted); }
 .hs-head__hint--scroll { display: none; }
 
-.sd-hscroll__track {
+.carousel-nav { display: flex; align-items: center; gap: 0.6rem; }
+.carousel-nav[hidden] { display: none; }
+.carousel-nav__btn {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  background: var(--cwf-yellow);
+  color: var(--cwf-black);
+  border: 2px solid var(--cwf-black);
+  border-radius: 8px;
+  font: 800 1.5rem/1 var(--font-head);
+  cursor: pointer;
+}
+.carousel-nav__btn:hover:not(:disabled) { background: var(--cwf-amber); }
+.carousel-nav__btn:disabled { opacity: 0.35; cursor: default; }
+.carousel-nav__count {
+  min-width: 3.6rem;
+  text-align: center;
+  font: 700 0.9rem/1 var(--font-head);
+  color: var(--cwf-black);
+  font-variant-numeric: tabular-nums;
+}
+/* strzałki na urządzeniach z myszą; na dotyku zostaje przesuwanie palcem i podpowiedź */
+@media (hover: hover) and (pointer: fine) and (min-width: 720px) {
+  .bday-gallery.has-carousel .hs-head__hint--swipe { display: none; }
+}
+
+.bday-track {
   display: flex;
   gap: 1.25rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
   padding: 0.3rem 0.2rem 1.2rem;
+  scroll-padding-inline: 0.2rem;
 }
 .bday-card {
   flex: 0 0 min(80vw, 360px);
@@ -606,7 +698,7 @@ p { text-wrap: pretty; }
 .bday-card h4 { font: 700 1.15rem/1.25 var(--font-head); margin: 0; color: var(--cwf-black); text-wrap: balance; }
 .bday-card p { margin: 0; color: var(--cwf-muted); font-size: 0.93rem; }
 
-/* Tyrolka pod galerią */
+/* Tyrolka pod galerią — romb to suwak karuzeli: przeciąganie, klik w linę i klawisze przewijają karty (script.js) */
 .zipline {
   margin-top: 1.2rem;
   background: #ffffff;
@@ -615,6 +707,7 @@ p { text-wrap: pretty; }
   padding: 0.6rem 1.6rem 0.8rem;
   box-shadow: var(--shadow-card);
   overflow: clip;
+  user-select: none;
 }
 .zipline__track {
   position: relative;
@@ -641,7 +734,15 @@ p { text-wrap: pretty; }
   color: var(--cwf-black);
   font: 800 0.82rem/1 var(--font-head);
 }
-/* romb jak znak CWF — obrót na pseudo-elemencie, żeby animowany translateX szedł wzdłuż liny */
+.zipline.is-interactive .zipline__track { cursor: pointer; }
+.zipline.is-interactive .zipline__rider {
+  cursor: grab;
+  touch-action: none; /* przeciąganie palcem nie przewija strony */
+}
+.zipline.is-dragging .zipline__rider { cursor: grabbing; }
+.zipline__rider:focus-visible { outline: none; }
+.zipline__rider:focus-visible::before { outline: 3px solid var(--cwf-black); outline-offset: 4px; }
+/* romb jak znak CWF — obrót na pseudo-elemencie, żeby translateX szedł wzdłuż liny */
 .zipline__rider::before {
   content: "";
   position: absolute;
@@ -845,13 +946,20 @@ p { text-wrap: pretty; }
   gap: 0.9rem;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
 }
-.gallery__grid img {
+.gallery__item {
+  display: block;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  overflow: clip;
+  cursor: zoom-in;
+}
+.gallery__item img {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow-card);
+  transition: scale 0.35s ease;
 }
+.gallery__item:hover img { scale: 1.04; }
 .section-head .gallery__hint { display: none; }
 
 /* Telefon: każda lokalizacja to karuzela przesuwana palcem, z podglądem kolejnego zdjęcia */
@@ -859,7 +967,7 @@ p { text-wrap: pretty; }
   .section-head .gallery__hint {
     display: block;
     margin-top: 0.4rem;
-    font-size: 0.88rem;
+    font-size: 1rem;
   }
   .gallery__grid {
     display: flex;
@@ -872,7 +980,7 @@ p { text-wrap: pretty; }
     scroll-padding-inline: 1.25rem;
   }
   .gallery__grid::-webkit-scrollbar { display: none; }
-  .gallery__grid img {
+  .gallery__item {
     flex: 0 0 82%;
     min-width: 0; /* bez tego automatyczne minimum (width: 100%) blokuje 82% i znika podgląd kolejnego zdjęcia */
     scroll-snap-align: start;
@@ -1065,6 +1173,173 @@ p { text-wrap: pretty; }
 .legal-doc dt { font-weight: 700; color: var(--cwf-black); }
 .legal-doc dd { margin: 0; }
 
+.page-head--404 { padding-block: clamp(4rem, 9vw, 6rem); }
+
+/* ---------- Dostępność i wygoda ---------- */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* otwarte menu mobilne lub podgląd zdjęcia blokują przewijanie strony pod spodem */
+html.is-locked { overflow: hidden; }
+
+/* pola dotyku ≥ 44 px */
+.loc-card__contact a,
+.footer-loc a,
+.footer-legal a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ---------- Podgląd zdjęć (lightbox, script.js) ---------- */
+.lightbox {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: rgb(12 12 12 / 0.96);
+  color: #ffffff;
+}
+.lightbox[open] { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; }
+.lightbox::backdrop { background: rgb(0 0 0 / 0.6); }
+.lightbox__bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+}
+.lightbox__count { font: 700 0.95rem/1 var(--font-head); font-variant-numeric: tabular-nums; }
+.lightbox__btn {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  background: rgb(255 255 255 / 0.12);
+  color: #ffffff;
+  border: 2px solid rgb(255 255 255 / 0.7);
+  border-radius: 8px;
+  font: 800 1.5rem/1 var(--font-head);
+  cursor: pointer;
+}
+.lightbox__btn:hover:not(:disabled) { background: var(--cwf-yellow); color: var(--cwf-black); border-color: var(--cwf-yellow); }
+.lightbox__btn:disabled { opacity: 0.3; cursor: default; }
+.lightbox__stage {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 0;
+  padding: 0 4rem;
+  touch-action: pan-y pinch-zoom;
+}
+.lightbox__img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 6px;
+}
+.lightbox__prev,
+.lightbox__next { position: absolute; top: 50%; translate: 0 -50%; }
+.lightbox__prev { left: 0.75rem; }
+.lightbox__next { right: 0.75rem; }
+.lightbox__caption { margin: 0; padding: 0.75rem 1rem 1.25rem; text-align: center; color: #dcdfe4; }
+@media (max-width: 719px) {
+  .lightbox__stage { padding: 0; }
+  .lightbox__prev,
+  .lightbox__next { top: auto; bottom: 0.5rem; translate: none; }
+}
+
+/* ---------- Stały pasek kontaktu na telefonie ---------- */
+.call-bar { display: none; }
+@media (max-width: 719px) {
+  .call-bar {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 150;
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem calc(0.5rem + env(safe-area-inset-bottom));
+    background: rgb(17 17 17 / 0.97);
+    border-top: 3px solid var(--cwf-yellow);
+    transition: transform 0.25s ease;
+  }
+  /* chowa się przy stopce (tam są te same numery), więc nie zasłania danych kontaktowych */
+  .call-bar.is-hidden { transform: translateY(110%); }
+  .call-bar__btn {
+    min-height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    border: 2px solid #ffffff;
+    border-radius: 8px;
+    color: #ffffff;
+    font: 800 0.9rem/1.1 var(--font-head);
+    text-decoration: none;
+  }
+  .call-bar__btn--main { background: var(--cwf-yellow); border-color: var(--cwf-yellow); color: var(--cwf-black); }
+  /* bez JS pasek się nie chowa — wtedy stopka dostaje miejsce na niego */
+  html:not(.js) .site-footer { padding-bottom: calc(2.2rem + 70px + env(safe-area-inset-bottom)); }
+}
+@media (max-width: 359px) {
+  .call-bar__btn span { display: none; }
+}
+
+/* ---------- Telefon: niższy nagłówek, tekst do czytania ≥ 16 px ---------- */
+@media (max-width: 719px) {
+  :root { --header-h: 4.25rem; }
+  .site-header { padding-block: 0.55rem; }
+  .brand-logo img { height: 44px; }
+  .section-head p,
+  .hero__sub,
+  .loc-card__near,
+  .loc-card__specs,
+  .loc-card__hours,
+  .loc-card__contact,
+  .offer-card p,
+  .offer-card__facts,
+  .extra-card p,
+  .bday-banner p,
+  .bday-card p,
+  .hs-head__hint,
+  .promo-card p,
+  .visit-steps p,
+  .docs-box a,
+  .faq-item p,
+  .glossary-dl,
+  .price-box__sub,
+  .footer-loc ul,
+  .legal-doc ol,
+  .legal-doc ul { font-size: 1rem; }
+}
+
+/* ---------- Ograniczony ruch: bez przesunięć, powiększeń i płynnego przewijania ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .btn:hover,
+  .loc-card:hover,
+  .offer-card:hover { translate: none; }
+  .gallery__item:hover img,
+  .video-card:hover img { scale: none; }
+  .call-bar,
+  .mobile-nav summary span { transition: none; }
+}
+
 .sd-progress { display: none; }
 
 /* ==========================================================================
@@ -1127,7 +1402,8 @@ p { text-wrap: pretty; }
       animation-range: entry 10% cover 35%;
     }
 
-    /* 8. Galeria atrakcji: przyklejona scena na cały ekran, pionowy scroll → poziomy przesuw */
+    /* 8. Galeria atrakcji na komputerze: przyklejona scena, przewijanie strony przesuwa karty i romb tyrolki.
+       Ten sam warunek ma script.js (pinnedQuery) — tam strzałki i przeciąganie rombu przewijają stronę. */
     @media (min-width: 920px) and (min-height: 660px) {
       .sd-hscroll {
         height: 260vh;
@@ -1148,26 +1424,18 @@ p { text-wrap: pretty; }
         padding-inline: max(1.25rem, calc(50vw - 620px));
         overflow: clip;
       }
-      .sd-hscroll__track {
+      .bday-track {
         overflow: visible;
         width: max-content;
         animation: sd-hscroll-move linear both;
         animation-timeline: --bday-scroll;
         animation-range: contain 8% contain 92%;
       }
+      /* zmienne --zip-* liczy script.js z rzeczywistej szerokości liny; bez JS działa przybliżenie */
       .zipline__rider {
         animation: sd-zipline linear both;
         animation-timeline: --bday-scroll;
         animation-range: contain 8% contain 92%;
-      }
-    }
-
-    /* 9. Zjazd tyrolką na wąskich ekranach (bez przyklejonej sceny) */
-    @media not ((min-width: 920px) and (min-height: 660px)) {
-      .zipline__rider {
-        animation: sd-zipline linear both;
-        animation-timeline: view();
-        animation-range: entry 20% exit 80%;
       }
     }
   }
@@ -1180,4 +1448,7 @@ p { text-wrap: pretty; }
 @keyframes sd-fade-up { from { opacity: 0; transform: translateY(38px); } to { opacity: 1; transform: none; } }
 @keyframes sd-sign-in { from { opacity: 0; transform: rotate(-90deg) scale(0.6); } to { opacity: 1; transform: none; } }
 @keyframes sd-hscroll-move { from { transform: translateX(0); } to { transform: translateX(calc(-100% + min(1240px, 100vw - 2.5rem))); } }
-@keyframes sd-zipline { from { transform: translateX(0); } to { transform: translateX(calc(min(1240px, 100vw - 2.5rem) - 3.2rem - 70px)); } }
+@keyframes sd-zipline {
+  from { transform: translate(0, var(--zip-y0, -10px)); }
+  to { transform: translate(var(--zip-x1, calc(min(1240px, 100vw - 2.5rem) - 3.2rem - 66px)), var(--zip-y1, 10px)); }
+}

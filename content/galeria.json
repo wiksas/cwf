@@ -4,15 +4,15 @@
       "nazwa": "Ludowa 6",
       "zdjecia": [
         {
-          "zdjecie": "/assets/galeria/ludowa-1.jpg",
-          "opis": "Hala Ludowa 6 z lotu drona — kolorowe ściany z drogami"
+          "zdjecie": "/assets/galeria/wspinacze-na-kolorowych-scianach-ludowa-6.jpg",
+          "opis": "Dwoje wspinaczy z liną na kolorowych ścianach hali Ludowa 6"
         },
         {
-          "zdjecie": "/assets/galeria/ludowa-2.jpg",
+          "zdjecie": "/assets/galeria/wspinaczka-zolta-plyta-ludowa-6.jpg",
           "opis": "Wspinaczka po żółtej płycie na Ludowej 6"
         },
         {
-          "zdjecie": "/assets/galeria/ludowa-3.jpg",
+          "zdjecie": "/assets/galeria/wspinaczka-z-lina-ludowa-6.jpg",
           "opis": "Kilka zespołów wspinających się z liną na Ludowej 6"
         }
       ]
@@ -21,15 +21,15 @@
       "nazwa": "Racławicka 60",
       "zdjecia": [
         {
-          "zdjecie": "/assets/galeria/raclawicka-1.jpg",
+          "zdjecie": "/assets/galeria/panel-i-boulderownia-raclawicka-60.jpg",
           "opis": "Hala Racławicka 60 — rzeźbiony panel i strefa boulderowa"
         },
         {
-          "zdjecie": "/assets/galeria/raclawicka-2.jpg",
+          "zdjecie": "/assets/galeria/wspinaczka-z-lina-raclawicka-60.jpg",
           "opis": "Wspinaczka z liną obok ściany z dużymi chwytami na Racławickiej 60"
         },
         {
-          "zdjecie": "/assets/galeria/raclawicka-3.jpg",
+          "zdjecie": "/assets/galeria/rzezbiony-panel-skalny-raclawicka-60.jpg",
           "opis": "Rzeźbiony panel imitujący naturalną skałę na Racławickiej 60"
         }
       ]
@@ -38,15 +38,15 @@
       "nazwa": "Rydlówka 32",
       "zdjecia": [
         {
-          "zdjecie": "/assets/galeria/rydlowka-1.jpg",
+          "zdjecie": "/assets/galeria/przewieszona-boulderownia-rydlowka-32.jpg",
           "opis": "Przewieszona boulderownia na Rydlówce 32"
         },
         {
-          "zdjecie": "/assets/galeria/rydlowka-2.jpg",
+          "zdjecie": "/assets/galeria/strefa-treningowa-chwytotablice-rydlowka-32.jpg",
           "opis": "Strefa treningowa z chwytotablicami na Rydlówce 32"
         },
         {
-          "zdjecie": "/assets/galeria/rydlowka-3.jpg",
+          "zdjecie": "/assets/galeria/wolne-ciezary-rydlowka-32.jpg",
           "opis": "Wolne ciężary w strefie treningowej na Rydlówce 32"
         }
       ]

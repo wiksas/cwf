@@ -1,5 +1,5 @@
-# Po zapisie w panelu /admin/ (commit w content/ lub assets/) wstawia treści do HTML i commituje wynik.
-# GitHub Pages publikuje gałąź main, więc strona aktualizuje się po commicie z tego workflow.
+# Po zapisie w panelu /admin/ (commit w content/ lub assets/) wstawia treści do HTML, generuje warianty zdjęć
+# (img/), podgląd linku i sitemap.xml, a potem commituje wynik. GitHub Pages publikuje gałąź main.
 name: Treści z CMS
 
 on:
@@ -10,6 +10,9 @@ on:
       - "assets/**"
       - "scripts/build.mjs"
       - "*.html"
+      - "styles.css"
+      - "script.js"
+      - "package*.json"
   workflow_dispatch:
 
 permissions:
@@ -29,16 +32,20 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: 22
+          cache: npm
+      - name: Zależności (sharp do zdjęć)
+        run: npm ci
       - name: Wstaw treści do HTML
         run: node scripts/build.mjs
       - name: Zapisz zmiany
         run: |
-          if git diff --quiet; then
-            echo "HTML aktualny — brak zmian."
+          git add -A
+          if git diff --cached --quiet; then
+            echo "Strona aktualna — brak zmian."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -am "Strona: aktualizacja treści z CMS"
+          git commit -m "Strona: aktualizacja treści z CMS"
           git pull --rebase origin main # gdy w trakcie doszedł kolejny zapis z CMS; jego własny przebieg zbuduje go ponownie
           git push

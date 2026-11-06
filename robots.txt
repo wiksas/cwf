@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cwf.pl/sitemap.xml

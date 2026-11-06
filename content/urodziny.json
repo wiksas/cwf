@@ -4,42 +4,42 @@
   "oswiadczenie": "/assets/dokumenty/oswiadczenie-rodzicow.pdf",
   "atrakcje": [
     {
-      "zdjecie": "/assets/bday-wspinaczka.jpg",
+      "zdjecie": "/assets/urodziny-wspinaczka-dzieci-pomaranczowa-scianka.jpg",
       "opis_zdjecia": "Dzieci wspinają się na pomarańczowej ściance",
       "tytul": "Wspinaczka na niskich i wysokich ściankach",
       "tekst": "Z asekuracją instruktorów, plus gry i zabawy wspinaczkowe dopasowane do wieku.",
       "wyroznienie": false
     },
     {
-      "zdjecie": "/assets/bday-tyrolka.jpg",
+      "zdjecie": "/assets/urodziny-tyrolka-dziecko-w-uprzezy.jpg",
       "opis_zdjecia": "Dziecko w uprzęży przy linie",
       "tytul": "Tyrolka — zjazd na 30-metrowej linie",
       "tekst": "Atrakcja specjalna przez całą halę. Usługa dodatkowa +200 zł.",
       "wyroznienie": true
     },
     {
-      "zdjecie": "/assets/bday-wieza.jpg",
+      "zdjecie": "/assets/urodziny-wieza-wspinaczkowa-17-m.jpg",
       "opis_zdjecia": "Wysoka ściana wspinaczkowa z dziećmi na linach",
       "tytul": "17-metrowa wieża i drabinka Bachara",
       "tekst": "Zabawa w wieży, wspinaczka po drabince i układanie wieży ze skrzyń.",
       "wyroznienie": false
     },
     {
-      "zdjecie": "/assets/bday-hustawka.jpg",
+      "zdjecie": "/assets/urodziny-strefa-zabaw-dzieci.jpg",
       "opis_zdjecia": "Dzieci bawią się w strefie zabaw na matach",
       "tytul": "Ogromna kilkuosobowa huśtawka",
       "tekst": "Do tego pajęczyna, wahadło, tor przeszkód i przeciąganie liny.",
       "wyroznienie": false
     },
     {
-      "zdjecie": "/assets/bday-salka.jpg",
+      "zdjecie": "/assets/salka-urodzinowa-rydlowka-32.jpg",
       "opis_zdjecia": "Hala Rydlówka 32 ze stolikami w tle",
       "tytul": "Osobna salka na poczęstunek",
       "tekst": "Wydzielony kącik lub salka na tort, posiłek i odpoczynek.",
       "wyroznienie": false
     },
     {
-      "zdjecie": "/assets/bday-prezenty.jpg",
+      "zdjecie": "/assets/urodziny-upominek-dla-dziecka.jpg",
       "opis_zdjecia": "Chłopiec z upominkiem przy ściance",
       "tytul": "Prezenty dla uczestników",
       "tekst": "Każdy uczestnik imprezy dostaje upominek od Fortecy.",

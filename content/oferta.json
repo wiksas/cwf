@@ -2,7 +2,7 @@
   "karty": [
     {
       "tytul": "Sekcje dla dorosłych",
-      "zdjecie": "/assets/sekcje-dorosli.jpg",
+      "zdjecie": "/assets/trening-wspinaczkowy-dorosli-krakow.jpg",
       "opis_zdjecia": "Dorośli podczas treningu na ściance CWF",
       "tekst": "Cykliczne treningi z instruktorem: technika, praca nóg, sprzęt i węzły. Z kartą sportową od 80 zł za zajęcia.",
       "punkty": [
@@ -16,7 +16,7 @@
     },
     {
       "tytul": "Sekcje dla dzieci",
-      "zdjecie": "/assets/sekcje-dzieci.jpg",
+      "zdjecie": "/assets/wspinaczka-dzieci-sekcja-krakow.jpg",
       "opis_zdjecia": "Dziecko wspinające się po kolorowych chwytach",
       "tekst": "Zajęcia ogólnorozwojowe z instruktorem: wspinaczka od podstaw, gry i zabawy. Z kartą sportową od 75 zł.",
       "punkty": [
@@ -30,8 +30,8 @@
     },
     {
       "tytul": "Urodziny dla dzieci",
-      "zdjecie": "/assets/urodziny.jpg",
-      "opis_zdjecia": "Urodziny dziecka na ściance wspinaczkowej",
+      "zdjecie": "/assets/urodziny-na-sciance-krakow.jpg",
+      "opis_zdjecia": "Chłopiec z prezentem urodzinowym przy ściance wspinaczkowej",
       "tekst": "2 godziny zabaw z instruktorami, tyrolka 30 m i osobna salka. Od 600 zł.",
       "punkty": [
         "program dopasowany do wieku",
@@ -43,7 +43,7 @@
     },
     {
       "tytul": "Warsztaty dla szkół",
-      "zdjecie": "/assets/warsztaty-szkoly.jpg",
+      "zdjecie": "/assets/warsztaty-wspinaczkowe-szkoly-krakow.jpg",
       "opis_zdjecia": "Grupa szkolna na warsztatach wspinaczkowych",
       "tekst": "Przedszkola, szkoły, świetlice, kluby sportowe i kolonie — jednorazowo lub cyklicznie. Bilet od 25 zł za osobę.",
       "punkty": [
@@ -57,7 +57,7 @@
     },
     {
       "tytul": "Zajęcia dla osób z niepełnosprawnością",
-      "zdjecie": "/assets/zajecia-niepelnosprawnosc.jpg",
+      "zdjecie": "/assets/wspinaczka-terapeutyczna-niepelnosprawnosc-krakow.jpg",
       "opis_zdjecia": "Zajęcia wspinaczkowe dla osoby z niepełnosprawnością",
       "tekst": "Zajęcia wspinaczkowo-terapeutyczne dla dzieci, młodzieży i dorosłych — indywidualne lub w grupach 3–5 osób.",
       "punkty": [

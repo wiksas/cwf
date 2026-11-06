@@ -385,6 +385,16 @@ collections:
         label: Telefony i teksty ogólne
         file: content/ustawienia.json
         fields:
+          - name: tytul_seo
+            label: Tytuł strony w Google
+            widget: string
+            hint: Do 60 znaków; najważniejsza fraza na początku, nazwa firmy na końcu.
+            pattern: ["^.{10,60}$", "Od 10 do 60 znaków"]
+          - name: opis_seo
+            label: Opis strony w Google
+            widget: text
+            hint: 140–160 znaków — co, gdzie, dla kogo; na końcu zachęta (np. „Sprawdź cennik!”).
+            pattern: ["^[\\s\\S]{50,160}$", "Od 50 do 160 znaków"]
           - name: infolinia
             label: Infolinia
             widget: string
@@ -395,7 +405,11 @@ collections:
             pattern: ["^\\+?[\\d ]{9,}$", "Cyfry i spacje, np. 509 838 500"]
           - { name: pasek_gorny, label: Tekst w czarnym pasku na górze, widget: string }
           - { name: hero_tekst, label: Tekst pod napisem „Centrum Wspinaczkowe Forteca”, widget: text }
-          - name: opis_seo
-            label: Opis strony w Google
-            widget: text
-            hint: Około 150 znaków — widoczny w wynikach wyszukiwania.
+          - name: hero_zdjecie
+            label: Zdjęcie w nagłówku strony
+            widget: image
+            hint: Poziome, najlepiej min. 1920 px szerokości. Z niego powstaje też obrazek podglądu linku (1200×630).
+          - name: hero_opis
+            label: Opis zdjęcia w nagłówku
+            widget: string
+            hint: Co widać na zdjęciu — trafia do podglądu linku w mediach społecznościowych.

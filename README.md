@@ -44,22 +44,28 @@ Zostawiamy wszystko, po czym klienci rozpoznają Fortecę, a poprawiamy wykonani
 | `index.html` | strona główna CWF (lokalizacje, oferta, urodziny, cennik, promocje, pierwsza wizyta + formularze, galeria, wideo, FAQ, kontakt) |
 | `regulaminy.html` | regulaminy: Racławicka 60, wieża, Ludowa 6 i Rydlówka 32, bony upominkowe |
 | `fundacja.html` | Fundacja Magnezja — cele i dane rejestrowe |
-| `styles.css` | style w palecie CWF + 9 efektów CSS Scroll-driven Animations |
-| `script.js` | zamykanie menu mobilnego po wyborze sekcji / Escape / kliknięciu obok |
+| `404.html` | strona błędu w wyglądzie serwisu (`noindex`, linki do strony głównej, cennika i kontaktu) |
+| `robots.txt`, `sitemap.xml` | indeksowanie; sitemapę (z listą zdjęć) generuje `build.mjs` |
+| `styles.css` | style w palecie CWF, czcionki z `fonts/`, efekty CSS Scroll-driven Animations |
+| `script.js` | menu mobilne (Esc, „wstecz”, blokada przewijania), wyróżnienie bieżącej sekcji w menu, strzałki karuzeli urodzin, podgląd zdjęć galerii, pasek „Zadzwoń” na telefonie |
 | `admin/` | panel treści dla klienta ([Sveltia CMS](https://sveltiacms.app/)): `index.html` + konfiguracja pól `config.yml` |
-| `content/*.json` | treści edytowane w panelu: cennik, promocje, galeria, urodziny, oferta, lokalizacje i godziny, formularze, filmy, FAQ, telefony |
-| `scripts/build.mjs` | wstawia `content/*.json` do bloków `<!-- cms:… -->` w plikach HTML (Node 22, bez zależności) |
-| `.github/workflows/tresci.yml` | po każdym zapisie w panelu uruchamia `build.mjs` i commituje zaktualizowany HTML |
-| `assets/logo-cwf.png`, `assets/sygnet-cwf.png` | oryginalne logo z `cwf.pl` |
-| `assets/sygnet.svg` | wektorowy znak CWF |
-| `assets/*.jpg`, `assets/galeria/*.jpg` | oryginalne zdjęcia z `cwf.pl` (hero, sekcje, urodziny, szkoły, galerie 3 lokalizacji) |
+| `content/*.json` | treści edytowane w panelu: cennik, promocje, galeria, urodziny, oferta, lokalizacje i godziny, formularze, filmy, FAQ, telefony, tytuł i opis dla Google, zdjęcie w nagłówku |
+| `scripts/build.mjs` | wstawia `content/*.json` do bloków `<!-- cms:… -->`, generuje warianty zdjęć, `og:image`, JSON-LD i `sitemap.xml` (Node 22 + `sharp`) |
+| `.github/workflows/tresci.yml` | po każdym zapisie w panelu uruchamia `build.mjs` i commituje wynik |
+| `img/` | **generowane** przez `build.mjs`: warianty WebP 480/960/1440 px (hero 800/1280/1920) i podgląd linku 1200×630; nieużywane pliki są usuwane |
+| `fonts/` | Inter i Montserrat (woff2, latin + Latin Extended-A), licencja `OFL.txt` |
+| `assets/logo-cwf.png`, `assets/logo-cwf.webp` | oryginalne logo z `cwf.pl` (PNG do danych strukturalnych, WebP 2× na stronie) |
+| `assets/sygnet.svg`, `assets/favicon-48.png`, `assets/favicon-192.png`, `assets/apple-touch-icon.png` | znak CWF i ikony |
+| `assets/*.jpg`, `assets/galeria/*.jpg` | oryginalne zdjęcia z `cwf.pl` (źródła wariantów w `img/`), nazwy opisowe: `[co-przedstawia]-[miejsce].jpg` |
 | `assets/dokumenty/oswiadczenie-rodzicow.pdf` | oświadczenie rodziców z `cwf.pl` (wersja 2025) |
 
 ---
 
 ## Jak otworzyć
 
-Dwuklik w `index.html`. Pełne animacje w Chrome / Edge 115+ i Safari 26+; w innych przeglądarkach strona działa statycznie. Menu mobilne sprawdzisz, zwężając okno poniżej 1080 px.
+Dwuklik w `index.html`. Pełne animacje w Chrome / Edge 115+ i Safari 26+; w innych przeglądarkach strona działa statycznie. Menu mobilne sprawdzisz, zwężając okno poniżej 1080 px, a pasek „Zadzwoń” — poniżej 720 px.
+
+Po zmianie treści, zdjęć, `styles.css` lub `script.js`: `npm install` (raz), potem `npm run build`. Skrypt podbija też wersje `styles.css?v=…` i `script.js?v=…` (skrót treści pliku), więc przeglądarki nie połączą nowego HTML ze starym CSS.
 
 ---
 
@@ -90,7 +96,7 @@ Zmiana jest widoczna na stronie po ok. 2 minutach. Strona pozostaje czystym HTML
 | Filmy, Pytania i słowniczek | karty YouTube, FAQ, słowniczek |
 | Telefony i teksty ogólne | infolinia i telefon urodzin (wszędzie, także na podstronach), pasek górny, tekst w hero, opis dla Google |
 
-W tekstach działa `**pogrubienie**` i `[link](adres)`. Zdjęcia są przy wgrywaniu zmniejszane do 1600 px i konwertowane do WebP; `width`/`height` w HTML odczytuje `build.mjs` z pliku. Nagłówki sekcji, regulaminy i układ zostają w HTML — zmienia je programista.
+W tekstach działa `**pogrubienie**` i `[link](adres)`. Zdjęcia są przy wgrywaniu zmniejszane do 1600 px i konwertowane do WebP; warianty do `srcset` i wymiary `width`/`height` robi `build.mjs`. Nagłówki sekcji, regulaminy i układ zostają w HTML — zmienia je programista.
 
 > Ceny występują też w zwykłych tekstach (hero „od 35 zł”, karty oferty, urodziny, promocja po 21:00, FAQ o sprzęcie). Panel o tym przypomina przy cenniku — po zmianie cennika trzeba je poprawić ręcznie w odpowiednich sekcjach.
 
@@ -108,10 +114,10 @@ Logowanie przyciskiem *Sign In with GitHub* jest wyłączone (`auth_methods: [to
 
 ### Praca programisty
 
-- Treści zmieniaj w `content/*.json` (albo w panelu), potem `node scripts/build.mjs` — skrypt podmienia tylko bloki `<!-- cms:nazwa --> … <!-- /cms:nazwa -->`, reszta HTML jest ręczna. Nie edytuj HTML wewnątrz tych bloków — zostanie nadpisany.
+- Treści zmieniaj w `content/*.json` (albo w panelu), potem `npm run build` — skrypt podmienia tylko bloki `<!-- cms:nazwa --> … <!-- /cms:nazwa -->`, reszta HTML jest ręczna. Nie edytuj HTML wewnątrz tych bloków — zostanie nadpisany.
 - Nowy blok: dodaj znaczniki w HTML, funkcję w `BLOCKS` w `scripts/build.mjs` i pola w `admin/config.yml`.
 - Błąd w treści (brak pliku zdjęcia, więcej cen niż kolumn, zły zakres dni) zatrzymuje Action z opisem w logu — strona zostaje w poprzedniej wersji.
-- Panel lokalnie: `python -m http.server` w katalogu repo → `http://localhost:8000/admin/` → *Work with Local Repository* (Chrome/Edge) → wskaż katalog repozytorium; zapis trafia prosto do plików, potem `node scripts/build.mjs`.
+- Panel lokalnie: `python -m http.server` w katalogu repo → `http://localhost:8000/admin/` → *Work with Local Repository* (Chrome/Edge) → wskaż katalog repozytorium; zapis trafia prosto do plików, potem `npm run build`.
 
 ---
 
@@ -126,8 +132,12 @@ Logowanie przyciskiem *Sign In with GitHub* jest wyłączone (`auth_methods: [to
 | `.sd-reveal` | wejście nagłówków sekcji | `view()` |
 | `.sd-stagger > *` | kaskadowe wejście kart (lokalizacje, oferta, cennik, promocje, wideo, FAQ) | `view()` + `--i` |
 | `.loc-card__sign` | znak CWF obraca się do pozycji na kartach lokalizacji | `view()` |
-| `.sd-hscroll` | atrakcje urodzinowe: przyklejona scena na cały ekran (od 920 × 660 px), pionowy scroll przesuwa 6 kart ze zdjęciami z urodzin w CWF | `--bday-scroll` (`view-timeline-name`) |
-| `.zipline__rider` | romb tyrolki jedzie po 30-metrowej linie razem z galerią; na telefonie — przy przewijaniu strony | `--bday-scroll` / `view()` |
+| `.sd-hscroll` | atrakcje urodzinowe na komputerze (od 920 × 660 px): przyklejona scena, pionowe przewijanie strony przesuwa karty w bok | `--bday-scroll` (`view-timeline-name`), `contain 8% … 92%` |
+| `.zipline__rider` | romb tyrolki jedzie po 30-metrowej linie razem z kartami w scenie; długość przejazdu (`--zip-x1`) i pochylenie liny liczy `script.js` | `--bday-scroll` |
+
+Romb tyrolki jest też suwakiem galerii (`script.js`, `role="slider"`): można go przeciągnąć myszą lub palcem, kliknąć w dowolne miejsce liny albo sterować strzałkami, Home/End i PageUp/PageDown; obok są strzałki ‹ › z licznikiem. W scenie suwak i strzałki przewijają **stronę** do odpowiedniego miejsca sceny (karty dalej prowadzi animacja CSS). Na telefonie, przy ograniczonym ruchu i w przeglądarkach bez `animation-timeline` galeria jest zwykłą karuzelą z `scroll-snap`, a suwak przewija same karty. Bez JS romb jest tylko ozdobą.
+
+> Scena to świadome odstępstwo od `jakosc-strony.md` §7 („bez przejmowania przewijania”) na życzenie: strona przewija się normalnie (nic nie blokuje ani nie przyspiesza przewijania), ale przez ok. 1,6 ekranu pionowy ruch zamienia się w poziomy przesuw kart.
 
 Wszystkie animacje działają tylko pod `prefers-reduced-motion: no-preference` i `@supports (animation-timeline: view())`, wyłącznie na `transform` / `opacity`.
 
@@ -138,10 +148,10 @@ Wszystkie animacje działają tylko pod `prefers-reduced-motion: no-preference` 
 - [ ] Potwierdzić z klientem cenę wejścia po 21:00 — przyjęto **30 zł** z zakładki „Cennik” (edytowanej 27.02.2026); strona główna `cwf.pl` podawała 25 zł.
 - [ ] Szczegóły promocji „Przyprowadź znajomego” (na `cwf.pl` brak konkretów).
 - [ ] Formularz osobowy nadal leży na Google Drive klienta — warto przenieść do `assets/dokumenty/`.
-- [ ] Zdjęcia w wyższej rozdzielczości / WebP z archiwum klienta.
-- [ ] Self-hosting fontów Inter i Montserrat (Google Fonts przesyła IP odwiedzającego do Google — RODO).
-- [ ] `og:image` i JSON-LD zakładają hosting w katalogu głównym `https://cwf.pl/`.
+- [ ] Zdjęcia w wyższej rozdzielczości z archiwum klienta — galerie mają źródła 768 px, więc podgląd pełnoekranowy pokazuje najwyżej 768 px.
+- [ ] Canonical, `og:*`, JSON-LD, `robots.txt` i `sitemap.xml` zakładają domenę `https://cwf.pl/` — podgląd na GitHub Pages jest kopią wskazującą na nią.
 - [ ] Po przeniesieniu na `cwf.pl`: zmienić `site_url` w `admin/config.yml` (oraz `repo`, jeśli zmieni się repozytorium).
+- [ ] Na hostingu docelowym: `https` + 301 z `www.cwf.pl` na `cwf.pl`, długie cache dla `img/`, `fonts/`, `styles.css`, `script.js` (adresy mają wersję), kod 404 dla `404.html`.
 - [ ] Przekierowania 301 ze starych adresów WordPressa:
 
 | Stary adres | Nowy adres |
@@ -153,6 +163,34 @@ Wszystkie animacje działają tylko pod `prefers-reduced-motion: no-preference` 
 | `/cennik/`, `/pytania-i-odpowiedzi/`, `/kontakt/`, `/formularze/` | `/#cennik`, `/#pytania`, `/#kontakt`, `/#formularze` |
 | `/regulaminy/`, `/fundacja/` | `/regulaminy.html`, `/fundacja.html` |
 | `/wp-content/uploads/2026/01/oswiadczenie-rodzicow-nowe-2025.pdf` | `/assets/dokumenty/oswiadczenie-rodzicow.pdf` |
+
+---
+
+## SEO i jakość (`pozycjonowanie.md`, `jakosc-strony.md`)
+
+Zrobione na stronie:
+
+| Obszar | Co |
+|---|---|
+| `<head>` | unikalne `title` (≤ 60 zn.) i `description` (≤ 160 zn.) z frazą i miastem na każdej podstronie, `canonical`, `robots`, `og:*` z obrazem 1200×630, `twitter:card`, favicony 48/192 + `apple-touch-icon` 180 |
+| Teksty | jeden `h1` z frazą („Ścianka wspinaczkowa w Krakowie” jako etykieta nad nazwą), frazy w części `h2` (lokalizacje, oferta, urodziny, cennik, FAQ), adresy z „Kraków” na kartach i w stopce |
+| Dane strukturalne | jeden `@graph`: `WebSite`, `SportsOrganization` (z usługami w `makesOffer`), 3 × `SportsActivityLocation` (adres, `openingHoursSpecification`, `hasMap`, zdjęcia), `WebPage`, `FAQPage` z widocznych pytań; podstrony: `WebPage`, fundacja dodatkowo `NGO`. validator.schema.org: 0 błędów, 0 ostrzeżeń |
+| Obrazy | opisowe nazwy plików, prawdziwe `alt` (poprawione: zdjęcie „z lotu drona” nim nie było), WebP w 3 rozmiarach z `srcset`/`sizes`, `width`/`height`, `lazy` poniżej pierwszego ekranu; zdjęcie hero jako `<img>` z `fetchpriority="high"` i `preload` |
+| Szybkość | czcionki lokalnie (woff2, `font-display: swap`, `preload`), brak zasobów z zewnętrznych domen, skrypt z `defer`, wersje plików w adresach |
+| Indeksowanie | `robots.txt` z sitemapą, `sitemap.xml` z `lastmod` i zdjęciami (`image:`), `404.html` z `noindex`, panel `/admin/` z `noindex` i poza sitemapą |
+| Wygoda | galeria: przesuwanie palcem na telefonie, podgląd pełnoekranowy (×, Esc, tło, „wstecz”, ← →, przesunięcie palcem, licznik, powrót zaznaczenia); karuzela urodzin ze strzałkami i licznikiem; menu mobilne zamyka się też „wstecz” i blokuje przewijanie; bieżąca sekcja wyróżniona w menu; pasek „Zadzwoń / Urodziny” na telefonie, chowa się przy stopce |
+| Dostępność | tekst do czytania ≥ 16 px na telefonie, pola dotyku ≥ 44 px, niższy nagłówek na telefonie (ok. 8% ekranu), `prefers-reduced-motion` wyłącza też przesunięcia przy najechaniu i płynne przewijanie, ukryte dopiski dla czytników przy linkach „Jak dojechać” i filmach |
+
+Rekomendacje (wymagają danych od klienta, decyzji albo zmian poza stroną):
+
+- **Podstrony usług** (`jakosc-strony.md` §1): sekcje dla dorosłych, sekcje dla dzieci, urodziny, szkoły, zajęcia dla osób z niepełnosprawnością (+ ewentualnie 3 lokalizacje) z unikalną treścią — zakres pakietu „Standard”. Frazy do przypisania: „sekcja wspinaczkowa dla dzieci Kraków”, „urodziny na ściance Kraków”, „wspinaczka dla szkół Kraków”.
+- **Opinie klientów** jako tekst z podpisem + link do opinii Google — potrzebne prawdziwe opinie i zgody autorów; bez nich sekcji nie dodajemy.
+- **Link do wizytówek Google** (Profil Firmy) dla 3 lokalizacji — do stopki i do `hasMap` zamiast wyszukiwania w Mapach.
+- **Wizytówka Google, Bing Places, katalogi** (np. lokalne serwisy sportowe i rodzinne) z identycznymi danymi: nazwa, adresy, telefony jak w panelu.
+- **Google Search Console + Bing Webmaster Tools** po starcie domeny: weryfikacja DNS, wysłanie `sitemap.xml`.
+- **Pomiar konwersji** (kliknięcia `tel:`) — narzędzie bez ciasteczek (np. Plausible) albo z banerem zgody; decyzja klienta. Strona nie ma formularza ani ciasteczek, więc dziś nie potrzebuje banera; polityka prywatności będzie potrzebna razem ze statystykami.
+- **Filmy**: na stronie są tylko linki do YouTube, więc bez `VideoObject` (dane strukturalne nie mogą opisywać treści, której nie ma na stronie). Tytuły filmów na YouTube warto uzupełnić o „Kraków” i link do strony w opisie.
+- **PageSpeed Insights** (mobile) i **Rich Results Test** — uruchomić po wdrożeniu na `cwf.pl`.
 
 ---
 

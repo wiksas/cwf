@@ -2,85 +2,395 @@
 <html lang="pl">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Ścianka wspinaczkowa Kraków — 3 lokalizacje | Centrum Wspinaczkowe Forteca</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <!-- cms:seo -->
-  <meta name="description" content="Centrum Wspinaczkowe Forteca w Krakowie: Ludowa 6, Racławicka 60, Rydlówka 32. Wejścia od 35 zł (2,5 h), sekcje z instruktorem, urodziny z 30-metrową tyrolką od 600 zł.">
+  <title>Ścianka wspinaczkowa Kraków – 3 lokalizacje | Forteca</title>
+  <meta name="description" content="Ścianka wspinaczkowa w Krakowie: Ludowa 6, Racławicka 60 i Rydlówka 32. Wejście na 2,5 h od 35 zł, sekcje z instruktorem, urodziny z tyrolką. Sprawdź cennik!">
+  <meta property="og:title" content="Ścianka wspinaczkowa Kraków – 3 lokalizacje | Forteca">
+  <meta property="og:description" content="Ścianka wspinaczkowa w Krakowie: Ludowa 6, Racławicka 60 i Rydlówka 32. Wejście na 2,5 h od 35 zł, sekcje z instruktorem, urodziny z tyrolką. Sprawdź cennik!">
+  <meta property="og:image" content="https://cwf.pl/img/scianka-wspinaczkowa-krakow-forteca-838a2ec3-og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Dwoje wspinaczy z liną na kolorowych ścianach hali Centrum Wspinaczkowego Forteca w Krakowie">
   <!-- /cms:seo -->
   <link rel="canonical" href="https://cwf.pl/">
-  <meta property="og:title" content="Centrum Wspinaczkowe Forteca — 3 ścianki w Krakowie">
-  <meta property="og:description" content="Sekcje dla dzieci i dorosłych, wspinaczkowe urodziny z tyrolką 30 m, warsztaty dla szkół. Sprawdź cennik i wybierz lokalizację.">
+  <meta name="robots" content="index, follow, max-image-preview:large, max-video-preview:-1">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://cwf.pl/">
-  <meta property="og:image" content="https://cwf.pl/assets/scianka-hero.jpg">
   <meta property="og:locale" content="pl_PL">
   <meta property="og:site_name" content="Centrum Wspinaczkowe Forteca">
+  <meta property="og:url" content="https://cwf.pl/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="assets/favicon-48.png" sizes="48x48" type="image/png">
+  <link rel="icon" href="assets/favicon-192.png" sizes="192x192" type="image/png">
   <link rel="icon" href="assets/sygnet.svg" type="image/svg+xml">
-  <link rel="apple-touch-icon" href="assets/sygnet-cwf.png">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <!-- cms:hero-preload -->
+  <link rel="preload" as="image" href="img/scianka-wspinaczkowa-krakow-forteca-838a2ec3-1280.webp" imagesrcset="img/scianka-wspinaczkowa-krakow-forteca-838a2ec3-800.webp 800w, img/scianka-wspinaczkowa-krakow-forteca-838a2ec3-1280.webp 1280w, img/scianka-wspinaczkowa-krakow-forteca-838a2ec3-1600.webp 1600w" imagesizes="100vw" fetchpriority="high">
+  <!-- /cms:hero-preload -->
+  <!-- cms:zasoby -->
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css?v=9798e710">
+  <!-- /cms:zasoby -->
   <!-- cms:jsonld -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Centrum Wspinaczkowe Forteca",
-    "url": "https://cwf.pl/",
-    "logo": "https://cwf.pl/assets/logo-cwf.png",
-    "telephone": "+48126328333",
-    "sameAs": [
-      "https://www.facebook.com/cwforteca",
-      "https://www.instagram.com/cwforteca"
-    ],
-    "location": [
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://cwf.pl/#strona",
+        "url": "https://cwf.pl/",
+        "name": "Centrum Wspinaczkowe Forteca",
+        "inLanguage": "pl-PL",
+        "publisher": {
+          "@id": "https://cwf.pl/#organizacja"
+        }
+      },
+      {
+        "@type": "SportsOrganization",
+        "@id": "https://cwf.pl/#organizacja",
+        "name": "Centrum Wspinaczkowe Forteca",
+        "alternateName": [
+          "CWF",
+          "Forteca"
+        ],
+        "url": "https://cwf.pl/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://cwf.pl/assets/logo-cwf.png",
+          "width": 1000,
+          "height": 414
+        },
+        "image": "https://cwf.pl/img/scianka-wspinaczkowa-krakow-forteca-838a2ec3-og.jpg",
+        "telephone": "+48126328333",
+        "areaServed": {
+          "@type": "City",
+          "name": "Kraków"
+        },
+        "sameAs": [
+          "https://www.facebook.com/cwforteca",
+          "https://www.instagram.com/cwforteca"
+        ],
+        "department": [
+          {
+            "@id": "https://cwf.pl/#ludowa-6"
+          },
+          {
+            "@id": "https://cwf.pl/#raclawicka-60"
+          },
+          {
+            "@id": "https://cwf.pl/#rydlowka-32"
+          }
+        ],
+        "makesOffer": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Sekcje dla dorosłych",
+              "description": "Cykliczne treningi z instruktorem: technika, praca nóg, sprzęt i węzły. Z kartą sportową od 80 zł za zajęcia.",
+              "areaServed": {
+                "@type": "City",
+                "name": "Kraków"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Sekcje dla dzieci",
+              "description": "Zajęcia ogólnorozwojowe z instruktorem: wspinaczka od podstaw, gry i zabawy. Z kartą sportową od 75 zł.",
+              "areaServed": {
+                "@type": "City",
+                "name": "Kraków"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Urodziny dla dzieci",
+              "description": "2 godziny zabaw z instruktorami, tyrolka 30 m i osobna salka. Od 600 zł.",
+              "areaServed": {
+                "@type": "City",
+                "name": "Kraków"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Warsztaty dla szkół",
+              "description": "Przedszkola, szkoły, świetlice, kluby sportowe i kolonie — jednorazowo lub cyklicznie. Bilet od 25 zł za osobę.",
+              "areaServed": {
+                "@type": "City",
+                "name": "Kraków"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Zajęcia dla osób z niepełnosprawnością",
+              "description": "Zajęcia wspinaczkowo-terapeutyczne dla dzieci, młodzieży i dorosłych — indywidualne lub w grupach 3–5 osób.",
+              "areaServed": {
+                "@type": "City",
+                "name": "Kraków"
+              }
+            }
+          }
+        ]
+      },
       {
         "@type": "SportsActivityLocation",
+        "@id": "https://cwf.pl/#ludowa-6",
         "name": "Centrum Wspinaczkowe Forteca — Ludowa 6",
+        "url": "https://cwf.pl/#ludowa-6",
+        "parentOrganization": {
+          "@id": "https://cwf.pl/#organizacja"
+        },
+        "image": [
+          "https://cwf.pl/img/wspinacze-na-kolorowych-scianach-ludowa-6-4803fc8d-768.webp",
+          "https://cwf.pl/img/wspinaczka-zolta-plyta-ludowa-6-c079c3d6-768.webp",
+          "https://cwf.pl/img/wspinaczka-z-lina-ludowa-6-97cb2794-768.webp"
+        ],
+        "telephone": "+48512631621",
+        "email": "recepcjaL6@cwf.pl",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "ul. Ludowa 6",
           "addressLocality": "Kraków",
+          "addressRegion": "małopolskie",
           "addressCountry": "PL"
         },
-        "telephone": "+48512631621",
-        "email": "recepcjaL6@cwf.pl",
-        "openingHours": [
-          "Mo-Fr 10:00-23:00",
-          "Sa-Su 10:00-22:00"
+        "hasMap": "https://maps.google.com/maps?q=Ludowa%206%2C%20Krak%C3%B3w",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday"
+            ],
+            "opens": "10:00",
+            "closes": "23:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Saturday",
+              "Sunday"
+            ],
+            "opens": "10:00",
+            "closes": "22:00"
+          }
+        ],
+        "sameAs": [
+          "https://www.facebook.com/CWFortecaLudowa6"
         ]
       },
       {
         "@type": "SportsActivityLocation",
+        "@id": "https://cwf.pl/#raclawicka-60",
         "name": "Centrum Wspinaczkowe Forteca — Racławicka 60",
+        "url": "https://cwf.pl/#raclawicka-60",
+        "parentOrganization": {
+          "@id": "https://cwf.pl/#organizacja"
+        },
+        "image": [
+          "https://cwf.pl/img/panel-i-boulderownia-raclawicka-60-08104831-768.webp",
+          "https://cwf.pl/img/wspinaczka-z-lina-raclawicka-60-bf28f426-768.webp",
+          "https://cwf.pl/img/rzezbiony-panel-skalny-raclawicka-60-8781c924-768.webp"
+        ],
+        "telephone": "+48509228998",
+        "email": "recepcjaR60@cwf.pl",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "ul. Racławicka 60",
           "addressLocality": "Kraków",
+          "addressRegion": "małopolskie",
           "addressCountry": "PL"
         },
-        "telephone": "+48509228998",
-        "email": "recepcjaR60@cwf.pl",
-        "openingHours": [
-          "Mo-Fr 10:00-23:00",
-          "Sa-Su 10:00-22:00"
+        "hasMap": "https://maps.google.com/maps?q=Rac%C5%82awicka%2060%2C%20Krak%C3%B3w",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday"
+            ],
+            "opens": "10:00",
+            "closes": "23:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Saturday",
+              "Sunday"
+            ],
+            "opens": "10:00",
+            "closes": "22:00"
+          }
+        ],
+        "sameAs": [
+          "https://www.facebook.com/CWFortecaRaclawicka60"
         ]
       },
       {
         "@type": "SportsActivityLocation",
+        "@id": "https://cwf.pl/#rydlowka-32",
         "name": "Centrum Wspinaczkowe Forteca — Rydlówka 32",
+        "url": "https://cwf.pl/#rydlowka-32",
+        "parentOrganization": {
+          "@id": "https://cwf.pl/#organizacja"
+        },
+        "image": [
+          "https://cwf.pl/img/przewieszona-boulderownia-rydlowka-32-d799912b-768.webp",
+          "https://cwf.pl/img/strefa-treningowa-chwytotablice-rydlowka-32-b59a83b0-768.webp",
+          "https://cwf.pl/img/wolne-ciezary-rydlowka-32-35aaa1bd-768.webp"
+        ],
+        "telephone": "+48509300918",
+        "email": "recepcjaR32@cwf.pl",
         "address": {
           "@type": "PostalAddress",
           "streetAddress": "ul. Rydlówka 32",
           "addressLocality": "Kraków",
+          "addressRegion": "małopolskie",
           "addressCountry": "PL"
         },
-        "telephone": "+48509300918",
-        "email": "recepcjaR32@cwf.pl",
-        "openingHours": [
-          "Mo-Th 10:00-23:00",
-          "Fr-Su 10:00-22:00"
+        "hasMap": "https://maps.google.com/maps?q=Rydl%C3%B3wka%2032%2C%20Krak%C3%B3w",
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday"
+            ],
+            "opens": "10:00",
+            "closes": "23:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Friday"
+            ],
+            "opens": "10:00",
+            "closes": "22:00"
+          },
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Saturday",
+              "Sunday"
+            ],
+            "opens": "10:00",
+            "closes": "22:00"
+          }
+        ],
+        "sameAs": [
+          "https://www.facebook.com/CWFortecaRydlowka32"
+        ]
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://cwf.pl/#strona-glowna",
+        "url": "https://cwf.pl/",
+        "name": "Ścianka wspinaczkowa Kraków – 3 lokalizacje | Forteca",
+        "description": "Ścianka wspinaczkowa w Krakowie: Ludowa 6, Racławicka 60 i Rydlówka 32. Wejście na 2,5 h od 35 zł, sekcje z instruktorem, urodziny z tyrolką. Sprawdź cennik!",
+        "inLanguage": "pl-PL",
+        "isPartOf": {
+          "@id": "https://cwf.pl/#strona"
+        },
+        "about": {
+          "@id": "https://cwf.pl/#organizacja"
+        },
+        "primaryImageOfPage": {
+          "@type": "ImageObject",
+          "url": "https://cwf.pl/img/scianka-wspinaczkowa-krakow-forteca-838a2ec3-og.jpg",
+          "width": 1200,
+          "height": 630
+        },
+        "hasPart": {
+          "@id": "https://cwf.pl/#pytania"
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://cwf.pl/#pytania",
+        "url": "https://cwf.pl/#pytania",
+        "inLanguage": "pl-PL",
+        "isPartOf": {
+          "@id": "https://cwf.pl/#strona-glowna"
+        },
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Nigdy się nie wspinałem — czy ktoś mi pomoże?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Tak. Dyżurujący instruktor odpowie na pytania i przeprowadzi szkolenie wstępne: zasady bezpieczeństwa, używanie sprzętu i asekurację. Przed pierwszą wizytą skontaktuj się z recepcją wybranej ścianki — szkolenie trzeba wcześniej zarezerwować."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Czy wspinanie jest niebezpieczne?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Wspinaczka uchodzi za sport ekstremalny, ale jej halowa odmiana — przy zachowaniu zasad bezpieczeństwa — jest dla osoby przeszkolonej bezpieczna. Przeszkolenie przysługuje u nas każdej początkującej osobie (po wcześniejszym umówieniu)."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Czy potrzebuję własnego sprzętu?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nie. Na miejscu wypożyczysz uprząż (15 zł), przyrząd asekuracyjny (10 zł), buty (25 zł) i linę (30 zł). Weź wygodny strój sportowy."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Jak się ubrać do wspinania?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "W wygodny strój sportowy, który nie krępuje ruchów. Własne buty powinny dobrze trzymać stopę i nie mieć zbyt grubej, sztywnej podeszwy — a profesjonalne buty wspinaczkowe wypożyczysz na miejscu. Instruktorzy doradzą też przy zakupie własnych."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Od ilu lat można się wspinać?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Sekcje dla dzieci przyjmują od 3,5 roku. Osoby poniżej 18 lat potrzebują pisemnej zgody rodzica (formularze), a do 16 lat wspinają się tylko z rodzicem lub instruktorem. Sekcje dla dorosłych — od 16 lat."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Czy bilet jest za godzinę wspinania?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Bilet wstępu upoważnia do korzystania z hali przez 2,5 godziny."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Nie jestem sprawny fizycznie — dam radę?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Każdy może się wspinać. Mamy miejsca przygotowane specjalnie dla początkujących, a wspinanie rekreacyjne to przede wszystkim relaks."
+            }
+          }
         ]
       }
     ]
@@ -125,7 +435,7 @@
   <header class="site-header">
     <div class="wrap site-header__inner">
       <a class="brand-logo" href="#top">
-        <img src="assets/logo-cwf.png" alt="Centrum Wspinaczkowe Forteca" width="215" height="89">
+        <img src="assets/logo-cwf.webp" alt="Centrum Wspinaczkowe Forteca" width="215" height="89">
       </a>
 
       <nav class="site-nav" aria-label="Menu główne">
@@ -160,9 +470,13 @@
   <main id="tresc">
     <!-- HERO -->
     <section class="hero" id="top" aria-labelledby="hero-title">
+      <!-- cms:hero-obraz -->
+      <img class="hero__bg" src="img/scianka-wspinaczkowa-krakow-forteca-838a2ec3-1280.webp" srcset="img/scianka-wspinaczkowa-krakow-forteca-838a2ec3-800.webp 800w, img/scianka-wspinaczkowa-krakow-forteca-838a2ec3-1280.webp 1280w, img/scianka-wspinaczkowa-krakow-forteca-838a2ec3-1600.webp 1600w" sizes="100vw" alt="" width="1600" height="900" fetchpriority="high" decoding="async">
+      <!-- /cms:hero-obraz -->
       <div class="wrap hero__inner">
         <img class="hero__sign" src="assets/sygnet.svg" alt="" width="124" height="124">
         <h1 id="hero-title">
+          <span class="hero__kicker">Ścianka wspinaczkowa w Krakowie</span>
           Centrum Wspinaczkowe
           <span>Forteca</span>
         </h1>
@@ -173,7 +487,7 @@
         <div class="hero__cta-row">
           <a class="btn btn--yellow" href="#lokalizacja">Wybierz lokalizację</a>
           <a class="btn btn--outline-light" href="#cennik">Sprawdź cennik</a>
-          <a class="btn btn--outline-light" href="tel:+48509838500"><svg class="ico"><use href="#i-phone"/></svg> Urodziny: 509 838 500</a>
+          <a class="btn btn--outline-light" href="tel:+48509838500"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> Urodziny: 509 838 500</a>
         </div>
         <!-- /cms:hero -->
       </div>
@@ -184,7 +498,7 @@
       <div class="wrap">
         <div class="section-head sd-reveal">
           <span class="section-eyebrow">3 obiekty w Krakowie</span>
-          <h2 id="lok-title">Wybierz swoją ściankę</h2>
+          <h2 id="lok-title">Ścianki wspinaczkowe w Krakowie — wybierz swoją</h2>
           <p>Dwie lokalizacje na Podgórzu i jedna na Krowodrzy — wszystkie czynne codziennie od 10:00. Na każdej ściance drogi od II (bardzo proste) do VI.4+, asekuracja górna i dolna oraz boulderownia.</p>
         </div>
 
@@ -193,7 +507,7 @@
           <article class="loc-card" id="ludowa-6" style="--i:0">
             <img class="loc-card__sign" src="assets/sygnet.svg" alt="" width="88" height="88">
             <h3>Ludowa 6</h3>
-            <p class="loc-card__addr">ul. Ludowa 6 · Podgórze</p>
+            <p class="loc-card__addr">ul. Ludowa 6, Kraków · Podgórze</p>
             <p class="loc-card__near">okolice ul. Wielickiej / Kopca Kraka</p>
             <ul class="loc-card__specs" aria-label="Ściana Ludowa 6">
               <li><b>740 m²</b> powierzchni wspinaczkowej</li>
@@ -205,16 +519,16 @@
               <div><dt>Sobota – Niedziela</dt><dd>10:00 – 22:00</dd></div>
             </dl>
             <div class="loc-card__contact">
-              <a href="tel:+48512631621"><svg class="ico"><use href="#i-phone"/></svg> 512 631 621</a>
-              <a href="mailto:recepcjaL6@cwf.pl"><svg class="ico"><use href="#i-mail"/></svg> recepcjaL6@cwf.pl</a>
+              <a href="tel:+48512631621"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> 512 631 621</a>
+              <a href="mailto:recepcjaL6@cwf.pl"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> recepcjaL6@cwf.pl</a>
             </div>
-            <a class="btn btn--white-pill" href="https://maps.google.com/maps?q=Ludowa%206%2C%20Krak%C3%B3w" target="_blank" rel="noopener"><svg class="ico"><use href="#i-pin"/></svg> Jak dojechać</a>
+            <a class="btn btn--white-pill" href="https://maps.google.com/maps?q=Ludowa%206%2C%20Krak%C3%B3w" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg> Jak dojechać <span class="visually-hidden">— Ludowa 6, mapa Google</span></a>
           </article>
 
           <article class="loc-card" id="raclawicka-60" style="--i:1">
             <img class="loc-card__sign" src="assets/sygnet.svg" alt="" width="88" height="88">
             <h3>Racławicka 60</h3>
-            <p class="loc-card__addr">ul. Racławicka 60 · Krowodrza</p>
+            <p class="loc-card__addr">ul. Racławicka 60, Kraków · Krowodrza</p>
             <p class="loc-card__near">okolice ul. Wrocławskiej / Urzędu Marszałkowskiego</p>
             <ul class="loc-card__specs" aria-label="Ściana Racławicka 60">
               <li><b>1200 m²</b> powierzchni wspinaczkowej</li>
@@ -227,16 +541,16 @@
               <div><dt>Sobota – Niedziela</dt><dd>10:00 – 22:00</dd></div>
             </dl>
             <div class="loc-card__contact">
-              <a href="tel:+48509228998"><svg class="ico"><use href="#i-phone"/></svg> 509 228 998</a>
-              <a href="mailto:recepcjaR60@cwf.pl"><svg class="ico"><use href="#i-mail"/></svg> recepcjaR60@cwf.pl</a>
+              <a href="tel:+48509228998"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> 509 228 998</a>
+              <a href="mailto:recepcjaR60@cwf.pl"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> recepcjaR60@cwf.pl</a>
             </div>
-            <a class="btn btn--white-pill" href="https://maps.google.com/maps?q=Rac%C5%82awicka%2060%2C%20Krak%C3%B3w" target="_blank" rel="noopener"><svg class="ico"><use href="#i-pin"/></svg> Jak dojechać</a>
+            <a class="btn btn--white-pill" href="https://maps.google.com/maps?q=Rac%C5%82awicka%2060%2C%20Krak%C3%B3w" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg> Jak dojechać <span class="visually-hidden">— Racławicka 60, mapa Google</span></a>
           </article>
 
           <article class="loc-card" id="rydlowka-32" style="--i:2">
             <img class="loc-card__sign" src="assets/sygnet.svg" alt="" width="88" height="88">
             <h3>Rydlówka 32</h3>
-            <p class="loc-card__addr">ul. Rydlówka 32 · Podgórze</p>
+            <p class="loc-card__addr">ul. Rydlówka 32, Kraków · Podgórze</p>
             <p class="loc-card__near">okolice Ronda Matecznego / ul. Wadowickiej</p>
             <ul class="loc-card__specs" aria-label="Ściana Rydlówka 32">
               <li><b>15</b> stanowisk z liną, ściany do <b>6 m</b></li>
@@ -248,10 +562,10 @@
               <div><dt>Sobota – Niedziela</dt><dd>10:00 – 22:00</dd></div>
             </dl>
             <div class="loc-card__contact">
-              <a href="tel:+48509300918"><svg class="ico"><use href="#i-phone"/></svg> 509 300 918</a>
-              <a href="mailto:recepcjaR32@cwf.pl"><svg class="ico"><use href="#i-mail"/></svg> recepcjaR32@cwf.pl</a>
+              <a href="tel:+48509300918"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> 509 300 918</a>
+              <a href="mailto:recepcjaR32@cwf.pl"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> recepcjaR32@cwf.pl</a>
             </div>
-            <a class="btn btn--white-pill" href="https://maps.google.com/maps?q=Rydl%C3%B3wka%2032%2C%20Krak%C3%B3w" target="_blank" rel="noopener"><svg class="ico"><use href="#i-pin"/></svg> Jak dojechać</a>
+            <a class="btn btn--white-pill" href="https://maps.google.com/maps?q=Rydl%C3%B3wka%2032%2C%20Krak%C3%B3w" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg> Jak dojechać <span class="visually-hidden">— Rydlówka 32, mapa Google</span></a>
           </article>
           <!-- /cms:lokalizacje -->
         </div>
@@ -275,14 +589,14 @@
       <div class="wrap">
         <div class="section-head sd-reveal">
           <span class="section-eyebrow">Zajęcia z instruktorem i rekreacja</span>
-          <h2 id="oferta-title">Poznaj naszą ofertę</h2>
+          <h2 id="oferta-title">Zajęcia wspinaczkowe dla dzieci i dorosłych</h2>
           <p>Dla początkujących i zaawansowanych. Honorujemy MultiSport, Medicover Sport, FitProfit, PZU Sport i Krakowską Kartę Rodzinną.</p>
         </div>
 
         <div class="offer-grid sd-stagger">
           <!-- cms:oferta -->
           <article class="offer-card" id="sekcje-dorosli" style="--i:0">
-            <img class="offer-card__img" src="assets/sekcje-dorosli.jpg" alt="Dorośli podczas treningu na ściance CWF" width="857" height="483" loading="lazy">
+            <img class="offer-card__img" src="img/trening-wspinaczkowy-dorosli-krakow-cf295828-857.webp" srcset="img/trening-wspinaczkowy-dorosli-krakow-cf295828-480.webp 480w, img/trening-wspinaczkowy-dorosli-krakow-cf295828-857.webp 857w" sizes="(min-width: 1280px) 240px, (min-width: 720px) 34vw, 100vw" alt="Dorośli podczas treningu na ściance CWF" width="857" height="483" loading="lazy" decoding="async">
             <div class="offer-card__body">
               <h3>Sekcje dla dorosłych</h3>
               <p>Cykliczne treningi z instruktorem: technika, praca nóg, sprzęt i węzły. Z kartą sportową od 80 zł za zajęcia.</p>
@@ -296,7 +610,7 @@
           </article>
 
           <article class="offer-card" id="sekcje-dzieci" style="--i:1">
-            <img class="offer-card__img" src="assets/sekcje-dzieci.jpg" alt="Dziecko wspinające się po kolorowych chwytach" width="2048" height="2048" loading="lazy">
+            <img class="offer-card__img" src="img/wspinaczka-dzieci-sekcja-krakow-b9ed1902-960.webp" srcset="img/wspinaczka-dzieci-sekcja-krakow-b9ed1902-480.webp 480w, img/wspinaczka-dzieci-sekcja-krakow-b9ed1902-960.webp 960w, img/wspinaczka-dzieci-sekcja-krakow-b9ed1902-1440.webp 1440w" sizes="(min-width: 1280px) 240px, (min-width: 720px) 34vw, 100vw" alt="Dziecko wspinające się po kolorowych chwytach" width="1440" height="1440" loading="lazy" decoding="async">
             <div class="offer-card__body">
               <h3>Sekcje dla dzieci</h3>
               <p>Zajęcia ogólnorozwojowe z instruktorem: wspinaczka od podstaw, gry i zabawy. Z kartą sportową od 75 zł.</p>
@@ -310,7 +624,7 @@
           </article>
 
           <article class="offer-card" style="--i:2">
-            <img class="offer-card__img" src="assets/urodziny.jpg" alt="Urodziny dziecka na ściance wspinaczkowej" width="1000" height="1000" loading="lazy">
+            <img class="offer-card__img" src="img/urodziny-na-sciance-krakow-a46a41cc-960.webp" srcset="img/urodziny-na-sciance-krakow-a46a41cc-480.webp 480w, img/urodziny-na-sciance-krakow-a46a41cc-960.webp 960w, img/urodziny-na-sciance-krakow-a46a41cc-1000.webp 1000w" sizes="(min-width: 1280px) 240px, (min-width: 720px) 34vw, 100vw" alt="Chłopiec z prezentem urodzinowym przy ściance wspinaczkowej" width="1000" height="1000" loading="lazy" decoding="async">
             <div class="offer-card__body">
               <h3>Urodziny dla dzieci</h3>
               <p>2 godziny zabaw z instruktorami, tyrolka 30 m i osobna salka. Od 600 zł.</p>
@@ -324,7 +638,7 @@
           </article>
 
           <article class="offer-card" id="szkoly" style="--i:3">
-            <img class="offer-card__img" src="assets/warsztaty-szkoly.jpg" alt="Grupa szkolna na warsztatach wspinaczkowych" width="720" height="720" loading="lazy">
+            <img class="offer-card__img" src="img/warsztaty-wspinaczkowe-szkoly-krakow-07b28a8d-720.webp" srcset="img/warsztaty-wspinaczkowe-szkoly-krakow-07b28a8d-480.webp 480w, img/warsztaty-wspinaczkowe-szkoly-krakow-07b28a8d-720.webp 720w" sizes="(min-width: 1280px) 240px, (min-width: 720px) 34vw, 100vw" alt="Grupa szkolna na warsztatach wspinaczkowych" width="720" height="720" loading="lazy" decoding="async">
             <div class="offer-card__body">
               <h3>Warsztaty dla szkół</h3>
               <p>Przedszkola, szkoły, świetlice, kluby sportowe i kolonie — jednorazowo lub cyklicznie. Bilet od 25 zł za osobę.</p>
@@ -338,7 +652,7 @@
           </article>
 
           <article class="offer-card" id="niepelnosprawnosc" style="--i:4">
-            <img class="offer-card__img" src="assets/zajecia-niepelnosprawnosc.jpg" alt="Zajęcia wspinaczkowe dla osoby z niepełnosprawnością" width="1333" height="1333" loading="lazy">
+            <img class="offer-card__img" src="img/wspinaczka-terapeutyczna-niepelnosprawnosc-krakow-a33853f3-960.webp" srcset="img/wspinaczka-terapeutyczna-niepelnosprawnosc-krakow-a33853f3-480.webp 480w, img/wspinaczka-terapeutyczna-niepelnosprawnosc-krakow-a33853f3-960.webp 960w, img/wspinaczka-terapeutyczna-niepelnosprawnosc-krakow-a33853f3-1333.webp 1333w" sizes="(min-width: 1280px) 240px, (min-width: 720px) 34vw, 100vw" alt="Zajęcia wspinaczkowe dla osoby z niepełnosprawnością" width="1333" height="1333" loading="lazy" decoding="async">
             <div class="offer-card__body">
               <h3>Zajęcia dla osób z niepełnosprawnością</h3>
               <p>Zajęcia wspinaczkowo-terapeutyczne dla dzieci, młodzieży i dorosłych — indywidualne lub w grupach 3–5 osób.</p>
@@ -386,7 +700,7 @@
       <div class="wrap">
         <div class="section-head sd-reveal">
           <span class="section-eyebrow">2 godziny zabawy z instruktorami</span>
-          <h2 id="bday-title">Wspinaczkowe urodziny, które wszyscy zapamiętają</h2>
+          <h2 id="bday-title">Urodziny na ściance w Krakowie, które wszyscy zapamiętają</h2>
           <p>Program dopasowujemy do wieku uczestników. Dzieci są przez cały czas pod opieką wykwalifikowanych instruktorów.</p>
         </div>
 
@@ -404,20 +718,25 @@
           <!-- /cms:urodziny-pakiety -->
         </div>
 
-        <div class="sd-hscroll">
+        <div class="bday-gallery sd-hscroll">
           <div class="sd-hscroll__sticky">
             <div class="hs-head">
               <!-- cms:urodziny-naglowek -->
               <h3>6 atrakcji w 2 godziny</h3>
               <!-- /cms:urodziny-naglowek -->
-              <span class="hs-head__hint hs-head__hint--swipe">przesuń karty w bok</span>
-              <span class="hs-head__hint hs-head__hint--scroll">przewijaj — tyrolka jedzie razem z galerią</span>
+              <span class="hs-head__hint hs-head__hint--swipe">Przesuń karty w bok albo przeciągnij znak tyrolki</span>
+              <span class="hs-head__hint hs-head__hint--scroll">Przewijaj stronę — tyrolka jedzie razem z galerią; znak możesz też przeciągnąć</span>
+              <div class="carousel-nav" hidden>
+                <button class="carousel-nav__btn" type="button" data-dir="-1" aria-controls="bday-track" aria-label="Poprzednie atrakcje">‹</button>
+                <span class="carousel-nav__count" aria-live="polite"></span>
+                <button class="carousel-nav__btn" type="button" data-dir="1" aria-controls="bday-track" aria-label="Następne atrakcje">›</button>
+              </div>
             </div>
 
-            <div class="sd-hscroll__track" role="region" aria-label="Atrakcje podczas urodzin" tabindex="0">
+            <div class="bday-track" id="bday-track" role="region" aria-label="Atrakcje podczas urodzin" tabindex="0" data-carousel>
               <!-- cms:urodziny-atrakcje -->
               <article class="bday-card">
-                <img class="bday-card__img" src="assets/bday-wspinaczka.jpg" alt="Dzieci wspinają się na pomarańczowej ściance" width="545" height="727" loading="lazy">
+                <img class="bday-card__img" src="img/urodziny-wspinaczka-dzieci-pomaranczowa-scianka-f6673b74-545.webp" srcset="img/urodziny-wspinaczka-dzieci-pomaranczowa-scianka-f6673b74-480.webp 480w, img/urodziny-wspinaczka-dzieci-pomaranczowa-scianka-f6673b74-545.webp 545w" sizes="(min-width: 460px) 360px, 80vw" alt="Dzieci wspinają się na pomarańczowej ściance" width="545" height="727" loading="lazy" decoding="async">
                 <div class="bday-card__body">
                   <span class="bday-card__badge">01</span>
                   <h4>Wspinaczka na niskich i wysokich ściankach</h4>
@@ -425,7 +744,7 @@
                 </div>
               </article>
               <article class="bday-card bday-card--hit">
-                <img class="bday-card__img" src="assets/bday-tyrolka.jpg" alt="Dziecko w uprzęży przy linie" width="1000" height="1500" loading="lazy">
+                <img class="bday-card__img" src="img/urodziny-tyrolka-dziecko-w-uprzezy-91c0d312-960.webp" srcset="img/urodziny-tyrolka-dziecko-w-uprzezy-91c0d312-480.webp 480w, img/urodziny-tyrolka-dziecko-w-uprzezy-91c0d312-960.webp 960w, img/urodziny-tyrolka-dziecko-w-uprzezy-91c0d312-1000.webp 1000w" sizes="(min-width: 460px) 360px, 80vw" alt="Dziecko w uprzęży przy linie" width="1000" height="1500" loading="lazy" decoding="async">
                 <div class="bday-card__body">
                   <span class="bday-card__badge">02 · hit</span>
                   <h4>Tyrolka — zjazd na 30-metrowej linie</h4>
@@ -433,7 +752,7 @@
                 </div>
               </article>
               <article class="bday-card">
-                <img class="bday-card__img" src="assets/bday-wieza.jpg" alt="Wysoka ściana wspinaczkowa z dziećmi na linach" width="1316" height="640" loading="lazy">
+                <img class="bday-card__img" src="img/urodziny-wieza-wspinaczkowa-17-m-5386658d-960.webp" srcset="img/urodziny-wieza-wspinaczkowa-17-m-5386658d-480.webp 480w, img/urodziny-wieza-wspinaczkowa-17-m-5386658d-960.webp 960w, img/urodziny-wieza-wspinaczkowa-17-m-5386658d-1316.webp 1316w" sizes="(min-width: 460px) 360px, 80vw" alt="Wysoka ściana wspinaczkowa z dziećmi na linach" width="1316" height="640" loading="lazy" decoding="async">
                 <div class="bday-card__body">
                   <span class="bday-card__badge">03</span>
                   <h4>17-metrowa wieża i drabinka Bachara</h4>
@@ -441,7 +760,7 @@
                 </div>
               </article>
               <article class="bday-card">
-                <img class="bday-card__img" src="assets/bday-hustawka.jpg" alt="Dzieci bawią się w strefie zabaw na matach" width="1500" height="1000" loading="lazy">
+                <img class="bday-card__img" src="img/urodziny-strefa-zabaw-dzieci-45f093c8-960.webp" srcset="img/urodziny-strefa-zabaw-dzieci-45f093c8-480.webp 480w, img/urodziny-strefa-zabaw-dzieci-45f093c8-960.webp 960w, img/urodziny-strefa-zabaw-dzieci-45f093c8-1440.webp 1440w" sizes="(min-width: 460px) 360px, 80vw" alt="Dzieci bawią się w strefie zabaw na matach" width="1440" height="960" loading="lazy" decoding="async">
                 <div class="bday-card__body">
                   <span class="bday-card__badge">04</span>
                   <h4>Ogromna kilkuosobowa huśtawka</h4>
@@ -449,7 +768,7 @@
                 </div>
               </article>
               <article class="bday-card">
-                <img class="bday-card__img" src="assets/bday-salka.jpg" alt="Hala Rydlówka 32 ze stolikami w tle" width="1600" height="1200" loading="lazy">
+                <img class="bday-card__img" src="img/salka-urodzinowa-rydlowka-32-5547c657-960.webp" srcset="img/salka-urodzinowa-rydlowka-32-5547c657-480.webp 480w, img/salka-urodzinowa-rydlowka-32-5547c657-960.webp 960w, img/salka-urodzinowa-rydlowka-32-5547c657-1440.webp 1440w" sizes="(min-width: 460px) 360px, 80vw" alt="Hala Rydlówka 32 ze stolikami w tle" width="1440" height="1080" loading="lazy" decoding="async">
                 <div class="bday-card__body">
                   <span class="bday-card__badge">05</span>
                   <h4>Osobna salka na poczęstunek</h4>
@@ -457,7 +776,7 @@
                 </div>
               </article>
               <article class="bday-card">
-                <img class="bday-card__img" src="assets/bday-prezenty.jpg" alt="Chłopiec z upominkiem przy ściance" width="1500" height="1000" loading="lazy">
+                <img class="bday-card__img" src="img/urodziny-upominek-dla-dziecka-f0ae8286-960.webp" srcset="img/urodziny-upominek-dla-dziecka-f0ae8286-480.webp 480w, img/urodziny-upominek-dla-dziecka-f0ae8286-960.webp 960w, img/urodziny-upominek-dla-dziecka-f0ae8286-1440.webp 1440w" sizes="(min-width: 460px) 360px, 80vw" alt="Chłopiec z upominkiem przy ściance" width="1440" height="960" loading="lazy" decoding="async">
                 <div class="bday-card__body">
                   <span class="bday-card__badge">06</span>
                   <h4>Prezenty dla uczestników</h4>
@@ -484,7 +803,7 @@
       <div class="wrap">
         <div class="section-head sd-reveal">
           <span class="section-eyebrow">Cennik</span>
-          <h2 id="cennik-title">Ile kosztuje wspinanie w Fortecy?</h2>
+          <h2 id="cennik-title">Cennik ścianki — ile kosztuje wspinanie w Fortecy?</h2>
           <p>Pojedyncze wejście to aż 2,5 godziny na ściance. Ceny obowiązują we wszystkich trzech lokalizacjach.</p>
         </div>
 
@@ -700,25 +1019,43 @@
           <div class="gallery__loc" id="galeria-ludowa-6">
             <h3>Ludowa 6</h3>
             <div class="gallery__grid sd-stagger" role="region" aria-label="Zdjęcia — Ludowa 6" tabindex="0">
-              <img style="--i:0" src="assets/galeria/ludowa-1.jpg" alt="Hala Ludowa 6 z lotu drona — kolorowe ściany z drogami" width="768" height="432" loading="lazy">
-              <img style="--i:1" src="assets/galeria/ludowa-2.jpg" alt="Wspinaczka po żółtej płycie na Ludowej 6" width="768" height="513" loading="lazy">
-              <img style="--i:2" src="assets/galeria/ludowa-3.jpg" alt="Kilka zespołów wspinających się z liną na Ludowej 6" width="768" height="513" loading="lazy">
+              <a class="gallery__item" style="--i:0" href="img/wspinacze-na-kolorowych-scianach-ludowa-6-4803fc8d-768.webp" data-lightbox="galeria-ludowa-6">
+                <img src="img/wspinacze-na-kolorowych-scianach-ludowa-6-4803fc8d-768.webp" srcset="img/wspinacze-na-kolorowych-scianach-ludowa-6-4803fc8d-480.webp 480w, img/wspinacze-na-kolorowych-scianach-ludowa-6-4803fc8d-768.webp 768w" sizes="(min-width: 1280px) 400px, (min-width: 720px) 33vw, 82vw" alt="Dwoje wspinaczy z liną na kolorowych ścianach hali Ludowa 6" width="768" height="432" loading="lazy" decoding="async">
+              </a>
+              <a class="gallery__item" style="--i:1" href="img/wspinaczka-zolta-plyta-ludowa-6-c079c3d6-768.webp" data-lightbox="galeria-ludowa-6">
+                <img src="img/wspinaczka-zolta-plyta-ludowa-6-c079c3d6-768.webp" srcset="img/wspinaczka-zolta-plyta-ludowa-6-c079c3d6-480.webp 480w, img/wspinaczka-zolta-plyta-ludowa-6-c079c3d6-768.webp 768w" sizes="(min-width: 1280px) 400px, (min-width: 720px) 33vw, 82vw" alt="Wspinaczka po żółtej płycie na Ludowej 6" width="768" height="513" loading="lazy" decoding="async">
+              </a>
+              <a class="gallery__item" style="--i:2" href="img/wspinaczka-z-lina-ludowa-6-97cb2794-768.webp" data-lightbox="galeria-ludowa-6">
+                <img src="img/wspinaczka-z-lina-ludowa-6-97cb2794-768.webp" srcset="img/wspinaczka-z-lina-ludowa-6-97cb2794-480.webp 480w, img/wspinaczka-z-lina-ludowa-6-97cb2794-768.webp 768w" sizes="(min-width: 1280px) 400px, (min-width: 720px) 33vw, 82vw" alt="Kilka zespołów wspinających się z liną na Ludowej 6" width="768" height="513" loading="lazy" decoding="async">
+              </a>
             </div>
           </div>
           <div class="gallery__loc" id="galeria-raclawicka-60">
             <h3>Racławicka 60</h3>
             <div class="gallery__grid sd-stagger" role="region" aria-label="Zdjęcia — Racławicka 60" tabindex="0">
-              <img style="--i:0" src="assets/galeria/raclawicka-1.jpg" alt="Hala Racławicka 60 — rzeźbiony panel i strefa boulderowa" width="768" height="432" loading="lazy">
-              <img style="--i:1" src="assets/galeria/raclawicka-2.jpg" alt="Wspinaczka z liną obok ściany z dużymi chwytami na Racławickiej 60" width="768" height="513" loading="lazy">
-              <img style="--i:2" src="assets/galeria/raclawicka-3.jpg" alt="Rzeźbiony panel imitujący naturalną skałę na Racławickiej 60" width="768" height="432" loading="lazy">
+              <a class="gallery__item" style="--i:0" href="img/panel-i-boulderownia-raclawicka-60-08104831-768.webp" data-lightbox="galeria-raclawicka-60">
+                <img src="img/panel-i-boulderownia-raclawicka-60-08104831-768.webp" srcset="img/panel-i-boulderownia-raclawicka-60-08104831-480.webp 480w, img/panel-i-boulderownia-raclawicka-60-08104831-768.webp 768w" sizes="(min-width: 1280px) 400px, (min-width: 720px) 33vw, 82vw" alt="Hala Racławicka 60 — rzeźbiony panel i strefa boulderowa" width="768" height="432" loading="lazy" decoding="async">
+              </a>
+              <a class="gallery__item" style="--i:1" href="img/wspinaczka-z-lina-raclawicka-60-bf28f426-768.webp" data-lightbox="galeria-raclawicka-60">
+                <img src="img/wspinaczka-z-lina-raclawicka-60-bf28f426-768.webp" srcset="img/wspinaczka-z-lina-raclawicka-60-bf28f426-480.webp 480w, img/wspinaczka-z-lina-raclawicka-60-bf28f426-768.webp 768w" sizes="(min-width: 1280px) 400px, (min-width: 720px) 33vw, 82vw" alt="Wspinaczka z liną obok ściany z dużymi chwytami na Racławickiej 60" width="768" height="513" loading="lazy" decoding="async">
+              </a>
+              <a class="gallery__item" style="--i:2" href="img/rzezbiony-panel-skalny-raclawicka-60-8781c924-768.webp" data-lightbox="galeria-raclawicka-60">
+                <img src="img/rzezbiony-panel-skalny-raclawicka-60-8781c924-768.webp" srcset="img/rzezbiony-panel-skalny-raclawicka-60-8781c924-480.webp 480w, img/rzezbiony-panel-skalny-raclawicka-60-8781c924-768.webp 768w" sizes="(min-width: 1280px) 400px, (min-width: 720px) 33vw, 82vw" alt="Rzeźbiony panel imitujący naturalną skałę na Racławickiej 60" width="768" height="432" loading="lazy" decoding="async">
+              </a>
             </div>
           </div>
           <div class="gallery__loc" id="galeria-rydlowka-32">
             <h3>Rydlówka 32</h3>
             <div class="gallery__grid sd-stagger" role="region" aria-label="Zdjęcia — Rydlówka 32" tabindex="0">
-              <img style="--i:0" src="assets/galeria/rydlowka-1.jpg" alt="Przewieszona boulderownia na Rydlówce 32" width="768" height="576" loading="lazy">
-              <img style="--i:1" src="assets/galeria/rydlowka-2.jpg" alt="Strefa treningowa z chwytotablicami na Rydlówce 32" width="768" height="576" loading="lazy">
-              <img style="--i:2" src="assets/galeria/rydlowka-3.jpg" alt="Wolne ciężary w strefie treningowej na Rydlówce 32" width="768" height="576" loading="lazy">
+              <a class="gallery__item" style="--i:0" href="img/przewieszona-boulderownia-rydlowka-32-d799912b-768.webp" data-lightbox="galeria-rydlowka-32">
+                <img src="img/przewieszona-boulderownia-rydlowka-32-d799912b-768.webp" srcset="img/przewieszona-boulderownia-rydlowka-32-d799912b-480.webp 480w, img/przewieszona-boulderownia-rydlowka-32-d799912b-768.webp 768w" sizes="(min-width: 1280px) 400px, (min-width: 720px) 33vw, 82vw" alt="Przewieszona boulderownia na Rydlówce 32" width="768" height="576" loading="lazy" decoding="async">
+              </a>
+              <a class="gallery__item" style="--i:1" href="img/strefa-treningowa-chwytotablice-rydlowka-32-b59a83b0-768.webp" data-lightbox="galeria-rydlowka-32">
+                <img src="img/strefa-treningowa-chwytotablice-rydlowka-32-b59a83b0-768.webp" srcset="img/strefa-treningowa-chwytotablice-rydlowka-32-b59a83b0-480.webp 480w, img/strefa-treningowa-chwytotablice-rydlowka-32-b59a83b0-768.webp 768w" sizes="(min-width: 1280px) 400px, (min-width: 720px) 33vw, 82vw" alt="Strefa treningowa z chwytotablicami na Rydlówce 32" width="768" height="576" loading="lazy" decoding="async">
+              </a>
+              <a class="gallery__item" style="--i:2" href="img/wolne-ciezary-rydlowka-32-35aaa1bd-768.webp" data-lightbox="galeria-rydlowka-32">
+                <img src="img/wolne-ciezary-rydlowka-32-35aaa1bd-768.webp" srcset="img/wolne-ciezary-rydlowka-32-35aaa1bd-480.webp 480w, img/wolne-ciezary-rydlowka-32-35aaa1bd-768.webp 768w" sizes="(min-width: 1280px) 400px, (min-width: 720px) 33vw, 82vw" alt="Wolne ciężary w strefie treningowej na Rydlówce 32" width="768" height="576" loading="lazy" decoding="async">
+              </a>
             </div>
           </div>
           <!-- /cms:galeria -->
@@ -736,34 +1073,34 @@
         <div class="video-grid sd-stagger">
           <!-- cms:wideo -->
           <a class="video-card" style="--i:0" href="https://www.youtube.com/watch?v=T7Yo__vs2BQ" target="_blank" rel="noopener">
-            <img src="assets/urodziny-2.jpg" alt="" width="1500" height="1000" loading="lazy">
-            <span class="video-card__play"><svg class="ico"><use href="#i-play"/></svg></span>
-            <span class="video-card__title">Urodziny, które wszyscy zapamiętają!</span>
+            <img src="img/urodziny-dzieci-zabawa-na-materacach-4777214b-960.webp" srcset="img/urodziny-dzieci-zabawa-na-materacach-4777214b-480.webp 480w, img/urodziny-dzieci-zabawa-na-materacach-4777214b-960.webp 960w, img/urodziny-dzieci-zabawa-na-materacach-4777214b-1440.webp 1440w" sizes="(min-width: 1280px) 300px, (min-width: 720px) 34vw, 100vw" alt="" width="1440" height="960" loading="lazy" decoding="async">
+            <span class="video-card__play"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>
+            <span class="video-card__title">Urodziny, które wszyscy zapamiętają! <span class="visually-hidden">(YouTube, nowa karta)</span></span>
           </a>
           <a class="video-card" style="--i:1" href="https://www.youtube.com/watch?v=en3Fd90KhqY" target="_blank" rel="noopener">
-            <img src="assets/sekcje-dorosli.jpg" alt="" width="857" height="483" loading="lazy">
-            <span class="video-card__play"><svg class="ico"><use href="#i-play"/></svg></span>
-            <span class="video-card__title">Sekcje / Meeting boulderowy</span>
+            <img src="img/trening-wspinaczkowy-dorosli-krakow-cf295828-857.webp" srcset="img/trening-wspinaczkowy-dorosli-krakow-cf295828-480.webp 480w, img/trening-wspinaczkowy-dorosli-krakow-cf295828-857.webp 857w" sizes="(min-width: 1280px) 300px, (min-width: 720px) 34vw, 100vw" alt="" width="857" height="483" loading="lazy" decoding="async">
+            <span class="video-card__play"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>
+            <span class="video-card__title">Sekcje / Meeting boulderowy <span class="visually-hidden">(YouTube, nowa karta)</span></span>
           </a>
           <a class="video-card" style="--i:2" href="https://www.youtube.com/watch?v=r0fxEhWpyBQ" target="_blank" rel="noopener">
-            <img src="assets/sekcje-dzieci.jpg" alt="" width="2048" height="2048" loading="lazy">
-            <span class="video-card__play"><svg class="ico"><use href="#i-play"/></svg></span>
-            <span class="video-card__title">Forteciaki — zawody wspinaczkowe dla dzieci</span>
+            <img src="img/wspinaczka-dzieci-sekcja-krakow-b9ed1902-960.webp" srcset="img/wspinaczka-dzieci-sekcja-krakow-b9ed1902-480.webp 480w, img/wspinaczka-dzieci-sekcja-krakow-b9ed1902-960.webp 960w, img/wspinaczka-dzieci-sekcja-krakow-b9ed1902-1440.webp 1440w" sizes="(min-width: 1280px) 300px, (min-width: 720px) 34vw, 100vw" alt="" width="1440" height="1440" loading="lazy" decoding="async">
+            <span class="video-card__play"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>
+            <span class="video-card__title">Forteciaki — zawody wspinaczkowe dla dzieci <span class="visually-hidden">(YouTube, nowa karta)</span></span>
           </a>
           <a class="video-card" style="--i:3" href="https://www.youtube.com/watch?v=PKiSZG8dncw" target="_blank" rel="noopener">
-            <img src="assets/rydlowka.jpg" alt="" width="1600" height="1200" loading="lazy">
-            <span class="video-card__play"><svg class="ico"><use href="#i-play"/></svg></span>
-            <span class="video-card__title">Centrum Wspinaczkowe Forteca — Rydlówka 32</span>
+            <img src="img/hala-wspinaczkowa-rydlowka-32-krakow-5547c657-960.webp" srcset="img/hala-wspinaczkowa-rydlowka-32-krakow-5547c657-480.webp 480w, img/hala-wspinaczkowa-rydlowka-32-krakow-5547c657-960.webp 960w, img/hala-wspinaczkowa-rydlowka-32-krakow-5547c657-1440.webp 1440w" sizes="(min-width: 1280px) 300px, (min-width: 720px) 34vw, 100vw" alt="" width="1440" height="1080" loading="lazy" decoding="async">
+            <span class="video-card__play"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>
+            <span class="video-card__title">Centrum Wspinaczkowe Forteca — Rydlówka 32 <span class="visually-hidden">(YouTube, nowa karta)</span></span>
           </a>
           <a class="video-card" style="--i:4" href="https://www.youtube.com/watch?v=e2sZofM2wvM" target="_blank" rel="noopener">
-            <img src="assets/galeria/ludowa-2.jpg" alt="" width="768" height="513" loading="lazy">
-            <span class="video-card__play"><svg class="ico"><use href="#i-play"/></svg></span>
-            <span class="video-card__title">Sekcje wspinaczkowe dla dorosłych</span>
+            <img src="img/wspinaczka-zolta-plyta-ludowa-6-c079c3d6-768.webp" srcset="img/wspinaczka-zolta-plyta-ludowa-6-c079c3d6-480.webp 480w, img/wspinaczka-zolta-plyta-ludowa-6-c079c3d6-768.webp 768w" sizes="(min-width: 1280px) 300px, (min-width: 720px) 34vw, 100vw" alt="" width="768" height="513" loading="lazy" decoding="async">
+            <span class="video-card__play"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>
+            <span class="video-card__title">Sekcje wspinaczkowe dla dorosłych <span class="visually-hidden">(YouTube, nowa karta)</span></span>
           </a>
           <a class="video-card" style="--i:5" href="https://www.youtube.com/watch?v=av9MzDB8dZo" target="_blank" rel="noopener">
-            <img src="assets/bday-wspinaczka.jpg" alt="" width="545" height="727" loading="lazy">
-            <span class="video-card__play"><svg class="ico"><use href="#i-play"/></svg></span>
-            <span class="video-card__title">Sekcje wspinaczkowe dla dzieci</span>
+            <img src="img/urodziny-wspinaczka-dzieci-pomaranczowa-scianka-f6673b74-545.webp" srcset="img/urodziny-wspinaczka-dzieci-pomaranczowa-scianka-f6673b74-480.webp 480w, img/urodziny-wspinaczka-dzieci-pomaranczowa-scianka-f6673b74-545.webp 545w" sizes="(min-width: 1280px) 300px, (min-width: 720px) 34vw, 100vw" alt="" width="545" height="727" loading="lazy" decoding="async">
+            <span class="video-card__play"><svg class="ico" aria-hidden="true"><use href="#i-play"/></svg></span>
+            <span class="video-card__title">Sekcje wspinaczkowe dla dzieci <span class="visually-hidden">(YouTube, nowa karta)</span></span>
           </a>
           <!-- /cms:wideo -->
         </div>
@@ -775,7 +1112,7 @@
       <div class="wrap">
         <div class="section-head sd-reveal">
           <span class="section-eyebrow">Pierwszy raz na ściance</span>
-          <h2 id="faq-title">Pytania i odpowiedzi</h2>
+          <h2 id="faq-title">Najczęstsze pytania o wspinanie na ściance</h2>
         </div>
 
         <div class="faq-cols">
@@ -834,13 +1171,13 @@
   <footer class="site-footer" id="kontakt">
     <div class="wrap">
       <div class="footer-infolinia">
-        <span class="section-eyebrow">Kontakt</span>
+        <span class="section-eyebrow">Kontakt · Kraków</span>
         <!-- cms:infolinia -->
         <h2>Infolinia <a href="tel:+48126328333">12 632 83 33</a></h2>
         <!-- /cms:infolinia -->
         <div class="hero__cta-row">
           <!-- cms:infolinia-przycisk -->
-          <a class="btn btn--yellow" href="tel:+48126328333"><svg class="ico"><use href="#i-phone"/></svg> Zadzwoń</a>
+          <a class="btn btn--yellow" href="tel:+48126328333"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> Zadzwoń</a>
           <!-- /cms:infolinia-przycisk -->
           <a class="btn btn--outline-light" href="https://www.facebook.com/cwforteca" target="_blank" rel="noopener"><svg class="ico"><use href="#i-fb"/></svg> Facebook</a>
           <a class="btn btn--outline-light" href="https://www.instagram.com/cwforteca" target="_blank" rel="noopener"><svg class="ico"><use href="#i-ig"/></svg> Instagram</a>
@@ -852,8 +1189,9 @@
         <div class="footer-loc">
           <h3>Ludowa 6</h3>
           <ul>
-            <li><a href="tel:+48512631621"><svg class="ico"><use href="#i-phone"/></svg> 512 631 621</a></li>
-            <li><a href="mailto:recepcjaL6@cwf.pl"><svg class="ico"><use href="#i-mail"/></svg> recepcjaL6@cwf.pl</a></li>
+            <li><a href="https://maps.google.com/maps?q=Ludowa%206%2C%20Krak%C3%B3w" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg> ul. Ludowa 6, Kraków</a></li>
+            <li><a href="tel:+48512631621"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> 512 631 621</a></li>
+            <li><a href="mailto:recepcjaL6@cwf.pl"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> recepcjaL6@cwf.pl</a></li>
             <li>Pn–Pt 10:00–23:00 · Sb–Nd 10:00–22:00</li>
             <li><a href="https://www.facebook.com/CWFortecaLudowa6" target="_blank" rel="noopener">Facebook Ludowa 6 ↗</a></li>
           </ul>
@@ -861,8 +1199,9 @@
         <div class="footer-loc">
           <h3>Racławicka 60</h3>
           <ul>
-            <li><a href="tel:+48509228998"><svg class="ico"><use href="#i-phone"/></svg> 509 228 998</a></li>
-            <li><a href="mailto:recepcjaR60@cwf.pl"><svg class="ico"><use href="#i-mail"/></svg> recepcjaR60@cwf.pl</a></li>
+            <li><a href="https://maps.google.com/maps?q=Rac%C5%82awicka%2060%2C%20Krak%C3%B3w" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg> ul. Racławicka 60, Kraków</a></li>
+            <li><a href="tel:+48509228998"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> 509 228 998</a></li>
+            <li><a href="mailto:recepcjaR60@cwf.pl"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> recepcjaR60@cwf.pl</a></li>
             <li>Pn–Pt 10:00–23:00 · Sb–Nd 10:00–22:00</li>
             <li><a href="https://www.facebook.com/CWFortecaRaclawicka60" target="_blank" rel="noopener">Facebook Racławicka 60 ↗</a></li>
           </ul>
@@ -870,8 +1209,9 @@
         <div class="footer-loc">
           <h3>Rydlówka 32</h3>
           <ul>
-            <li><a href="tel:+48509300918"><svg class="ico"><use href="#i-phone"/></svg> 509 300 918</a></li>
-            <li><a href="mailto:recepcjaR32@cwf.pl"><svg class="ico"><use href="#i-mail"/></svg> recepcjaR32@cwf.pl</a></li>
+            <li><a href="https://maps.google.com/maps?q=Rydl%C3%B3wka%2032%2C%20Krak%C3%B3w" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg> ul. Rydlówka 32, Kraków</a></li>
+            <li><a href="tel:+48509300918"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> 509 300 918</a></li>
+            <li><a href="mailto:recepcjaR32@cwf.pl"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> recepcjaR32@cwf.pl</a></li>
             <li>Pn–Czw 10:00–23:00 · Pt–Nd 10:00–22:00</li>
             <li><a href="https://www.facebook.com/CWFortecaRydlowka32" target="_blank" rel="noopener">Facebook Rydlówka 32 ↗</a></li>
           </ul>
@@ -895,6 +1235,14 @@
       </div>
     </div>
   </footer>
-  <script src="script.js"></script>
+  <!-- cms:pasek-kontakt -->
+  <nav class="call-bar" aria-label="Szybki kontakt">
+    <a class="call-bar__btn call-bar__btn--main" href="tel:+48126328333"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> Zadzwoń <span>12 632 83 33</span></a>
+    <a class="call-bar__btn" href="tel:+48509838500"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> Urodziny</a>
+  </nav>
+  <!-- /cms:pasek-kontakt -->
+  <!-- cms:skrypt -->
+  <script src="script.js?v=776bd83f" defer></script>
+  <!-- /cms:skrypt -->
 </body>
 </html>
