@@ -373,6 +373,9 @@ if (galleryLinks.length && typeof HTMLDialogElement === "function") {
 
 // ---------- Wysokościomierz: przeciągnięcie rombu (albo klik w linę) przewija stronę ----------
 // Romb prowadzi animacja CSS scroll(root); bez niej (ograniczony ruch, starsze przeglądarki) ustawia go skrypt.
+// Podczas przeciągania romb idzie za palcem bez czekania na przewinięcie strony (na telefonie 1 px liny to ok. 100 px
+// strony, więc przewinięcie z dorysowaniem zdjęć bywa wolniejsze niż palec), a przewijanie jest zbierane do jednego
+// na klatkę ekranu.
 // Element zostaje aria-hidden: to wygodny skrót dla myszy i palca, przewijanie z klawiatury działa jak zawsze.
 const altimeter = document.querySelector(".altimeter");
 
@@ -381,38 +384,59 @@ if (altimeter) {
   const CLIMBER_BOTTOM = 6; // bottom: 6px w CSS
   const CLIMBER_SIZE = 17;
   const TOP_GAP = 9; // romb na „17 m” kończy 9 px pod górną krawędzią (36px w keyframes sd-climb = 6 + 17 + 9 + 4 obramowania)
+  const clamp01 = (v) => Math.min(1, Math.max(0, v));
   const maxScroll = () => document.documentElement.scrollHeight - document.documentElement.clientHeight;
   const travel = () => altimeter.clientHeight - CLIMBER_BOTTOM - CLIMBER_SIZE - TOP_GAP;
+  const setClimber = (progress) => {
+    climber.style.transform = `translateY(${-progress * travel()}px) rotate(45deg)`;
+  };
 
+  let dragging = false;
   const place = () => {
+    if (dragging) return; // w trakcie przeciągania położenie rombu wyznacza palec
     if (climber.getAnimations().length) {
       climber.style.transform = "";
       return;
     }
-    const progress = maxScroll() > 0 ? Math.min(1, Math.max(0, window.scrollY / maxScroll())) : 0;
-    climber.style.transform = `translateY(${-progress * travel()}px) rotate(45deg)`;
+    setClimber(maxScroll() > 0 ? clamp01(window.scrollY / maxScroll()) : 0);
   };
 
-  /** Wysokość wskaźnika na linie → położenie strony (środek rombu pod palcem / kursorem). */
-  const scrollToPointer = (clientY) => {
+  /** Wysokość wskaźnika na linie → postęp 0–1 (środek rombu pod palcem / kursorem). */
+  const progressAt = (clientY) => {
     const bottom = altimeter.getBoundingClientRect().bottom - altimeter.clientTop - CLIMBER_BOTTOM - CLIMBER_SIZE / 2;
-    const progress = Math.min(1, Math.max(0, (bottom - clientY) / travel()));
-    window.scrollTo({ top: progress * maxScroll(), behavior: "instant" });
+    return clamp01((bottom - clientY) / travel());
   };
 
-  let dragging = false;
+  let target = 0;
+  let scrollFrame = 0;
+  const flushScroll = () => {
+    scrollFrame = 0;
+    window.scrollTo({ top: target * maxScroll(), behavior: "instant" });
+  };
+  const dragTo = (clientY) => {
+    target = progressAt(clientY);
+    setClimber(target);
+    if (!scrollFrame) scrollFrame = requestAnimationFrame(flushScroll);
+  };
+
   altimeter.addEventListener("pointerdown", (event) => {
     if (event.button > 0) return;
     event.preventDefault();
     dragging = true;
-    altimeter.classList.add("is-dragging");
+    altimeter.classList.add("is-dragging"); // CSS zdejmuje animację scroll(root) z rombu na czas przeciągania
     altimeter.setPointerCapture(event.pointerId);
-    scrollToPointer(event.clientY);
+    dragTo(event.clientY);
   });
-  altimeter.addEventListener("pointermove", (event) => dragging && scrollToPointer(event.clientY));
+  altimeter.addEventListener("pointermove", (event) => dragging && dragTo(event.clientY));
   const endDrag = () => {
+    if (!dragging) return;
+    if (scrollFrame) {
+      cancelAnimationFrame(scrollFrame);
+      flushScroll();
+    }
     dragging = false;
     altimeter.classList.remove("is-dragging");
+    place();
   };
   altimeter.addEventListener("pointerup", endDrag);
   altimeter.addEventListener("pointercancel", endDrag);

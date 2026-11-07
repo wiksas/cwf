@@ -381,6 +381,8 @@ button:disabled { cursor: not-allowed; }
 }
 .altimeter.is-dragging,
 .altimeter.is-dragging .altimeter__climber { cursor: grabbing; }
+/* w trakcie przeciągania romb ustawia script.js (idzie za palcem), animacja scroll(root) wraca po puszczeniu */
+.altimeter.is-dragging .altimeter__climber { animation: none; }
 /* węższy ekran: sama lina z rombem przy krawędzi okna, bez podziałki; 22 px szerokości przy samej krawędzi, żeby nie
    zasłaniać tekstu (margines treści to 20 px); górna i dolna ramka zostają, bo od nich liczy się droga rombu
    (keyframes sd-climb, script.js) */
