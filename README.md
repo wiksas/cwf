@@ -1,6 +1,6 @@
-# Przebudowa strony `cwf.pl` — Centrum Wspinaczkowe Forteca
+# Przebudowa strony `cwf.pl`: Centrum Wspinaczkowe Forteca
 
-> Nowa strona główna CWF w **oryginalnej identyfikacji** (żółty znak wspinacza, biel, czerń, zdjęcia z `cwf.pl`) — z porządkiem w ofercie, pełnym cennikiem w tabelach, menu mobilnym i animacjami CSS Scroll-driven.
+> Strona główna CWF w **oryginalnej identyfikacji** (żółty znak wspinacza, czerń, biel, zdjęcia z `cwf.pl`), przebudowana drugi raz według zasad anti-slop: układ wynika z treści, każda decyzja wizualna ma zapisany powód, bez wymyślonych danych.
 
 | | |
 |---|---|
@@ -26,14 +26,34 @@ Zostawiamy wszystko, po czym klienci rozpoznają Fortecę, a poprawiamy wykonani
 
 | Zachowane z oryginału | Ulepszone |
 |---|---|
-| logo i żółty znak wspinacza, kolory `#ffca08` / `#fbb03b` / biel / czerń | jedna, uporządkowana sekcja oferty ze zdjęciami CWF |
-| hero ze zdjęciem ścianki i napisem „Centrum Wspinaczkowe **Forteca**” | pełny cennik w czytelnych tabelach (kolumny: ulgowy/normalny, z kartą sportową itd.) |
-| biały nagłówek z żółtym przyciskiem „Wybierz lokalizację” | menu mobilne (wcześniej brak na wąskich ekranach w koncepcie) i ikony SVG zamiast emoji |
-| białe karty z cieniem i przyciski „Zobacz więcej” | sekcja urodzin z pakietami od 600 zł, galerią atrakcji i animacją tyrolki |
-| 3 lokalizacje z godzinami, telefonami i e-mailami | kontakt bez duplikatów, linki „Jak dojechać” |
-| filmy CWF z YouTube, FAQ i słowniczek | karty wideo z prawdziwymi tytułami filmów, pełne FAQ i słowniczek na stronie głównej |
-| podstrony lokalizacji (parametry ścian, udogodnienia, galerie) | parametry ścian na kartach lokalizacji, wspólne udogodnienia, galeria 3 × 3 zdjęcia (na telefonie karuzela przesuwana palcem) |
-| podstrony oferty, formularze, regulaminy, fundacja, dane firmy | fakty z podstron oferty na kartach, sekcja „Pierwsza wizyta” z formularzami, `regulaminy.html`, `fundacja.html`, dane rejestrowe w stopce |
+| logo i żółty znak wspinacza, kolory `#ffca08` / czerń / biel | jedna, uporządkowana sekcja oferty ze zdjęciami CWF |
+| hero ze zdjęciem ścianki i napisem „Centrum Wspinaczkowe **Forteca**” | pełny cennik w czytelnych tabelach ze spisem cenników obok |
+| nagłówek z żółtym przyciskiem „Wybierz lokalizację” | menu mobilne i ikony SVG zamiast emoji |
+| 3 lokalizacje z godzinami, telefonami i e-mailami | lokalizacje jako wiersze do porównania, kontakt bez duplikatów, linki „Jak dojechać” |
+| filmy CWF z YouTube, FAQ i słowniczek | sekcja urodzin z pakietami od 600 zł i przejazdem tyrolki |
+| podstrony lokalizacji (parametry ścian, udogodnienia, galerie) | parametry ścian przy lokalizacjach, galeria z dużym zdjęciem każdej hali (na telefonie karuzela) |
+| podstrony oferty, formularze, regulaminy, fundacja, dane firmy | sekcja „Pierwsza wizyta” z formularzami, `regulaminy.html`, `fundacja.html`, dane rejestrowe w stopce |
+
+---
+
+## Kierunek wizualny (anti-slop)
+
+Odczyt: lokalna strona trzech ścianek w Krakowie dla rodziców (urodziny) i wspinaczy (wejścia, sekcje), w identyfikacji znaku CWF. Pokrętła: **ENERGIA 2 / RYTM 3 / RUCH 2**.
+
+| Decyzja | Powód |
+|---|---|
+| Czerń `#1d1d1b` + żółty `#ffca08` + biel, jasny `#f3f1ec` pod tabelami i zdjęciami | to kolory znaku CWF; więcej barw dają zdjęcia hal |
+| Żółte tło tylko w sekcji urodzin | najbardziej dochodowa usługa, jedyne miejsce, gdzie kolor ma przyciągnąć wzrok |
+| Romb ze znaku jako punktor, numer kroku, wskaźnik wysokościomierza i wózek tyrolki | jeden powtarzany motyw z logo zamiast ikon z biblioteki |
+| Nagłówki: Saira Condensed | wąski, kanciasty krój jak napis w logo; mieści długie polskie słowa w dużym stopniu na telefonie (oryginał `cwf.pl` używa Roboto/Arial, Montserrat z poprzedniej wersji nie miał związku z marką) |
+| Tekst: Inter | czytelny w 16 px, cyfry tabelaryczne w cennikach |
+| Hero: tekst na czerni, zdjęcie bez przyciemnienia, skośna krawędź | zdjęcie hali widać w pełnych kolorach; skos powtarza skos skały ze znaku |
+| Lokalizacje jako wiersze, nie karty | trzy hale mają te same pola, wiersze pozwalają je porównać |
+| Oferta: dwie duże karty i trzy mniejsze | sekcje dla dorosłych i dzieci to stała oferta, reszta jest uzupełnieniem |
+| Cennik: przyklejona kolumna ze spisem | sześć cenników jest długich; spis skraca drogę do właściwej tabeli |
+| Promocje na czarnym pasie, bez kart | trzy krótkie oferty z dużą ceną czyta się w jednym rzędzie |
+| Bez nadtytułów nad nagłówkami, bez tła z chwytami, bez cieni na kartach | powtarzały nagłówek albo były ozdobą bez funkcji |
+| Ruch: wysokościomierz, scena tyrolki, cień nagłówka | każdy pokazuje położenie albo realną atrakcję (wieża 17 m, tyrolka 30 m); usunięte: pasek postępu (dublował wysokościomierz), wjazdy kart i nagłówków, obrót znaku |
 
 ---
 
@@ -46,14 +66,14 @@ Zostawiamy wszystko, po czym klienci rozpoznają Fortecę, a poprawiamy wykonani
 | `fundacja.html` | Fundacja Magnezja — cele i dane rejestrowe |
 | `404.html` | strona błędu w wyglądzie serwisu (`noindex`, linki do strony głównej, cennika i kontaktu) |
 | `robots.txt`, `sitemap.xml` | indeksowanie; sitemapę (z listą zdjęć) generuje `build.mjs` |
-| `styles.css` | style w palecie CWF, czcionki z `fonts/`, efekty CSS Scroll-driven Animations |
+| `styles.css` | system wizualny (kolory i kroje z tabeli wyżej), czcionki z `fonts/`, efekty CSS Scroll-driven Animations |
 | `script.js` | menu mobilne (Esc, „wstecz”, blokada przewijania), wyróżnienie bieżącej sekcji w menu, strzałki karuzeli urodzin, podgląd zdjęć galerii, pasek „Zadzwoń” na telefonie |
 | `admin/` | panel treści dla klienta ([Sveltia CMS](https://sveltiacms.app/)): `index.html` + konfiguracja pól `config.yml` |
 | `content/*.json` | treści edytowane w panelu: cennik, promocje, galeria, urodziny, oferta, lokalizacje i godziny, formularze, filmy, FAQ, telefony, tytuł i opis dla Google, zdjęcie w nagłówku |
 | `scripts/build.mjs` | wstawia `content/*.json` do bloków `<!-- cms:… -->`, generuje warianty zdjęć, `og:image`, JSON-LD i `sitemap.xml` (Node 22 + `sharp`) |
 | `.github/workflows/tresci.yml` | po każdym zapisie w panelu uruchamia `build.mjs` i commituje wynik |
 | `img/` | **generowane** przez `build.mjs`: warianty WebP 480/960/1440 px (hero 800/1280/1920) i podgląd linku 1200×630; nieużywane pliki są usuwane |
-| `fonts/` | Inter i Montserrat (woff2, latin + Latin Extended-A), licencja `OFL.txt` |
+| `fonts/` | Inter (tekst) i Saira Condensed 700/800 (nagłówki), woff2 latin + Latin Extended-A, licencja `OFL.txt` |
 | `assets/logo-cwf.png`, `assets/logo-cwf.webp` | oryginalne logo z `cwf.pl` (PNG do danych strukturalnych, WebP 2× na stronie) |
 | `assets/sygnet.svg`, `assets/favicon-48.png`, `assets/favicon-192.png`, `assets/apple-touch-icon.png` | znak CWF i ikony |
 | `assets/*.jpg`, `assets/galeria/*.jpg` | oryginalne zdjęcia z `cwf.pl` (źródła wariantów w `img/`), nazwy opisowe: `[co-przedstawia]-[miejsce].jpg` |
@@ -86,12 +106,12 @@ Zmiana jest widoczna na stronie po ok. 2 minutach. Strona pozostaje czystym HTML
 
 | Sekcja w panelu | Gdzie trafia na stronie |
 |---|---|
-| Cennik | honorowane karty + wszystkie tabele cen (dowolna liczba cenników, tabel, kolumn i wierszy; wiersz bez cen = śródtytuł grupy) |
-| Promocje | karty promocji; pusta lista = komunikat „Aktualnie nie mamy promocji” |
-| Galeria | grupy zdjęć z opisami (alt); nowe zdjęcia → `assets/galeria/` |
-| Urodziny | pakiety, oświadczenie rodzica (PDF), karty atrakcji — numeracja i nagłówek „N atrakcji w 2 godziny” liczą się same |
-| Oferta | karty oferty ze zdjęciami i karty „Także w Fortecy” |
-| Lokalizacje i godziny | karty lokalizacji, stopka i JSON-LD dla Google z jednego źródła; w stopce sąsiednie dni o tych samych godzinach łączą się (Pt + Sb–Nd → Pt–Nd) |
+| Cennik | honorowane karty, spis cenników + wszystkie tabele cen (dowolna liczba cenników, tabel, kolumn i wierszy; wiersz bez cen = śródtytuł grupy) |
+| Promocje | promocje na czarnym pasie; pusta lista = komunikat „Aktualnie nie mamy promocji” |
+| Galeria | grupy zdjęć z opisami (alt), pierwsze zdjęcie grupy jest duże; nowe zdjęcia → `assets/galeria/` |
+| Urodziny | pakiety, oświadczenie rodzica (PDF), karty atrakcji; nagłówek „N atrakcji w 2 godziny” liczy się sam |
+| Oferta | karty oferty ze zdjęciami (pierwsze dwie duże) i pozycje „Także w Fortecy” |
+| Lokalizacje i godziny | wiersze lokalizacji, stopka i JSON-LD dla Google z jednego źródła; w stopce sąsiednie dni o tych samych godzinach łączą się (Pt + Sb–Nd → Pt–Nd) |
 | Formularze | lista dokumentów: plik (rozmiar „PDF · 49 KB” liczy się sam) albo link |
 | Filmy, Pytania i słowniczek | karty YouTube, FAQ, słowniczek |
 | Telefony i teksty ogólne | infolinia i telefon urodzin (wszędzie, także na podstronach), pasek górny, tekst w hero, opis dla Google |
@@ -125,13 +145,8 @@ Logowanie przyciskiem *Sign In with GitHub* jest wyłączone (`auth_methods: [to
 
 | Element | Efekt | Oś czasu |
 |---|---|---|
-| `.sd-progress` | żółty pasek postępu czytania | `scroll(root)` |
 | `.site-header::after` | cień nagłówka pojawia się po zjechaniu z góry | `scroll(root)`, `0 150px` |
-| `.altimeter__climber` | wysokościomierz 0–17 m (wysokość wieży CWF): od 1500 px z podziałką na marginesie, na węższych ekranach sama lina z rombem przy krawędzi okna. Romb można przeciągnąć (albo kliknąć w linę), żeby przewinąć stronę (`script.js`); bez animacji CSS pozycję rombu ustawia skrypt | `scroll(root)` |
-| `.hero__inner` | treść hero odpływa i blednie | `view()`, `exit` |
-| `.sd-reveal` | wejście nagłówków sekcji | `view()` |
-| `.sd-stagger > *` | kaskadowe wejście kart (lokalizacje, oferta, cennik, promocje, wideo, FAQ) | `view()` + `--i` |
-| `.loc-card__sign` | znak CWF obraca się do pozycji na kartach lokalizacji | `view()` |
+| `.altimeter__climber` | wysokościomierz 0–17 m (wysokość wieży CWF): od 1500 px z podziałką na marginesie, na węższych ekranach wąska lina z rombem przy samej krawędzi okna (nie zasłania tekstu). Romb można przeciągnąć (albo kliknąć w linę), żeby przewinąć stronę (`script.js`); bez animacji CSS pozycję rombu ustawia skrypt | `scroll(root)` |
 | `.sd-hscroll` | atrakcje urodzinowe na komputerze (od 920 × 660 px): przyklejona scena, pionowe przewijanie strony przesuwa karty w bok | `--bday-scroll` (`view-timeline-name`), `contain 8% … 92%` |
 | `.zipline__rider` | romb tyrolki jedzie po 30-metrowej linie razem z kartami w scenie; długość przejazdu (`--zip-x1`) i pochylenie liny liczy `script.js` | `--bday-scroll` |
 

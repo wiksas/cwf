@@ -45,7 +45,7 @@
       "tytul": "Warsztaty dla szkół",
       "zdjecie": "/assets/warsztaty-wspinaczkowe-szkoly-krakow.jpg",
       "opis_zdjecia": "Grupa szkolna na warsztatach wspinaczkowych",
-      "tekst": "Przedszkola, szkoły, świetlice, kluby sportowe i kolonie — jednorazowo lub cyklicznie. Bilet od 25 zł za osobę.",
+      "tekst": "Przedszkola, szkoły, świetlice, kluby sportowe i kolonie, jednorazowo lub cyklicznie. Bilet od 25 zł za osobę.",
       "punkty": [
         "2 godziny zegarowe z rozgrzewką",
         "1 instruktor na maks. 5 osób",
@@ -59,7 +59,7 @@
       "tytul": "Zajęcia dla osób z niepełnosprawnością",
       "zdjecie": "/assets/wspinaczka-terapeutyczna-niepelnosprawnosc-krakow.jpg",
       "opis_zdjecia": "Zajęcia wspinaczkowe dla osoby z niepełnosprawnością",
-      "tekst": "Zajęcia wspinaczkowo-terapeutyczne dla dzieci, młodzieży i dorosłych — indywidualne lub w grupach 3–5 osób.",
+      "tekst": "Zajęcia wspinaczkowo-terapeutyczne dla dzieci, młodzieży i dorosłych, indywidualne lub w grupach 3–5 osób.",
       "punkty": [
         "m.in. zespół Downa, MPD, autyzm",
         "osoby niewidome i niedosłyszące",
@@ -74,7 +74,7 @@
     {
       "kotwica": "szkolenie",
       "tytul": "Szkolenie z asekuracji",
-      "tekst": "Pierwsza wizyta? Instruktor nauczy Cię wiązania i asekuracji górnej. **40 zł / 2 os.** — zarezerwuj w recepcji."
+      "tekst": "Pierwsza wizyta? Instruktor nauczy Cię wiązania i asekuracji górnej. **40 zł / 2 os.**, rezerwacja w recepcji."
     },
     {
       "kotwica": "skalki",
@@ -83,7 +83,7 @@
     },
     {
       "tytul": "Wypożyczalnia sprzętu",
-      "tekst": "Uprząż, przyrząd, buty i lina na miejscu — nie musisz nic kupować na start."
+      "tekst": "Uprząż, przyrząd, buty i lina na miejscu. Na start nie musisz nic kupować."
     },
     {
       "tytul": "Imprezy firmowe",

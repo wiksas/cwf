@@ -99,7 +99,7 @@ for (const track of document.querySelectorAll("[data-carousel]")) {
   const rider = zipline?.querySelector(".zipline__rider");
   const CABLE_TILT = Math.tan((1 * Math.PI) / 180); // lina w CSS jest obrócona o 1° wokół środka
   const RIDER_INSET = 6; // odstęp rombu od końców liny (left: 6px w CSS)
-  // animation-range: contain 8% contain 92% w CSS — karty ruszają po 8% i stoją od 92% sceny
+  // animation-range: contain 8% contain 92% w CSS: karty ruszają po 8% i stoją od 92% sceny
   const RANGE_START = 0.08;
   const RANGE_LENGTH = 0.84;
 
@@ -119,7 +119,7 @@ for (const track of document.querySelectorAll("[data-carousel]")) {
   const viewInset = () => parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
   /** Długość fazy „contain” sceny w px przewijania. */
   const sceneRange = () => gallery.offsetHeight - (document.documentElement.clientHeight - viewInset());
-  /** Postęp sceny 0–1 z położenia strony — ta sama oś co view-timeline w CSS. */
+  /** Postęp sceny 0–1 z położenia strony, na tej samej osi co view-timeline w CSS. */
   const sceneProgress = () => {
     const range = sceneRange();
     const raw = (viewInset() - gallery.getBoundingClientRect().top) / range;
@@ -226,7 +226,7 @@ for (const track of document.querySelectorAll("[data-carousel]")) {
       dragging = false;
       zipline.classList.remove("is-dragging");
       if (pinned()) return; // w scenie strona zostaje tam, gdzie puszczono romb
-      // dojazd do najbliższej karty; przyciąganie wraca dopiero po dojechaniu —
+      // dojazd do najbliższej karty; przyciąganie wraca dopiero po dojechaniu,
       // przywrócone od razu cofnęłoby karuzelę do karty sprzed przeciągania
       goTo(nearestStop(track.scrollLeft));
       const resnap = () => {

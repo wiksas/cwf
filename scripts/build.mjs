@@ -1,4 +1,4 @@
-// Wstawia treści z content/*.json (edytowane w panelu /admin/ — Sveltia CMS) do stron HTML,
+// Wstawia treści z content/*.json (edytowane w panelu /admin/, Sveltia CMS) do stron HTML,
 // generuje warianty zdjęć WebP (img/), obraz podglądu linku (og:image) i sitemap.xml.
 // Podmieniane są wyłącznie bloki <!-- cms:nazwa --> … <!-- /cms:nazwa -->; reszta HTML jest pisana ręcznie.
 // Uruchomienie: npm install, potem node scripts/build.mjs (to samo robi GitHub Action po każdym zapisie w CMS).
@@ -12,7 +12,7 @@ const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const SITE = "https://cwf.pl/";
 const CITY = "Kraków";
 const ORG_NAME = "Centrum Wspinaczkowe Forteca";
-const OPT_DIR = "img"; // wyłącznie pliki generowane — nieużywane są usuwane przy każdym buildzie
+const OPT_DIR = "img"; // wyłącznie pliki generowane; nieużywane są usuwane przy każdym buildzie
 
 /** Strony, w których podmieniane są bloki; `url` = adres w sitemap.xml (null = poza sitemapą). */
 const PAGES = [
@@ -48,7 +48,7 @@ function inline(text, strong = "b") {
     .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (_, label, href) => `<a href="${href}"${external(href)}>${label}</a>`);
 }
 
-/** Ten sam tekst bez formatowania — do danych strukturalnych. */
+/** Ten sam tekst bez formatowania, do danych strukturalnych. */
 const plain = (text) =>
   String(text ?? "")
     .replace(/\*\*(.+?)\*\*/g, "$1")
@@ -126,7 +126,7 @@ async function prepareImage(src, widths, where) {
 function variants(src, widths = WIDTHS) {
   const rel = String(src).replace(/^\/+/, "");
   const found = variantCache.get(`${rel}|${widths}`);
-  if (!found) throw new Error(`Zdjęcie ${rel} nie zostało przygotowane — dodaj je do listy w prepareAllImages()`);
+  if (!found) throw new Error(`Zdjęcie ${rel} nie zostało przygotowane: dodaj je do sekcji „przygotowanie zdjęć” w build.mjs`);
   return found;
 }
 
@@ -177,7 +177,7 @@ function openingRows(loc) {
   });
 }
 
-/** Łączy sąsiednie dni z tymi samymi godzinami (Pt + Sb–Nd → Pt–Nd) — do stopki. */
+/** Łączy sąsiednie dni z tymi samymi godzinami (Pt + Sb–Nd → Pt–Nd), do stopki. */
 function mergedRows(rows) {
   const out = [];
   for (const row of rows) {
@@ -254,7 +254,7 @@ function schema() {
         return {
           "@type": "SportsActivityLocation",
           "@id": `${SITE}#${slug(loc.nazwa)}`,
-          name: `${ORG_NAME} — ${loc.nazwa}`,
+          name: `${ORG_NAME}, ${loc.nazwa}`,
           url: `${SITE}#${slug(loc.nazwa)}`,
           parentOrganization: { "@id": ORG_ID },
           ...(photos.length ? { image: photos.map((p) => absolute(largest(p.zdjecie).href)) } : {}),
@@ -307,34 +307,40 @@ function schema() {
 
 // ---------- bloki ----------
 
-function locationCard(loc, i) {
+function locationCard(loc) {
   const name = need(loc.nazwa, "lokalizacja: nazwa");
-  const parts = [
-    `<img class="loc-card__sign" src="assets/sygnet.svg" alt="" width="88" height="88">`,
+  const head = [
     `<h3>${esc(name)}</h3>`,
-    `<p class="loc-card__addr">${esc(need(loc.adres, `${name}: adres`))}, ${CITY}${loc.dzielnica ? ` · ${esc(loc.dzielnica)}` : ""}</p>`,
+    `<p class="loc__addr">${esc(need(loc.adres, `${name}: adres`))}, ${CITY}${loc.dzielnica ? ` · ${esc(loc.dzielnica)}` : ""}</p>`,
   ];
-  if (loc.okolice) parts.push(`<p class="loc-card__near">${esc(loc.okolice)}</p>`);
+  if (loc.okolice) head.push(`<p class="loc__near">${esc(loc.okolice)}</p>`);
+  const parts = [wrap(`<div class="loc__name">`, head, "</div>")];
   if (loc.parametry?.length) {
-    parts.push(wrap(`<ul class="loc-card__specs" aria-label="Ściana ${esc(name)}">`, loc.parametry.map((p) => `<li>${inline(p)}</li>`), "</ul>"));
+    parts.push(wrap(`<ul class="loc__specs ticks" aria-label="Ściany: ${esc(name)}">`, loc.parametry.map((p) => `<li>${inline(p)}</li>`), "</ul>"));
   }
   parts.push(
     wrap(
-      `<dl class="loc-card__hours">`,
-      openingRows(loc).map((row) => `<div><dt>${dayRange(row, DAY_FULL, " – ")}</dt><dd>${esc(row.open)} – ${esc(row.close)}</dd></div>`),
-      "</dl>",
-    ),
-    wrap(
-      `<div class="loc-card__contact">`,
+      `<div class="loc__info">`,
       [
-        `<a href="tel:${tel(loc.telefon)}">${ico("phone")} ${esc(loc.telefon)}</a>`,
-        `<a href="mailto:${esc(need(loc.email, `${name}: e-mail`))}">${ico("mail")} ${esc(loc.email)}</a>`,
+        wrap(
+          `<dl class="loc__hours">`,
+          openingRows(loc).map((row) => `<div><dt>${dayRange(row, DAY_FULL, " – ")}</dt><dd>${esc(row.open)}–${esc(row.close)}</dd></div>`),
+          "</dl>",
+        ),
+        wrap(
+          `<div class="loc__contact">`,
+          [
+            `<a href="tel:${tel(loc.telefon)}">${ico("phone")} ${esc(loc.telefon)}</a>`,
+            `<a href="mailto:${esc(need(loc.email, `${name}: e-mail`))}">${ico("mail")} ${esc(loc.email)}</a>`,
+            `<a href="${esc(mapUrl(name))}" target="_blank" rel="noopener">${ico("pin")} Jak dojechać <span class="visually-hidden">(${esc(name)}, mapa Google)</span></a>`,
+          ],
+          "</div>",
+        ),
       ],
       "</div>",
     ),
-    `<a class="btn btn--white-pill" href="${esc(mapUrl(name))}" target="_blank" rel="noopener">${ico("pin")} Jak dojechać <span class="visually-hidden">— ${esc(name)}, mapa Google</span></a>`,
   );
-  return wrap(`<article class="loc-card" id="${slug(name)}" style="--i:${i}">`, parts, "</article>");
+  return wrap(`<article class="loc" id="${slug(name)}">`, parts, "</article>");
 }
 
 function footerLocation(loc) {
@@ -342,26 +348,31 @@ function footerLocation(loc) {
     `<li><a href="${esc(mapUrl(loc.nazwa))}" target="_blank" rel="noopener">${ico("pin")} ${esc(loc.adres)}, ${CITY}</a></li>`,
     `<li><a href="tel:${tel(loc.telefon)}">${ico("phone")} ${esc(loc.telefon)}</a></li>`,
     `<li><a href="mailto:${esc(loc.email)}">${ico("mail")} ${esc(loc.email)}</a></li>`,
-    `<li>${mergedRows(openingRows(loc)).map((row) => `${dayRange(row, DAY_SHORT, "–")} ${esc(row.open)}–${esc(row.close)}`).join(" · ")}</li>`,
+    ...mergedRows(openingRows(loc)).map((row) => `<li class="footer-loc__hours">${dayRange(row, DAY_SHORT, "–")} ${esc(row.open)}–${esc(row.close)}</li>`),
   ];
   if (loc.facebook) items.push(`<li><a href="${esc(loc.facebook)}" target="_blank" rel="noopener">Facebook ${esc(loc.nazwa)} ↗</a></li>`);
   return wrap(`<div class="footer-loc">`, [`<h3>${esc(loc.nazwa)}</h3>`, wrap("<ul>", items, "</ul>")], "</div>");
 }
 
-const SIZES_OFFER = "(min-width: 1280px) 240px, (min-width: 720px) 34vw, 100vw";
+// sizes: pierwsze dwie karty oferty i pierwsze zdjęcie w grupie galerii są większe (układ w styles.css)
+const SIZES_OFFER_LEAD = "(min-width: 1280px) 610px, (min-width: 760px) 50vw, 100vw";
+const SIZES_OFFER = "(min-width: 1280px) 400px, (min-width: 760px) 33vw, 100vw";
 const SIZES_BDAY = "(min-width: 460px) 360px, 80vw";
-const SIZES_GALLERY = "(min-width: 1280px) 400px, (min-width: 720px) 33vw, 82vw";
-const SIZES_VIDEO = "(min-width: 1280px) 300px, (min-width: 720px) 34vw, 100vw";
+const SIZES_GALLERY_LEAD = "(min-width: 1280px) 820px, (min-width: 720px) 66vw, 82vw";
+const SIZES_GALLERY = "(min-width: 1280px) 410px, (min-width: 720px) 33vw, 82vw";
+const SIZES_VIDEO = "(min-width: 1280px) 400px, (min-width: 720px) 33vw, 50vw";
+const SIZES_HERO = "(min-width: 960px) 60vw, 100vw";
 
 function offerCard(card, i) {
+  const lead = i < 2;
   const body = [`<h3>${esc(need(card.tytul, "oferta: tytuł"))}</h3>`, `<p>${inline(card.tekst)}</p>`];
-  if (card.punkty?.length) body.push(wrap(`<ul class="offer-card__facts">`, card.punkty.map((p) => `<li>${inline(p)}</li>`), "</ul>"));
+  if (card.punkty?.length) body.push(wrap(`<ul class="offer__facts ticks">`, card.punkty.map((p) => `<li>${inline(p)}</li>`), "</ul>"));
   if (card.przycisk_tekst && card.przycisk_link) {
-    body.push(`<a class="btn btn--white-pill" href="${esc(card.przycisk_link)}"${external(card.przycisk_link)}>${esc(card.przycisk_tekst)}</a>`);
+    body.push(`<a class="text-link" href="${esc(card.przycisk_link)}"${external(card.przycisk_link)}>${esc(card.przycisk_tekst)}</a>`);
   }
   return wrap(
-    `<article class="offer-card"${anchor(card.kotwica)} style="--i:${i}">`,
-    [img(card.zdjecie, card.opis_zdjecia, SIZES_OFFER, ` class="offer-card__img"`), wrap(`<div class="offer-card__body">`, body, "</div>")],
+    `<article class="offer${lead ? " offer--lead" : ""}"${anchor(card.kotwica)}>`,
+    [img(card.zdjecie, card.opis_zdjecia, lead ? SIZES_OFFER_LEAD : SIZES_OFFER, ` class="offer__img"`), wrap(`<div class="offer__body">`, body, "</div>")],
     "</article>",
   );
 }
@@ -373,17 +384,12 @@ function attractionsWord(n) {
   return n % 10 >= 2 && n % 10 <= 4 && (tens < 12 || tens > 14) ? "atrakcje" : "atrakcji";
 }
 
-function birthdayCard(card, i) {
-  const badge = `${String(i + 1).padStart(2, "0")}${card.wyroznienie ? " · hit" : ""}`;
+function birthdayCard(card) {
   return wrap(
     `<article class="bday-card${card.wyroznienie ? " bday-card--hit" : ""}">`,
     [
       img(card.zdjecie, card.opis_zdjecia, SIZES_BDAY, ` class="bday-card__img"`),
-      wrap(
-        `<div class="bday-card__body">`,
-        [`<span class="bday-card__badge">${badge}</span>`, `<h4>${esc(need(card.tytul, "atrakcja: tytuł"))}</h4>`, `<p>${inline(card.tekst)}</p>`],
-        "</div>",
-      ),
+      wrap(`<div class="bday-card__body">`, [`<h4>${esc(need(card.tytul, "atrakcja: tytuł"))}</h4>`, `<p>${inline(card.tekst)}</p>`], "</div>"),
     ],
     "</article>",
   );
@@ -410,7 +416,10 @@ function priceTable(table, where) {
   );
 }
 
-function priceBox(box, i) {
+/** Kotwica cennika: z panelu (stare linki, np. cennik-sekcje) albo z tytułu. */
+const priceBoxId = (box) => box.kotwica || `cennik-${slug(need(box.tytul, "cennik: tytuł"))}`;
+
+function priceBox(box) {
   const boxTitle = need(box.tytul, "cennik: tytuł");
   const parts = [`<h3>${esc(boxTitle)}</h3>`];
   if (box.podtytul) parts.push(`<p class="price-box__sub">${inline(box.podtytul)}</p>`);
@@ -420,10 +429,10 @@ function priceBox(box, i) {
     parts.push(priceTable(table, `cennik „${boxTitle}”, tabela ${j + 1}`));
   });
   if (box.dodatki?.length) {
-    parts.push(wrap(`<ul class="price-chips">`, box.dodatki.map((d) => `<li>${esc(d.nazwa)} <b>${esc(d.cena)}</b></li>`), "</ul>"));
+    parts.push(wrap(`<ul class="price-extras">`, box.dodatki.map((d) => `<li><span>${esc(d.nazwa)}</span> <b>${esc(d.cena)}</b></li>`), "</ul>"));
   }
   const cls = box.wyroznienie ? "price-box price-box--highlight" : "price-box";
-  return wrap(`<article class="${cls}"${anchor(box.kotwica)} style="--i:${i}">`, parts, "</article>");
+  return wrap(`<article class="${cls}" id="${esc(priceBoxId(box))}">`, parts, "</article>");
 }
 
 function fileLabel(file) {
@@ -448,26 +457,25 @@ function galleryGroup(group) {
   const id = `galeria-${slug(name)}`;
   const photos = group.zdjecia.map((photo, i) =>
     wrap(
-      `<a class="gallery__item" style="--i:${i}" href="${largest(photo.zdjecie).href}" data-lightbox="${id}">`,
-      [img(photo.zdjecie, need(photo.opis, `galeria „${name}”: opis zdjęcia`), SIZES_GALLERY)],
+      `<a class="gallery__item" href="${largest(photo.zdjecie).href}" data-lightbox="${id}">`,
+      [img(photo.zdjecie, need(photo.opis, `galeria „${name}”: opis zdjęcia`), i === 0 ? SIZES_GALLERY_LEAD : SIZES_GALLERY)],
       "</a>",
     ),
   );
   return wrap(
     `<div class="gallery__loc" id="${id}">`,
-    [`<h3>${esc(name)}</h3>`, wrap(`<div class="gallery__grid sd-stagger" role="region" aria-label="Zdjęcia — ${esc(name)}" tabindex="0">`, photos, "</div>")],
+    [`<h3>${esc(name)}</h3>`, wrap(`<div class="gallery__grid" role="region" aria-label="Zdjęcia: ${esc(name)}" tabindex="0">`, photos, "</div>")],
     "</div>",
   );
 }
 
-function videoCard(video, i) {
+function videoCard(video) {
   const videoTitle = need(video.tytul, "wideo: tytuł");
   return wrap(
-    `<a class="video-card" style="--i:${i}" href="${esc(need(video.link, `wideo „${videoTitle}”: link`))}" target="_blank" rel="noopener">`,
+    `<a class="video" href="${esc(need(video.link, `wideo „${videoTitle}”: link`))}" target="_blank" rel="noopener">`,
     [
-      img(video.miniatura, "", SIZES_VIDEO),
-      `<span class="video-card__play">${ico("play")}</span>`,
-      `<span class="video-card__title">${esc(videoTitle)} <span class="visually-hidden">(YouTube, nowa karta)</span></span>`,
+      wrap(`<span class="video__thumb">`, [img(video.miniatura, "", SIZES_VIDEO), `<span class="video__play">${ico("play")}</span>`], "</span>"),
+      `<span class="video__title">${esc(videoTitle)} <span class="visually-hidden">(YouTube, nowa karta)</span></span>`,
     ],
     "</a>",
   );
@@ -498,11 +506,11 @@ const BLOCKS = {
     ].join("\n"),
   "og-obraz": ogImageTags,
   "hero-preload": () =>
-    `<link rel="preload" as="image" href="${heroList[Math.min(1, heroList.length - 1)].href}" imagesrcset="${srcset(heroList)}" imagesizes="100vw" fetchpriority="high">`,
+    `<link rel="preload" as="image" href="${heroList[Math.min(1, heroList.length - 1)].href}" imagesrcset="${srcset(heroList)}" imagesizes="${SIZES_HERO}" fetchpriority="high">`,
   zasoby: () =>
     [
       `<link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>`,
-      `<link rel="preload" href="fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>`,
+      `<link rel="preload" href="fonts/saira-condensed-latin-800.woff2" as="font" type="font/woff2" crossorigin>`,
       `<link rel="stylesheet" href="styles.css?v=${fileVersion("styles.css")}">`,
     ].join("\n"),
   skrypt: () => `<script src="script.js?v=${fileVersion("script.js")}" defer></script>`,
@@ -512,16 +520,16 @@ const BLOCKS = {
       `<span>${esc(ustawienia.pasek_gorny)}</span>`,
       `<span>Infolinia: <a href="tel:${tel(infolinia)}">${esc(infolinia)}</a> · Urodziny: <a href="tel:${tel(telUrodziny)}">${esc(telUrodziny)}</a></span>`,
     ].join("\n"),
-  "hero-obraz": () => img(ustawienia.hero_zdjecie, "", "100vw", ` class="hero__bg"`, { widths: HERO_WIDTHS, eager: true }),
+  "hero-obraz": () => img(ustawienia.hero_zdjecie, "", SIZES_HERO, ` class="hero__img"`, { widths: HERO_WIDTHS, eager: true }),
   hero: () =>
     [
       wrap(`<p class="hero__sub">`, [inline(need(ustawienia.hero_tekst, "ustawienia: tekst w nagłówku"), "strong")], "</p>"),
       wrap(
-        `<div class="hero__cta-row">`,
+        `<div class="hero__actions">`,
         [
           `<a class="btn btn--yellow" href="#lokalizacja">Wybierz lokalizację</a>`,
           `<a class="btn btn--outline-light" href="#cennik">Sprawdź cennik</a>`,
-          `<a class="btn btn--outline-light" href="tel:${tel(telUrodziny)}">${ico("phone")} Urodziny: ${esc(telUrodziny)}</a>`,
+          `<a class="hero__tel" href="tel:${tel(telUrodziny)}">${ico("phone")} Urodziny: ${esc(telUrodziny)}</a>`,
         ],
         "</div>",
       ),
@@ -532,19 +540,21 @@ const BLOCKS = {
   oferta: () => oferta.karty.map(offerCard).join("\n\n"),
   "oferta-dodatkowe": () =>
     (oferta.dodatkowe ?? [])
-      .map((item, i) =>
-        wrap(`<article class="extra-card"${anchor(item.kotwica)} style="--i:${i}">`, [`<h4>${esc(item.tytul)}</h4>`, `<p>${inline(item.tekst)}</p>`], "</article>"),
-      )
+      .map((item) => wrap(`<article class="extra"${anchor(item.kotwica)}>`, [`<h4>${esc(item.tytul)}</h4>`, `<p>${inline(item.tekst)}</p>`], "</article>"))
       .join("\n"),
   "urodziny-pakiety": () =>
     [
-      wrap("<div>", [`<h3>${inline(need(urodziny.pakiety_naglowek, "urodziny: nagłówek pakietów"), "span")}</h3>`, `<p>${inline(urodziny.pakiety_tekst)}</p>`], "</div>"),
       wrap(
-        `<div class="bday-phone-box">`,
+        `<div class="bday__prices">`,
+        [`<h3>${inline(need(urodziny.pakiety_naglowek, "urodziny: nagłówek pakietów"))}</h3>`, `<p>${inline(urodziny.pakiety_tekst)}</p>`],
+        "</div>",
+      ),
+      wrap(
+        `<div class="bday__book">`,
         [
-          `<span>Rezerwacja urodzin</span>`,
-          `<a class="bday-phone-box__tel" href="tel:${tel(telUrodziny)}">${esc(telUrodziny)}</a>`,
-          `<a class="btn btn--yellow" href="${esc(asset(urodziny.oswiadczenie, "urodziny: oświadczenie rodzica").href)}" download>Oświadczenie rodzica (PDF)</a>`,
+          `<p>Rezerwacja urodzin</p>`,
+          `<a class="bday__tel" href="tel:${tel(telUrodziny)}">${ico("phone")} ${esc(telUrodziny)}</a>`,
+          `<a class="btn btn--ink" href="${esc(asset(urodziny.oswiadczenie, "urodziny: oświadczenie rodzica").href)}" download>Oświadczenie rodzica (PDF)</a>`,
         ],
         "</div>",
       ),
@@ -553,25 +563,26 @@ const BLOCKS = {
   "urodziny-atrakcje": () => attractions.map(birthdayCard).join("\n"),
   "cennik-karty": () => (cennik.karty_sportowe ?? []).map((k) => `<li>${esc(k)}</li>`).join("\n"),
   cennik: () => need(cennik.cenniki, "cennik").map(priceBox).join("\n\n"),
+  "cennik-spis": () => cennik.cenniki.map((box) => `<li><a href="#${esc(priceBoxId(box))}">${esc(box.tytul)}</a></li>`).join("\n"),
   promocje: () =>
     promoList.length
       ? promoList
-          .map((promo, i) =>
+          .map((promo) =>
             wrap(
-              `<article class="promo-card" style="--i:${i}">`,
-              [`<span class="promo-card__badge">${esc(promo.etykieta)}</span>`, `<h3>${esc(promo.tytul)}</h3>`, `<p>${inline(promo.tekst)}</p>`],
+              `<article class="promo">`,
+              [`<p class="promo__value">${esc(promo.etykieta)}</p>`, `<h3>${esc(promo.tytul)}</h3>`, `<p>${inline(promo.tekst)}</p>`],
               "</article>",
             ),
           )
           .join("\n")
-      : `<p>Aktualnie nie mamy promocji — zapytaj w recepcji o bieżące oferty.</p>`,
+      : `<p class="promos__empty">Aktualnie nie mamy promocji. Zapytaj w recepcji o bieżące oferty.</p>`,
   formularze: () => need(formularze.dokumenty, "formularze").map(documentLink).join("\n"),
   galeria: () => groups.map(galleryGroup).join("\n"),
   wideo: () => videos.map(videoCard).join("\n"),
   faq: () =>
     faq.pytania
       .map((item, i) =>
-        wrap(`<details class="faq-item" style="--i:${i}"${i === 0 ? " open" : ""}>`, [`<summary>${esc(item.pytanie)}</summary>`, `<p>${inline(item.odpowiedz)}</p>`], "</details>"),
+        wrap(`<details class="faq-item"${i === 0 ? " open" : ""}>`, [`<summary>${esc(item.pytanie)}</summary>`, `<p>${inline(item.odpowiedz)}</p>`], "</details>"),
       )
       .join("\n"),
   slowniczek: () => (faq.slowniczek ?? []).map((t) => `<div><dt>${esc(t.termin)}</dt><dd>${inline(t.definicja)}</dd></div>`).join("\n"),
@@ -650,4 +661,4 @@ for (const name of readdirSync(path.join(ROOT, OPT_DIR))) {
   }
 }
 
-console.log(changed ? `Gotowe — zmienione pliki: ${changed}.` : "Gotowe — bez zmian.");
+console.log(changed ? `Gotowe, zmienione pliki: ${changed}.` : "Gotowe, bez zmian.");

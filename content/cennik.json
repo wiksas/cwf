@@ -198,7 +198,7 @@
               "nazwa": "do 5",
               "ceny": [
                 "600 zł",
-                "—"
+                "brak"
               ]
             },
             {
@@ -290,7 +290,7 @@
         },
         {
           "naglowek": "Zajęcia cykliczne dla grup 3–5 osób",
-          "opis": "M.in. grupy z niepełnosprawnością, szkoły, przedszkola, świetlice — cena za grupę, z instruktorem",
+          "opis": "M.in. grupy z niepełnosprawnością, szkoły, przedszkola, świetlice. Cena za grupę, z instruktorem",
           "naglowek_wierszy": "Czas zajęć",
           "kolumny": [
             "Do 16:00",

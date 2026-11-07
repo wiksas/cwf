@@ -25,8 +25,8 @@
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <!-- cms:zasoby -->
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="fonts/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=7e194468">
+  <link rel="preload" href="fonts/saira-condensed-latin-800.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="styles.css?v=1e36d8bd">
   <!-- /cms:zasoby -->
 </head>
 <body>
@@ -41,7 +41,7 @@
   <header class="site-header">
     <div class="wrap site-header__inner">
       <a class="brand-logo" href="index.html">
-        <img src="assets/logo-cwf.webp" alt="Centrum Wspinaczkowe Forteca — strona główna" width="215" height="89">
+        <img src="assets/logo-cwf.webp" alt="Centrum Wspinaczkowe Forteca, strona główna" width="215" height="89">
       </a>
       <a class="btn btn--yellow" href="index.html#lokalizacja">Wybierz lokalizację</a>
     </div>
@@ -51,13 +51,12 @@
     <section class="page-head page-head--404" aria-labelledby="page-title">
       <div class="wrap">
         <div class="section-head">
-          <span class="section-eyebrow">Błąd 404</span>
-          <h1 id="page-title">Nie ma takiej strony</h1>
-          <p>Ta droga jest jeszcze nieobita. Adres mógł się zmienić po przeniesieniu strony — wróć na stronę główną albo zadzwoń do recepcji.</p>
+          <h1 id="page-title">Nie ma takiej strony (błąd 404)</h1>
+          <p>Ta droga jest jeszcze nieobita. Adres mógł się zmienić po przeniesieniu strony. Wróć na stronę główną albo zadzwoń do recepcji.</p>
           <ul class="page-toc">
             <li><a class="btn btn--yellow" href="index.html">Strona główna</a></li>
-            <li><a class="btn btn--white-pill" href="index.html#cennik">Cennik</a></li>
-            <li><a class="btn btn--white-pill" href="index.html#kontakt">Kontakt</a></li>
+            <li><a class="btn btn--outline" href="index.html#cennik">Cennik</a></li>
+            <li><a class="btn btn--outline" href="index.html#kontakt">Kontakt</a></li>
           </ul>
         </div>
       </div>
@@ -66,12 +65,11 @@
 
   <footer class="site-footer" id="kontakt">
     <div class="wrap">
-      <div class="footer-infolinia">
-        <span class="section-eyebrow">Kontakt · Kraków</span>
+      <div class="footer-top">
         <!-- cms:infolinia -->
         <h2>Infolinia <a href="tel:+48126328333">12 632 83 33</a></h2>
         <!-- /cms:infolinia -->
-        <div class="hero__cta-row">
+        <div class="footer-top__actions">
           <!-- cms:infolinia-przycisk -->
           <a class="btn btn--yellow" href="tel:+48126328333"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> Zadzwoń</a>
           <!-- /cms:infolinia-przycisk -->
@@ -86,7 +84,8 @@
             <li><a href="https://maps.google.com/maps?q=Ludowa%206%2C%20Krak%C3%B3w" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg> ul. Ludowa 6, Kraków</a></li>
             <li><a href="tel:+48512631621"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> 512 631 621</a></li>
             <li><a href="mailto:recepcjaL6@cwf.pl"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> recepcjaL6@cwf.pl</a></li>
-            <li>Pn–Pt 10:00–23:00 · Sb–Nd 10:00–22:00</li>
+            <li class="footer-loc__hours">Pn–Pt 10:00–23:00</li>
+            <li class="footer-loc__hours">Sb–Nd 10:00–22:00</li>
             <li><a href="https://www.facebook.com/CWFortecaLudowa6" target="_blank" rel="noopener">Facebook Ludowa 6 ↗</a></li>
           </ul>
         </div>
@@ -96,7 +95,8 @@
             <li><a href="https://maps.google.com/maps?q=Rac%C5%82awicka%2060%2C%20Krak%C3%B3w" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg> ul. Racławicka 60, Kraków</a></li>
             <li><a href="tel:+48509228998"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> 509 228 998</a></li>
             <li><a href="mailto:recepcjaR60@cwf.pl"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> recepcjaR60@cwf.pl</a></li>
-            <li>Pn–Pt 10:00–23:00 · Sb–Nd 10:00–22:00</li>
+            <li class="footer-loc__hours">Pn–Pt 10:00–23:00</li>
+            <li class="footer-loc__hours">Sb–Nd 10:00–22:00</li>
             <li><a href="https://www.facebook.com/CWFortecaRaclawicka60" target="_blank" rel="noopener">Facebook Racławicka 60 ↗</a></li>
           </ul>
         </div>
@@ -106,7 +106,8 @@
             <li><a href="https://maps.google.com/maps?q=Rydl%C3%B3wka%2032%2C%20Krak%C3%B3w" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-pin"/></svg> ul. Rydlówka 32, Kraków</a></li>
             <li><a href="tel:+48509300918"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg> 509 300 918</a></li>
             <li><a href="mailto:recepcjaR32@cwf.pl"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg> recepcjaR32@cwf.pl</a></li>
-            <li>Pn–Czw 10:00–23:00 · Pt–Nd 10:00–22:00</li>
+            <li class="footer-loc__hours">Pn–Czw 10:00–23:00</li>
+            <li class="footer-loc__hours">Pt–Nd 10:00–22:00</li>
             <li><a href="https://www.facebook.com/CWFortecaRydlowka32" target="_blank" rel="noopener">Facebook Rydlówka 32 ↗</a></li>
           </ul>
         </div>
@@ -121,7 +122,7 @@
   </nav>
   <!-- /cms:pasek-kontakt -->
   <!-- cms:skrypt -->
-  <script src="script.js?v=8a374289" defer></script>
+  <script src="script.js?v=74e70ca2" defer></script>
   <!-- /cms:skrypt -->
 </body>
 </html>

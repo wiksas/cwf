@@ -1,12 +1,12 @@
 {
   "pytania": [
     {
-      "pytanie": "Nigdy się nie wspinałem — czy ktoś mi pomoże?",
-      "odpowiedz": "Tak. Dyżurujący instruktor odpowie na pytania i przeprowadzi szkolenie wstępne: zasady bezpieczeństwa, używanie sprzętu i asekurację. Przed pierwszą wizytą skontaktuj się z recepcją wybranej ścianki — szkolenie trzeba wcześniej zarezerwować."
+      "pytanie": "Nigdy się nie wspinałem. Czy ktoś mi pomoże?",
+      "odpowiedz": "Tak. Dyżurujący instruktor odpowie na pytania i przeprowadzi szkolenie wstępne: zasady bezpieczeństwa, używanie sprzętu i asekurację. Przed pierwszą wizytą skontaktuj się z recepcją wybranej ścianki, bo szkolenie trzeba wcześniej zarezerwować."
     },
     {
       "pytanie": "Czy wspinanie jest niebezpieczne?",
-      "odpowiedz": "Wspinaczka uchodzi za sport ekstremalny, ale jej halowa odmiana — przy zachowaniu zasad bezpieczeństwa — jest dla osoby przeszkolonej bezpieczna. Przeszkolenie przysługuje u nas każdej początkującej osobie (po wcześniejszym umówieniu)."
+      "odpowiedz": "Wspinaczka uchodzi za sport ekstremalny, ale jej halowa odmiana, przy zachowaniu zasad bezpieczeństwa, jest dla osoby przeszkolonej bezpieczna. Przeszkolenie przysługuje u nas każdej początkującej osobie (po wcześniejszym umówieniu)."
     },
     {
       "pytanie": "Czy potrzebuję własnego sprzętu?",
@@ -14,18 +14,18 @@
     },
     {
       "pytanie": "Jak się ubrać do wspinania?",
-      "odpowiedz": "W wygodny strój sportowy, który nie krępuje ruchów. Własne buty powinny dobrze trzymać stopę i nie mieć zbyt grubej, sztywnej podeszwy — a profesjonalne buty wspinaczkowe wypożyczysz na miejscu. Instruktorzy doradzą też przy zakupie własnych."
+      "odpowiedz": "W wygodny strój sportowy, który nie krępuje ruchów. Własne buty powinny dobrze trzymać stopę i nie mieć zbyt grubej, sztywnej podeszwy, a profesjonalne buty wspinaczkowe wypożyczysz na miejscu. Instruktorzy doradzą też przy zakupie własnych."
     },
     {
       "pytanie": "Od ilu lat można się wspinać?",
-      "odpowiedz": "Sekcje dla dzieci przyjmują od 3,5 roku. Osoby poniżej 18 lat potrzebują pisemnej zgody rodzica ([formularze](#formularze)), a do 16 lat wspinają się tylko z rodzicem lub instruktorem. Sekcje dla dorosłych — od 16 lat."
+      "odpowiedz": "Sekcje dla dzieci przyjmują od 3,5 roku. Osoby poniżej 18 lat potrzebują pisemnej zgody rodzica ([formularze](#formularze)), a do 16 lat wspinają się tylko z rodzicem lub instruktorem. Sekcje dla dorosłych: od 16 lat."
     },
     {
       "pytanie": "Czy bilet jest za godzinę wspinania?",
       "odpowiedz": "Bilet wstępu upoważnia do korzystania z hali przez 2,5 godziny."
     },
     {
-      "pytanie": "Nie jestem sprawny fizycznie — dam radę?",
+      "pytanie": "Nie jestem sprawny fizycznie. Dam radę?",
       "odpowiedz": "Każdy może się wspinać. Mamy miejsca przygotowane specjalnie dla początkujących, a wspinanie rekreacyjne to przede wszystkim relaks."
     }
   ],
@@ -36,7 +36,7 @@
     },
     {
       "termin": "Droga i trawers",
-      "definicja": "Droga to wyznaczony sposób przejścia ściany; trawers — wspinanie w bok, częsta rozgrzewka."
+      "definicja": "Droga to wyznaczony sposób przejścia ściany; trawers to wspinanie w bok, częsta rozgrzewka."
     },
     {
       "termin": "Magnezja",
@@ -48,7 +48,7 @@
     },
     {
       "termin": "Obwód",
-      "definicja": "Zamknięta pętla ruchów po wybranych chwytach — trening wytrzymałości."
+      "definicja": "Zamknięta pętla ruchów po wybranych chwytach, trening wytrzymałości."
     },
     {
       "termin": "Przyrząd asekuracyjny",
